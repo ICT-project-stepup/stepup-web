@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { ReactComponent as SearchIcon } from '../../icons/SearchIcon.svg';
 
 
-export default function SearchBar({ placeholder, value, onChange }) {
+export default function SearchBar({ value, onChange }) {
     return (
       <SearchWrapper>
         <SearchInput
-          placeholder={placeholder}
+          placeholder="검색어를 입력하세요"
           onChange={onChange}
           value={value}
         />
@@ -31,7 +31,7 @@ export default function SearchBar({ placeholder, value, onChange }) {
   };
 
 const SearchWrapper = styled.div`
-  width: 30rem;
+  width: 100%;
   height: 3.25rem;
   display: flex;
   position: relative;
@@ -40,9 +40,19 @@ const SearchWrapper = styled.div`
 
 const SearchInput = styled.input`
   font-family: "Pretendard-Regular";
+  font-size: 1.25rem;
   width: 100%;
   height: 100%;
   border: 0.125rem solid #8AA353;
   border-radius: 2rem;
   padding-left: 2rem;
+
+  &::placeholder {
+    color: #AFBFA5;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #8AA353;
+  }
 `;

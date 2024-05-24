@@ -9,15 +9,16 @@ export default function Header() {
             <HeaderWrapper>
                 <LogoSearchContainer>
                     <Logo />
-                    <SearchBarCategoryWrapper>
+                    <SearchCategoryWrapper>
                         <SearchBar />
                         <CategoryWrapper>
                             <CategoryItem>구인글 보기</CategoryItem>
                             <CategoryItem>커뮤니티</CategoryItem>
                             <CategoryItem>내 정보</CategoryItem>
                         </CategoryWrapper>
-                    </SearchBarCategoryWrapper>
+                    </SearchCategoryWrapper>
                 </LogoSearchContainer>
+
                 <LoginWrapper>
                     <span>
                         로그인
@@ -26,7 +27,7 @@ export default function Header() {
                         |
                     </span>
                     <span>
-                        로그아웃
+                        회원가입
                     </span>
                 </LoginWrapper>
             </HeaderWrapper>
@@ -43,7 +44,7 @@ const HeaderContainer = styled.div`
     top: 0;
     background-color: white;
     z-index: 1000;
-`
+`;
 
 const HeaderWrapper = styled.div`
     width: 100%;
@@ -52,7 +53,7 @@ const HeaderWrapper = styled.div`
     align-items: start;
     margin: 0 auto;
     padding: 1.5rem 0;
-`
+`;
 
 const LogoSearchContainer = styled.div`
     width: 45%;
@@ -60,35 +61,37 @@ const LogoSearchContainer = styled.div`
     justify-content: space-between;
     align-items: start;
     padding-left: 5rem;
-`
+`;
 
-const SearchBarCategoryWrapper = styled.div`
+const SearchCategoryWrapper = styled.div`
+    width: 65%;
+    height: 100%
     display: flex;
     flex-direction: column;
-`
+`;
 
 const CategoryWrapper = styled.div`
-    font-family: "Pretendard-Regular";
+    font-family: "Pretendard-SemiBold";
     font-size: 1.25rem;
     color: #6E6E6E;
     display: flex;
     align-items: center;
     margin-left: 1rem;
     padding: 1.5rem 0;
-`
+`;
 
 const CategoryItem = styled.span`
-    margin-right: 2.5rem;
+    margin-right: 3rem;
 `;
 
 const LoginWrapper = styled.div`
     font-family: "Pretendard-Regular";
     font-size: 1.25rem;
     color: #6E6E6E;
-    width: 12rem;
+    width: 10rem;
     height: 3.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-right: 7rem;
-`
+`;
