@@ -1,13 +1,21 @@
+import { styled } from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header";
 import Main from "./pages/Main";
+import Footer from "./components/header/Footer";
 
-function App() {
+export default function App() {
   return (
-    <div>
+    <AppContainer>
       <Header />
-    </div>
+      <Footer />
+    </AppContainer>
   );
 }
 
-export default App;
+const AppContainer = styled.div`
+  text-align: center;
+  display : flex;
+  min-height: 100vh;
+  flex-direction: column;
+`;
