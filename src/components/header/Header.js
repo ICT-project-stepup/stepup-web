@@ -40,7 +40,8 @@ const HeaderContainer = styled.div`
     height: 9.375rem;
     display: flex;
     justify-content: center;
-    position: fixed;
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
     top: 0;
     background-color: white;
     z-index: 1000;
