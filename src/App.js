@@ -23,6 +23,10 @@ import ManageResume from "./pages/homeless/resume/ManageResume";
 import ComuMain from "./pages/community/ComuMain";
 import ComuPostDetail from "./pages/community/post/ComuPostDetail";
 import PublishComuPost from "./pages/community/post/PublishComuPost";
+import CompleteModify from "./pages/popup/CompleteModify";
+import NoLogIn from "./pages/popup/NoLogIn";
+import NoResume from "./pages/popup/NoResume";
+import SignInWelcome from "./pages/popup/SignInWelcome";
 
 
 export default function App() {
@@ -54,6 +58,11 @@ export default function App() {
         <Route path="/communitymain" element={<ComuMain />} />
         <Route path="/comupostdetail" element={<ComuPostDetail />} />
         <Route path="/publishcomupost" element={<PublishComuPost />} />
+
+        <Route path="/completemodify" element={<CompleteModify />} />
+        <Route path="/nologin" element={<NoLogIn />} />
+        <Route path="/noresume" element={<NoResume />} />
+        <Route path="/signinwelcome" element={<SignInWelcome />} />
       </Routes>
       <Footer />
     </AppContainer>
