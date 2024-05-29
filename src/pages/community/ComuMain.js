@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export default function Main() {
     return(
         <Test>
-            <span>커뮤니티 메인페이지</span>
+            <span>커뮤니티 메인 페이지</span>
         </Test>
     )
 }

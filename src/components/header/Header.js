@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { Link } from 'react-router-dom';
 import { ReactComponent as Logo} from '../../assets/Logo.svg';
 import SearchBar from "./SearchBar";
 
@@ -8,27 +9,29 @@ export default function Header() {
         <HeaderContainer>
             <HeaderWrapper>
                 <LogoSearchContainer>
-                    <Logo />
+                    <Link to="/">
+                        <Logo />
+                    </Link>
                     <SearchCategoryWrapper>
                         <SearchBar />
                         <CategoryWrapper>
-                            <CategoryItem>구인글 보기</CategoryItem>
-                            <CategoryItem>커뮤니티</CategoryItem>
-                            <CategoryItem>내 정보</CategoryItem>
+                            <CategoryItem to="/">구인글 보기</CategoryItem>
+                            <CategoryItem to="/communitymain">커뮤니티</CategoryItem>
+                            <CategoryItem to="/homelessmypage">내 정보</CategoryItem>
                         </CategoryWrapper>
                     </SearchCategoryWrapper>
                 </LogoSearchContainer>
 
                 <LoginWrapper>
-                    <span>
+                    <LoginBtn to="/login">
                         로그인
-                    </span>
+                    </LoginBtn>
                     <span>
                         |
                     </span>
-                    <span>
+                    <LoginBtn to="signin">
                         회원가입
-                    </span>
+                    </LoginBtn>
                 </LoginWrapper>
             </HeaderWrapper>
         </HeaderContainer>
@@ -72,17 +75,18 @@ const SearchCategoryWrapper = styled.div`
 `;
 
 const CategoryWrapper = styled.div`
-    font-family: "Pretendard-SemiBold";
-    font-size: 1.25rem;
-    color: #6E6E6E;
     display: flex;
     align-items: center;
     margin-left: 1rem;
     padding: 1.5rem 0;
 `;
 
-const CategoryItem = styled.span`
+const CategoryItem = styled(Link)`
     margin-right: 3rem;
+    text-decoration: none;
+    font-family: "Pretendard-SemiBold";
+    font-size: 1.25rem;
+    color: #6E6E6E;
 `;
 
 const LoginWrapper = styled.div`
@@ -96,3 +100,10 @@ const LoginWrapper = styled.div`
     align-items: center;
     margin-right: 7rem;
 `;
+
+const LoginBtn = styled(Link)`
+    text-decoration: none;
+    font-family: "Pretendard-Regular";
+    font-size: 1.25rem;
+    color: #6E6E6E;
+`; 
