@@ -20,6 +20,9 @@ import ApplicationHistory from "./pages/homeless/ApplicationHistory";
 import InterestPost from "./pages/homeless/InterestPost"
 import HmlsModifyInfo from "./pages/homeless/HmlsModifyInfo";
 import ManageResume from "./pages/homeless/resume/ManageResume";
+import ComuMain from "./pages/community/ComuMain";
+import ComuPostDetail from "./pages/community/post/ComuPostDetail";
+import PublishComuPost from "./pages/community/post/PublishComuPost";
 
 
 export default function App() {
@@ -47,6 +50,10 @@ export default function App() {
         <Route path="/interestpost" element={<InterestPost />} />
         <Route path="/homelessmodifyinfo" element={<HmlsModifyInfo />} />
         <Route path="/manageresume" element={<ManageResume />} />
+
+        <Route path="/communitymain" element={<ComuMain />} />
+        <Route path="/comupostdetail" element={<ComuPostDetail />} />
+        <Route path="/publishcomupost" element={<PublishComuPost />} />
       </Routes>
       <Footer />
     </AppContainer>
