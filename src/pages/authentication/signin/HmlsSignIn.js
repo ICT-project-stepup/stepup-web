@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export default function Main() {
     return(
         <Test>
-            <span>노숙인 회원가입</span>
+            <span>회원가입 - 노숙인</span>
         </Test>
     )
 }

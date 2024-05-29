@@ -9,6 +9,12 @@ import SignIn from "./pages/authentication/signin/SignIn";
 import FindId from "./pages/authentication/login/FindId";
 import FarmSignIn from "./pages/authentication/signin/FarmSignIn";
 import HmlsSignIn from "./pages/authentication/signin/HmlsSignIn";
+import FarmMyPage from "./pages/farm/FarmMyPage";
+import ShowApplicant from "./pages/farm/ShowApplicant";
+import ShowResume from "./pages/farm/ShowResume";
+import FarmModifyInfo from "./pages/farm/FarmModifyInfo";
+import PublishJobAd from "./pages/farm/job_ad/PublishJobAd";
+import JobAdDetail from "./pages/farm/job_ad/JobAdDetail";
 
 
 export default function App() {
@@ -20,10 +26,16 @@ export default function App() {
 
         <Route path="/login" element={<LogIn />} />
         <Route path="/findid" element={<FindId />} />
-
         <Route path="/signin" element={<SignIn />} />
         <Route path="/farmsignin" element={<FarmSignIn />} />
         <Route path="/homelesssignin" element={<HmlsSignIn />} />
+
+        <Route path="/farmmypage" element={<FarmMyPage />} />
+        <Route path="/showapplicant" element={<ShowApplicant />} />
+        <Route path="/showresume" element={<ShowResume />} />
+        <Route path="/farmmodifyinfo" element={<FarmModifyInfo />} />
+        <Route path="/publishjobad" element={<PublishJobAd />} />
+        <Route path="/jobaddetail" element={<JobAdDetail />} />
       </Routes>
       <Footer />
     </AppContainer>
