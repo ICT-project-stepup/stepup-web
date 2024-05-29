@@ -28,7 +28,7 @@ export default function Footer() {
                 </CategoryWrapper>
             </NavWrapper>
             <BottomWrapper>
-                <Logo />
+                <Logo width="10.5rem" height="3.5rem" />
                 <CopyrightWrapper>
                     <TermsWrapper>
                         <span>개인정보처리방침</span>

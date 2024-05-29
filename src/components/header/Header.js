@@ -9,9 +9,9 @@ export default function Header() {
         <HeaderContainer>
             <HeaderWrapper>
                 <LogoSearchContainer>
-                    <Link to="/">
+                    <LogoLink to="/">
                         <Logo />
-                    </Link>
+                    </LogoLink>
                     <SearchCategoryWrapper>
                         <SearchBar />
                         <CategoryWrapper>
@@ -65,6 +65,11 @@ const LogoSearchContainer = styled.div`
     justify-content: space-between;
     align-items: start;
     padding-left: 5rem;
+`;
+
+const LogoLink = styled(Link)`
+    width: 10.5rem; 
+    height: 3.5rem; 
 `;
 
 const SearchCategoryWrapper = styled.div`
