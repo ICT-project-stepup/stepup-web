@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function NoResume() {
     return(
         <Test>
             <span>이력서 없음 알림</span>

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채은 */
-export default function Main() {
+export default function CompleteModify() {
     return(
         <Test>
             <span>정보 수정 완료 알림</span>

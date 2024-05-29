@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function ApplicationHistory() {
     return(
         <Test>
             <span>지원 현황 - 노숙인</span>

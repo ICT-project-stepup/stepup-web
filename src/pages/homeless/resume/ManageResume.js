@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function ManageResume() {
     return(
         <Test>
             <span>이력서 관리 - 노숙인</span>

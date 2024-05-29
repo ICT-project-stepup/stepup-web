@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채은 */
-export default function Main() {
+export default function FarmModifyInfo() {
     return(
         <Test>
             <span>회원정보 수정 - 농가</span>

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채은 */
-export default function Main() {
+export default function ShowResume() {
     return(
         <Test>
             <span>이력서 보기 - 농가</span>

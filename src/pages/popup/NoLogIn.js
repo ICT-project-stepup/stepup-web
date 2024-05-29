@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function NoLogIn() {
     return(
         <Test>
             <span>로그인 후 이용 알림</span>

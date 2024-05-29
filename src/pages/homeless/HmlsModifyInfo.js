@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function HmlsModifyInfo() {
     return(
         <Test>
             <span>회원정보 수정 - 노숙인</span>

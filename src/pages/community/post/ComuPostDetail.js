@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채민 */
-export default function Main() {
+export default function ComuPostDetail() {
     return(
         <Test>
             <span>커뮤니티 글 상세</span>

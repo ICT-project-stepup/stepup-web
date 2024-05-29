@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function LogIn() {
     return(
         <Test>
             <span>로그인 페이지</span>

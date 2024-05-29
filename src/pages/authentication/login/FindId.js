@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function FindId() {
     return(
         <Test>
             <span>아이디 찾기</span>

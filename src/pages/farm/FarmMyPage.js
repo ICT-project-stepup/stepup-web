@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채은 */
-export default function Main() {
+export default function FarmMyPage() {
     return(
         <Test>
             <span>마이페이지 - 농가</span>

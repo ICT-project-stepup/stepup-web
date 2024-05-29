@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function InterestPost() {
     return(
         <Test>
             <span>저장글 보기 - 노숙인</span>

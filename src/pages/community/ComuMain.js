@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채민 */
-export default function Main() {
+export default function ComuMain() {
     return(
         <Test>
             <span>커뮤니티 메인 페이지</span>

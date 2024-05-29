@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function HmlsMyPage() {
     return(
         <Test>
             <span>마이페이지 - 노숙인</span>

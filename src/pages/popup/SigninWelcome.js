@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 예은 */
-export default function Main() {
+export default function SignInWelcome() {
     return(
         <Test>
             <span>회원가입 환영 알림</span>

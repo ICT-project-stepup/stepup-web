@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 /* 채은 */
-export default function Main() {
+export default function PublishJobAd() {
     return(
         <Test>
             <span>구인글 쓰기 - 농가</span>
