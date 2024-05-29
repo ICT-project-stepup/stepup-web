@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-
+/* 예은 */
 export default function Main() {
     return(
         <Test>

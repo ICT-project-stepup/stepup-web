@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-
+/* 채민 */
 export default function Main() {
     return(
         <Test>
