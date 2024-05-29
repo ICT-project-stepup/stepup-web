@@ -15,6 +15,11 @@ import ShowResume from "./pages/farm/ShowResume";
 import FarmModifyInfo from "./pages/farm/FarmModifyInfo";
 import PublishJobAd from "./pages/farm/job_ad/PublishJobAd";
 import JobAdDetail from "./pages/farm/job_ad/JobAdDetail";
+import HmlsMyPage from "./pages/homeless/HmlsMyPage";
+import ApplicationHistory from "./pages/homeless/ApplicationHistory";
+import InterestPost from "./pages/homeless/InterestPost"
+import HmlsModifyInfo from "./pages/homeless/HmlsModifyInfo";
+import ManageResume from "./pages/homeless/resume/ManageResume";
 
 
 export default function App() {
@@ -36,6 +41,12 @@ export default function App() {
         <Route path="/farmmodifyinfo" element={<FarmModifyInfo />} />
         <Route path="/publishjobad" element={<PublishJobAd />} />
         <Route path="/jobaddetail" element={<JobAdDetail />} />
+
+        <Route path="/homelessmypage" element={<HmlsMyPage />} />
+        <Route path="/applicationhistory" element={<ApplicationHistory />} />
+        <Route path="/interestpost" element={<InterestPost />} />
+        <Route path="/homelessmodifyinfo" element={<HmlsModifyInfo />} />
+        <Route path="/manageresume" element={<ManageResume />} />
       </Routes>
       <Footer />
     </AppContainer>
