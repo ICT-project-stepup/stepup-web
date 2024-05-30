@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-/* 채은 */
+/* 예은 */
 export default function ShowResume() {
     return(
         <Test>
