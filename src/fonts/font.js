@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import PretendardRegular from "./Pretendard-Regular.woff";
 import PretendardBold from "./Pretendard-Bold.woff";
 import PretendardSemiBold from "./Pretendard-SemiBold.woff";
+import PretendardMedium from "./Pretendard-Medium.woff";
 
 
 export default createGlobalStyle`
@@ -25,5 +26,12 @@ export default createGlobalStyle`
         font-weight: 600;
         font-display: swap;
         src: url(${PretendardSemiBold}) format("woff");
+    }
+    @font-face {
+        font-family: "Pretendard-Medium";
+        font-style: nomal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(${PretendardMedium}) format("woff");
     }
 `;
