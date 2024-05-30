@@ -29,7 +29,7 @@ export default function Header() {
                     <span>
                         |
                     </span>
-                    <LoginBtn to="signin">
+                    <LoginBtn to="/signin">
                         회원가입
                     </LoginBtn>
                 </LoginWrapper>
