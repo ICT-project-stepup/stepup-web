@@ -7,6 +7,10 @@ import { ReactComponent as ApplyIcon } from "../../icons/ApplyIcon.svg";
 import { ReactComponent as SaveIcon } from "../../icons/SaveIcon.svg";
 import { useNavigate } from "react-router-dom";
 
+const userDummy = {
+  name: "이공주",
+};
+
 /* 채은 */
 export default function HmlsMyPage() {
   const navigate = useNavigate();
@@ -27,7 +31,7 @@ export default function HmlsMyPage() {
     <Test>
       <Content>
         <StyledProfile />
-        <Text>이공주 님</Text>
+        <Text>{userDummy.name}</Text>
         <ChangeInformBtn>정보 수정</ChangeInformBtn>
       </Content>
 
