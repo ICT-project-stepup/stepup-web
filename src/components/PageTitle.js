@@ -14,8 +14,6 @@ const Title = styled.div`
     position: absolute;
     width: 12.3125rem;
     height: 2.375rem;
-    left: 5.3125rem;
-    top: 11.875rem;
     background: #ffffff;
     border-left: 0.125rem solid #2b2b2b;
     font-family: "Pretendard-Medium";
