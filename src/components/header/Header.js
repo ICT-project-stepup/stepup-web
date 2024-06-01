@@ -48,6 +48,7 @@ const HeaderContainer = styled.div`
     top: 0;
     background-color: white;
     z-index: 1000;
+    box-shadow: 0 5px 8px -4px rgba(175, 191, 165, 0.5);
 `;
 
 const HeaderWrapper = styled.div`
