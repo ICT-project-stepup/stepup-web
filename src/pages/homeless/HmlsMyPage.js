@@ -54,17 +54,16 @@ export default function HmlsMyPage() {
 const Test = styled.div`
   /* 전체 네모 박스 */
 
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
   box-sizing: border-box;
-  width: 1206px;
-  height: 467px;
-  // top: 310px;
-  border: 3px solid rgba(175, 191, 165, 0.4);
-  border-radius: 40px;
+  width: 75.375rem;
+  height: 29.1875rem;
+  border: 0.1875rem solid rgba(175, 191, 165, 0.4);
+  border-radius: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -74,12 +73,12 @@ const Test = styled.div`
 const Content = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px; /* Content와 ButtonBox 사이의 간격 */
+  margin-bottom: 1.25rem;
 `;
 
 const StyledProfile = styled(ProfileIcon)`
   // 프로필 이미지
-  margin-right: 20px;
+  margin-right: 1.25rem;
 `;
 
 const Text = styled.span`
@@ -93,39 +92,29 @@ const Text = styled.span`
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
-  font-size: 36px;
-  line-height: 43px;
-  /* identical to box height */
+  font-size: 2.25rem;
+  line-height: 2.6875rem;
   display: flex;
   align-items: center;
-
   color: #8aa353;
-
-  margin-right: 20px; /* 텍스트와 버튼 사이의 간격 */
+  margin-right: 1.25rem;
 `;
 
 const ChangeInformBtn = styled.button`
   /* 정보 수정 버튼 */
 
   box-sizing: border-box;
-
-  width: 115px;
-  height: 43px;
-  left: 831px;
-  top: 408px;
-
-  border: 1.5px solid #afbfa5;
-  border-radius: 15px;
-
+  width: 7.1875rem;
+  height: 2.6875rem;
+  border: 0.09375rem solid #afbfa5;
+  border-radius: 0.9375rem;
   color: #6e6e6e;
-
   cursor: pointer;
-
   background-color: white;
   font-family: Pretendard;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 500;
-  line-height: 23.87px;
+  line-height: 1.4925rem;
   text-align: center;
 `;
 
@@ -137,59 +126,46 @@ const ResumeBox = styled.button`
   /* 이력서 관리 버튼 */
 
   box-sizing: border-box;
-
-  width: 290px;
-  height: 174px;
-
-  border: 3px solid #afbfa5;
-  filter: drop-shadow(1px 4px 4px rgba(175, 191, 165, 0.4));
-  border-radius: 40px;
-
+  width: 18.125rem;
+  height: 10.875rem;
+  border: 0.1875rem solid #afbfa5;
+  filter: drop-shadow(0.0625rem 0.25rem 0.25rem rgba(175, 191, 165, 0.4));
+  border-radius: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  margin-right: 50px;
-
+  margin-right: 3.125rem;
   background-color: white;
   cursor: pointer;
-
-  // 이력서 관리 텍스트
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
-  font-size: 36px;
-  line-height: 43px;
-  /* identical to box height */
+  font-size: 2.25rem;
+  line-height: 2.6875rem;
   display: flex;
   align-items: center;
   text-align: center;
-
   color: #6e6e6e;
 `;
 
 const StyledResume = styled(ResumeIcon)`
-  margin-bottom: 10px; /* 아이콘과 텍스트 사이의 간격 */
+  margin-bottom: 0.625rem;
 `;
 
 const ApplyBox = styled.button`
   /* 지원 현황 버튼 */
 
   box-sizing: border-box;
-
-  width: 290px;
-  height: 174px;
-
-  border: 3px solid #afbfa5;
-  filter: drop-shadow(1px 4px 4px rgba(175, 191, 165, 0.4));
-  border-radius: 40px;
-
+  width: 18.125rem;
+  height: 10.875rem;
+  border: 0.1875rem solid #afbfa5;
+  filter: drop-shadow(0.0625rem 0.25rem 0.25rem rgba(175, 191, 165, 0.4));
+  border-radius: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   background-color: white;
   cursor: pointer;
 
@@ -198,39 +174,32 @@ const ApplyBox = styled.button`
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
-  font-size: 36px;
-  line-height: 43px;
-  /* identical to box height */
+  font-size: 2.25rem;
+  line-height: 2.6875rem;
   display: flex;
   align-items: center;
   text-align: center;
-
   color: #6e6e6e;
 `;
 
 const StyledApply = styled(ApplyIcon)`
-  margin-bottom: 10px; /* 아이콘과 텍스트 사이의 간격 */
+  margin-bottom: 0.625rem;
 `;
 
 const SaveBox = styled.button`
   /* 저장한 글 버튼 */
 
   box-sizing: border-box;
-
-  width: 290px;
-  height: 174px;
-
-  border: 3px solid #afbfa5;
-  filter: drop-shadow(1px 4px 4px rgba(175, 191, 165, 0.4));
-  border-radius: 40px;
-
+  width: 18.125rem;
+  height: 10.875rem;
+  border: 0.1875rem solid #afbfa5;
+  filter: drop-shadow(0.0625rem 0.25rem 0.25rem rgba(175, 191, 165, 0.4));
+  border-radius: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  margin-left: 50px;
-
+  margin-left: 3.125rem;
   background-color: white;
   cursor: pointer;
 
@@ -239,16 +208,14 @@ const SaveBox = styled.button`
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
-  font-size: 36px;
-  line-height: 43px;
-  /* identical to box height */
+  font-size: 2.25rem;
+  line-height: 2.6875rem;
   display: flex;
   align-items: center;
   text-align: center;
-
   color: #6e6e6e;
 `;
 
 const StyledSave = styled(SaveIcon)`
-  margin-bottom: 10px; /* 아이콘과 텍스트 사이의 간격 */
+  margin-bottom: 0.625rem;
 `;
