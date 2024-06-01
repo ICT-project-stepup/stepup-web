@@ -89,7 +89,7 @@ const Text = styled.span`
   top: 39.84%;
   bottom: 55.96%;
 
-  font-family: "Pretendard";
+  font-family: "Pretendard-SemiBold";
   font-style: normal;
   font-weight: 600;
   font-size: 2.25rem;
@@ -111,7 +111,7 @@ const ChangeInformBtn = styled.button`
   color: #6e6e6e;
   cursor: pointer;
   background-color: white;
-  font-family: Pretendard;
+  font-family: "Pretendard-Medium";
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.4925rem;
@@ -138,7 +138,7 @@ const ResumeBox = styled.button`
   margin-right: 3.125rem;
   background-color: white;
   cursor: pointer;
-  font-family: "Pretendard";
+  font-family: "Pretendard-Medium";
   font-style: normal;
   font-weight: 500;
   font-size: 2.25rem;
