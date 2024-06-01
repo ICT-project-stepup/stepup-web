@@ -6,7 +6,6 @@ import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
 
 /* 채은 */
 export default function ManageResume() {
-
   // 더미데이터
   const userDummy = {
     name: "이공주",
@@ -23,7 +22,6 @@ export default function ManageResume() {
     { label: "이메일", value: userDummy.email },
     { label: "주소", value: userDummy.address },
   ];
-
 
   return (
     <Test>
@@ -57,15 +55,15 @@ export default function ManageResume() {
 }
 
 const Test = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-margin-top: 10rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10rem;
 
-font-family: "Pretendard-Bold";
-font-size: 3rem;
-color: #8aa353;
+  font-family: "Pretendard-Bold";
+  font-size: 3rem;
+  color: #8aa353;
 `;
 
 const Text = styled.div`
@@ -79,7 +77,7 @@ const Text = styled.div`
   top: 11.875rem;
   background: #ffffff;
   border-left: 0.125rem solid #2b2b2b;
-  font-family: "Pretendard";
+  font-family: "Pretendard-Medium";
   font-style: normal;
   font-weight: 500;
   font-size: 2rem;
@@ -103,11 +101,11 @@ const Inform = styled.div`
   .title {
     width: 7.4375rem;
     height: 2.375rem;
-    font-family: "Pretendard";
+    font-family: "Pretendard-Medium";
     font-style: normal;
     font-weight: 500;
     font-size: 2rem;
-    line-height: 2.375rem; 
+    line-height: 2.375rem;
     color: #6e6e6e;
     margin-right: 1.25rem;
   }
@@ -117,7 +115,7 @@ const Inform = styled.div`
     width: 45.75rem;
     height: 1.625rem;
     margin-left: 0.6875rem;
-    font-family: "Pretendard";
+    font-family: "Pretendard-Regular";
     font-style: normal;
     font-weight: 400;
     font-size: 1.375rem;
@@ -126,7 +124,7 @@ const Inform = styled.div`
   }
 
   .highlight {
-    font-family: "Pretendard";
+    font-family: "Pretendard-SemiBold";
     font-size: 1.375rem;
     font-weight: 600;
     line-height: 1.640625rem;
@@ -150,19 +148,18 @@ const InformBox = styled.div`
   width: 50.25rem;
   height: 25.3125rem;
   margin-top: 1.25rem;
-  border: 0.1875rem solid rgba(175, 191, 165, 0.4); /* 3px */
+  border: 0.1875rem solid rgba(175, 191, 165, 0.4);
   border-radius: 2.5rem;
   position: absolute;
-  filter: drop-shadow(0.0625rem 0.25rem 0.25rem rgba(175, 191, 165, 0.4));
 `;
 
 const Info = styled.div`
-/* 정보 데이터들 */
+  /* 정보 데이터들 */
 
-display: flex;
-flex-direction: column;
-margin-left: 1.25rem;
-margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.25rem;
+  margin-top: 2.5rem;
 `;
 
 const InfoRow = styled.div`
@@ -172,27 +169,27 @@ const InfoRow = styled.div`
 `;
 
 const InfoLabel = styled.div`
-width: 7.5rem;
-font-family: "Pretendard";
-font-style: normal;
-font-weight: 500;
-font-size: 1.5rem;
-line-height: 1.8125rem;
-color: #6e6e6e;
-display: flex;
-align-items: center;
+  width: 7.5rem;
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.8125rem;
+  color: #6e6e6e;
+  display: flex;
+  align-items: center;
 `;
 
 const InfoValue = styled.div`
-/* 정보 데이터 */
-font-family: "Pretendard";
-font-style: normal;
-font-weight: 500;
-font-size: 1.375rem; 
-line-height: 1.625rem;
-display: flex;
-align-items: center;
-color: #8aa353;
+  /* 정보 데이터 */
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.375rem;
+  line-height: 1.625rem;
+  display: flex;
+  align-items: center;
+  color: #8aa353;
 `;
 
 const Button = styled.button`
@@ -216,7 +213,7 @@ const Button = styled.button`
   background: #8aa353;
   border-radius: 1.5625rem;
 
-  font-family: "Pretendard";
+  font-family: "Pretendard-SemiBold";
   font-style: normal;
   font-weight: 600;
   font-size: 1.25rem;
