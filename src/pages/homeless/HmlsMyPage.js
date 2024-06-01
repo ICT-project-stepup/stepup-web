@@ -54,7 +54,7 @@ export default function HmlsMyPage() {
 const Test = styled.div`
   /* 전체 네모 박스 */
 
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
