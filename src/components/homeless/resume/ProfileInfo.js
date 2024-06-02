@@ -1,8 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
+import RoundGreenBtn from "../../buttons/RoundWhiteBtn";
+import { useNavigate } from "react-router-dom";
 
-const ProfileInfo = ({ userInfoArray }) => {
+const ProfileInfo = ({ profileData }) => {
+  const navigate = useNavigate();
+
+  const profileInfoLabel = [
+    { label: "이름", value: profileData.name },
+    { label: "나이", value: profileData.age },
+    { label: "전화번호", value: profileData.phone },
+    { label: "이메일", value: profileData.email },
+    { label: "주소", value: profileData.address },
+  ];
+
   return (
     <Container>
       <Title>기본 정보</Title>
@@ -13,34 +25,52 @@ const ProfileInfo = ({ userInfoArray }) => {
       </Description>
 
       <InformBox>
-        <StyledProfile />
-        
-        <Info>
-          {userInfoArray.map((item, index) => (
-            <InfoRow key={index}>
-              <InfoLabel>{item.label}</InfoLabel>
-              <InfoValue>{item.value}</InfoValue>
-            </InfoRow>
-          ))}
-        </Info>
-        <Button>내 정보 수정</Button>
+        <InfoWrapper>
+          <StyledProfile />
+          <Info>
+            {profileInfoLabel.map((item, index) => (
+              <InfoRow key={index}>
+                <InfoLabel>{item.label}</InfoLabel>
+                <InfoValue>{item.value}</InfoValue>
+              </InfoRow>
+            ))}
+          </Info>
+        </InfoWrapper>
+
+        <BtnContainer>
+          <RoundGreenBtn
+            text="내 정보 수정"
+            style={btnStyle}
+            onClick={() => {
+              navigate("/homelessmodifyinfo"); // 버튼 클릭시 노숙인 회원정보수정으로 이동
+            }}
+          />
+        </BtnContainer>
       </InformBox>
     </Container>
   );
 };
 
+const InfoWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.25rem;
+`;
+
 const Container = styled.div`
-position: absolute;
-top: 17.8125rem;
-left: 5.3125rem;
-align-items: center;
+  position: absolute;
+  top: 18rem;
+  left: 5.3125rem;
+  //align-items: center;
+  //margin-bottom: 2rem;
+  //width: 100%;
+  //margin-bottom: 2rem;
 `;
 
 const Title = styled.div`
   width: 7.4375rem;
   height: 2.375rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
   font-weight: 500;
   font-size: 2rem;
   line-height: 2.375rem;
@@ -85,6 +115,7 @@ const InformBox = styled.div`
   border-radius: 2.5rem;
   box-shadow: 0 0.25rem 0.25rem rgba(175, 191, 165, 0.4);
   margin-bottom: 2rem;
+  flex-direction: column;
 `;
 
 const Info = styled.div`
@@ -123,42 +154,17 @@ const InfoValue = styled.div`
   color: #8aa353;
 `;
 
-const Button = styled.button`
-  /* 내 정보 수정 버튼 */
-
-  position: absolute;
-
-  // 버튼 크기
-
-  width: 11.5rem;
-  height: 2.75rem;
-
-  // 버튼 위치
-
-  top: 85%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  // 버튼 꾸미기
-
-  background: #8aa353;
-  border-radius: 1.5625rem;
-
-  font-family: "Pretendard-SemiBold";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.5rem;
-
+const BtnContainer = styled.div`
   display: flex;
-  align-items: center;
-  text-align: center;
   justify-content: center;
-
-  border: none;
-  cursor: pointer;
-
-  color: #ffffff;
 `;
+
+const btnStyle = {
+  width: "11.5rem",
+  height: "2.75rem",
+  cursor: "pointer",
+  background: "#8aa353",
+  color: "#ffffff",
+};
 
 export default ProfileInfo;

@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import ProfileInfo from "../../../components/homeless/resume/ProfileInfo";
-import CareerSection from "../../../components/homeless/resume/Career";
+import Career from "../../../components/homeless/resume/Career";
 import SelfIntroduction from "../../../components/homeless/resume/SelfIntroduction";
+import PageTitle from "../../../components/PageTitle";
 
 /* 채은 */
 export default function ManageResume() {
-  // 더미데이터
-  const userDummy = {
+  // ProfileInfo 더미데이터
+  const profileData = {
     name: "이공주",
     age: "61세",
     phone: "010-1964-0711",
@@ -15,27 +16,20 @@ export default function ManageResume() {
     address: "서울 용산구 한강대로92길 6 갈월동빌딩",
   };
 
-  const userInfoArray = [
-    { label: "이름", value: userDummy.name },
-    { label: "나이", value: userDummy.age },
-    { label: "전화번호", value: userDummy.phone },
-    { label: "이메일", value: userDummy.email },
-    { label: "주소", value: userDummy.address },
-  ];
-
   return (
     <Container>
-      <Text>
-        <span>이력서 관리</span>
-      </Text>
-      <ProfileInfo userInfoArray={userInfoArray} />
-      <CareerSection />
+      <TitleWrapper>
+        <PageTitle text="이력서 관리" /> {/* PageTitle 컴포넌트 사용 */}
+      </TitleWrapper>
+      <ProfileInfo profileData={profileData} />
+      <Career />
       <SelfIntroduction />
     </Container>
   );
 }
 
 const Container = styled.div`
+  text-align: left; // App.js의 text-align: center 덮어쓰기
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -47,24 +41,10 @@ const Container = styled.div`
   color: #8aa353;
 `;
 
-const Text = styled.div`
+const TitleWrapper = styled.div`
   /*이력서 관리 텍스트*/
-  box-sizing: border-box;
-  position: absolute;
-  width: 12.3125rem;
-  height: 2.375rem;
+
   left: 5.3125rem;
   top: 11.875rem;
-  background: #ffffff;
-  border-left: 0.125rem solid #2b2b2b;
-  font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 2rem;
-  line-height: 2.375rem;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  padding-left: 1.25rem;
-  color: #2b2b2b;
+  position: absolute;
 `;

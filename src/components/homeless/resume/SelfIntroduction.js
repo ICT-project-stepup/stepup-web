@@ -3,16 +3,28 @@ import styled from "styled-components";
 
 const SelfIntroduction = () => {
   return (
-    <>
-      <SectionTitle>자기소개</SectionTitle>
+    <Container>
+      <Title>자기소개</Title>
       <Textarea placeholder="입력하세요." />
-    </>
+    </Container>
   );
 };
 
-const SectionTitle = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 600;
+const Container = styled.div`
+position: absolute;
+top: 74rem;
+left: 5.3125rem;
+  width: 100%;
+`;
+
+const Title = styled.h2`
+  width: 7.4375rem;
+  height: 2.375rem;
+  font-family: "Pretendard-Medium";
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.375rem;
+  color: #6e6e6e;
   margin-bottom: 1rem;
 `;
 
