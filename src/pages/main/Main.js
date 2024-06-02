@@ -4,10 +4,95 @@ import PageTitle from "../../components/PageTitle";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import JobAdList from './JobAdList';
+import Pagination from "react-js-pagination";
+
+
+const postData = [
+    {
+        area: "경남 창녕군",
+        postTitle: "마늘 뽑으실 분 구합니다",
+        salaryType: "일급",
+        salary: "100,000",
+        workTime: "09:00 ~ 16:00",
+        postDate: "2024.05.17",
+        postState: "모집 중", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+    {
+        area: "전남 진도군",
+        postTitle: "대파 뽑으실 분 구해요",
+        salaryType: "시급",
+        salary: "9,600",
+        workTime: "08:00 ~ 14:00",
+        postDate: "2024.05.11",
+        postState: "마감", 
+    },
+];
 
 /* 채민 */
 export default function Main() {
     const [isListMode, setListMode] = useState(true);
+    const [activePage, setActivePage] = useState(1);
+
+    /* 페이지네이션에 필요한 변수들 */
+    const itemsPerPage = 7;
+    const totalItemsCount = postData.length;
+    const indexOfLastPost = activePage * itemsPerPage;
+    const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+    const currentPosts = postData.slice(indexOfFirstPost, indexOfLastPost);
 
     const toggleListMode = () => {
         setListMode(true);
@@ -17,26 +102,9 @@ export default function Main() {
         setListMode(false);
     };
 
-    const postData = [
-        {
-            area: "경남 창녕군",
-            postTitle: "마늘 뽑으실 분 구합니다",
-            salaryType: "일급",
-            salary: "100,000",
-            workTime: "09:00 ~ 16:00",
-            postDate: "2024.05.17",
-            postState: "모집 중", 
-        },
-        {
-            area: "전남 진도군",
-            postTitle: "대파 뽑으실 분 구해요",
-            salaryType: "시급",
-            salary: "9,600",
-            workTime: "08:00 ~ 14:00",
-            postDate: "2024.05.11",
-            postState: "마감", 
-        },
-    ];
+    const handlePageChange = (pageNumber) => {
+        setActivePage(pageNumber);
+    };
 
     return(
         <MainContainer>
@@ -86,7 +154,19 @@ export default function Main() {
                         <span className="date">등록일</span>
                         <span className="state">현황</span>
                     </ListTitle>
-                    {postData.map((postInfo) => (<JobAdList postInfo={postInfo} />))}
+                    {currentPosts.map((postInfo, index) => ( <JobAdList key={index} postInfo={postInfo} /> ))}
+                    <PaginationWrapper>
+                        <Pagination
+                            activePage={activePage}
+                            itemsCountPerPage={itemsPerPage}
+                            totalItemsCount={totalItemsCount}
+                            pageRangeDisplayed={5}
+                            onChange={handlePageChange}
+                            prevPageText={<PageText style={{ opacity: activePage === 1 ? 0 : 1 }}>이전</PageText>}
+                            nextPageText={<PageText style={{ opacity: activePage === Math.ceil(totalItemsCount / itemsPerPage) ? 0 : 1 }}>다음</PageText>}
+                            hideFirstLastPages
+                        />
+                    </PaginationWrapper>
                 </JobAdListWrapper>
             ) : (
                 <MapWrapper>
@@ -107,7 +187,7 @@ export default function Main() {
 
 const MainContainer = styled.div`
     width: auto;
-    height: auto;
+    height: 52rem;
     display: block;
     align-items: flex-start;
     padding: 2rem 6rem 0 6rem;
@@ -178,3 +258,52 @@ const MapWrapper = styled.div`
     height: 45%;
     borderRadius: 2rem;
 `;
+
+const PaginationWrapper = styled.div`
+    margin: 3rem 0;
+    font-family: Pretendard-Regular;
+    font-size: 1.5rem;
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    ul.pagination li {
+        width: 3.5rem;
+        height: 2.8rem;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #6E6E6E;
+    }
+    
+    ul.pagination li a {
+        text-decoration: none;
+        background-color: none;
+        padding: 0.55rem 1.1rem;
+        border-radius: 0.75rem;
+        color: #6E6E6E;
+    }
+    
+    ul.pagination li.active a {
+        color: white;
+        background-color: #8AA353;
+    }
+`;
+
+const PageText = styled.div`
+    width: 4rem;
+    display: flex;
+    justify-content: center;
+    pading: 0;
+    font-size: 1.188rem;
+`;
+
