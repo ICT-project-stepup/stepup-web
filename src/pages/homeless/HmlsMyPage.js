@@ -28,42 +28,45 @@ export default function HmlsMyPage() {
   };
 
   return (
-    <Test>
-      <Content>
-        <StyledProfile />
-        <Text>{userDummy.name}</Text>
-        <ChangeInformBtn>정보 수정</ChangeInformBtn>
-      </Content>
+    <Container>
+      <Test>
+        <Content>
+          <StyledProfile />
+          <Text>{userDummy.name}</Text>
+          <ChangeInformBtn>정보 수정</ChangeInformBtn>
+        </Content>
 
-      <ButtonBox>
-        <ResumeBox onClick={handleResumeClick}>
-          <StyledResume />
-          이력서 관리
-        </ResumeBox>
+        <ButtonBox>
+          <ResumeBox onClick={handleResumeClick}>
+            <StyledResume />
+            이력서 관리
+          </ResumeBox>
 
-        <ApplyBox onClick={handleApplyClick} x>
-          <StyledApply />
-          지원 현황
-        </ApplyBox>
+          <ApplyBox onClick={handleApplyClick} x>
+            <StyledApply />
+            지원 현황
+          </ApplyBox>
 
-        <SaveBox onClick={handleSaveClick}>
-          <StyledSave />
-          저장한 글
-        </SaveBox>
-      </ButtonBox>
-    </Test>
+          <SaveBox onClick={handleSaveClick}>
+            <StyledSave />
+            저장한 글
+          </SaveBox>
+        </ButtonBox>
+      </Test>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 
 const Test = styled.div`
   /* 전체 네모 박스 */
 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  box-sizing: border-box;
   width: 75.375rem;
   height: 29.1875rem;
   border: 0.1875rem solid rgba(175, 191, 165, 0.4);
@@ -72,6 +75,7 @@ const Test = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0.25rem 0.25rem rgba(175, 191, 165, 0.4); // 테두리에만 그림자 추가
 `;
 
 const Content = styled.div`
