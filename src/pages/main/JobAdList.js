@@ -24,7 +24,7 @@ export default function JobAdList({ postInfo }) {
 const PostListWrapper = styled.div`
     width: 100%;
     height: 4.2rem;
-    border-bottom: solid 0.1rem black;
+    border-bottom: solid 0.1rem #6E6E6E;
     display: flex;
     align-items: center;
     justify-content: space-between;
