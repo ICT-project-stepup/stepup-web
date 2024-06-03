@@ -38,14 +38,16 @@ const Career = () => {
 
   const data = careerData.map((item, index) => ({
     institution: (
-      <Input
+      <InputInstitution
         placeholder="기관을 입력하세요."
         value={item.institution}
-        onChange={(e) => handleInputChange(index, "institution", e.target.value)}
+        onChange={(e) =>
+          handleInputChange(index, "institution", e.target.value)
+        }
       />
     ),
     work: (
-      <Input
+      <InputWork
         placeholder="업무를 입력하세요."
         value={item.work}
         onChange={(e) => handleInputChange(index, "work", e.target.value)}
@@ -53,20 +55,29 @@ const Career = () => {
     ),
     period: (
       <PeriodWrapper>
-        <PeriodInput
-          type="number"
-          value={item.periodValue}
-          onChange={(e) => handleInputChange(index, "periodValue", e.target.value)}
-        />
         <PeriodSelect
+          value={item.periodValue}
+          onChange={(e) =>
+            handleInputChange(index, "periodValue", e.target.value)
+          }
+        >
+          {Array.from({ length: 11 }, (_, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1}
+            </option>
+          ))}
+        </PeriodSelect>
+        <PeriodUnitSelect
           value={item.periodUnit}
-          onChange={(e) => handleInputChange(index, "periodUnit", e.target.value)}
+          onChange={(e) =>
+            handleInputChange(index, "periodUnit", e.target.value)
+          }
         >
           <option value="일">일</option>
           <option value="주">주</option>
           <option value="개월">개월</option>
           <option value="년">년</option>
-        </PeriodSelect>
+        </PeriodUnitSelect>
       </PeriodWrapper>
     ),
     startDate: (
@@ -74,7 +85,7 @@ const Career = () => {
         <DatePicker
           selected={item.startDate}
           onChange={(date) => handleDateChange(index, "startDate", date)}
-          dateFormat="yyyy년 MM월"
+          dateFormat="yyyy년 MM월 dd일"
           showMonthYearPicker
         />
       </DatePickerWrapper>
@@ -84,7 +95,7 @@ const Career = () => {
         <DatePicker
           selected={item.endDate}
           onChange={(date) => handleDateChange(index, "endDate", date)}
-          dateFormat="yyyy년 MM월"
+          dateFormat="yyyy년 MM월 dd일"
           showMonthYearPicker
         />
       </DatePickerWrapper>
@@ -95,34 +106,47 @@ const Career = () => {
     <Container>
       <Title>경력</Title>
       <CareerBox>
-      <ListStyle
-        headers={careerLabel}
-        data={data}
-        renderRow={(item) => (
-          <Row>
-            <span className="institution">{item.institution}</span>
-            <span className="work">{item.work}</span>
-            <span className="period">{item.period}</span>
-            <span className="startDate">{item.startDate}</span>
-            <span className="endDate">{item.endDate}</span>
-          </Row>
-        )}
-      />
-      <AddCareerButton onClick={() => setCareerData([...careerData, { institution: "", work: "", periodValue: 1, periodUnit: "개월", startDate: new Date(), endDate: new Date() }])}>
-        + 경력 추가
-      </AddCareerButton>
+        <ListStyle
+          headers={careerLabel}
+          data={data}
+          renderRow={(item) => (
+            <Row>
+              <span className="institution">{item.institution}</span>
+              <span className="work">{item.work}</span>
+              <span className="period">{item.period}</span>
+              <span className="startDate">{item.startDate}</span>
+              <span className="endDate">{item.endDate}</span>
+            </Row>
+          )}
+        />
+        <AddCareerButton
+          onClick={() =>
+            setCareerData([
+              ...careerData,
+              {
+                institution: "",
+                work: "",
+                periodValue: 1,
+                periodUnit: "개월",
+                startDate: new Date(),
+                endDate: new Date(),
+              },
+            ])
+          }
+        >
+          + 경력 추가
+        </AddCareerButton>
       </CareerBox>
-
     </Container>
   );
 };
 
 const CareerBox = styled.div`
-display: flex;
-align-items: center;
-//justify-content: center;
-flex-direction: column;
-`
+  display: flex;
+  align-items: center;
+  //justify-content: center;
+  flex-direction: column;
+`;
 
 const Container = styled.div`
   position: absolute;
@@ -146,13 +170,68 @@ const Row = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
+  width: 100%;
+
+  .institution,
+  .work,
+  .period,
+  .startDate,
+  .endDate {
+    flex: 1;
+    margin-right: 1rem;
+  }
+
+  .institution {
+    flex: 2;
+  }
+
+  .work {
+    flex: 2;
+  }
 `;
 
-const Input = styled.input`
-  border: 1px solid #8aa353;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  font-size: 1rem;
+const InputInstitution = styled.input`
+  /* 기관 입력 */
+
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 242px;
+  height: 43px;
+  left: 112px;
+
+  border: 1.5px solid #8aa353;
+  border-radius: 15px;
+
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #6e6e6e;
+`;
+
+const InputWork = styled.input`
+  /* 업무 입력 */
+
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 264px;
+  height: 43px;
+  left: 409px;
+
+  border: 1.5px solid #8aa353;
+  border-radius: 15px;
+
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #6e6e6e;
 `;
 
 const DatePickerWrapper = styled.div`
@@ -161,11 +240,25 @@ const DatePickerWrapper = styled.div`
   }
   .react-datepicker__input-container {
     input {
-      width: 100%;
-      border: 1px solid #8aa353;
-      border-radius: 0.25rem;
-      padding: 0.5rem;
-      font-size: 1rem;
+      box-sizing: border-box;
+
+      //position: absolute;
+      width: 176px;
+      height: 43px;
+
+      border: 1.5px solid #8aa353;
+      border-radius: 15px;
+
+      font-family: "Pretendard-Medium";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      color: #6e6e6e;
     }
   }
 `;
@@ -175,24 +268,56 @@ const PeriodWrapper = styled.div`
   align-items: center;
 `;
 
-const PeriodInput = styled.input`
-  border: 1px solid #8aa353;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  width: 4rem;
-  margin-right: 1rem;
+const PeriodSelect = styled.select`
+  //일 주 개월 년
+
+  box-sizing: border-box;
+
+  width: 83px;
+  height: 43px;
+  left: 816px;
+
+  border: 1.5px solid #8aa353;
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  overflow-y: auto; /* 스크롤을 가능하게 하기 위해 추가 */
+  max-height: 120px; /* 처음에 4개까지만 보이도록 설정 */
+
+  margin-right: 8px;
+
+  // 글씨체
+
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #6e6e6e;
 `;
 
-const PeriodSelect = styled.select`
-  border: 1px solid #8aa353;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background: white;
+const PeriodUnitSelect = styled.select`
+  box-sizing: border-box;
+  width: 83px;
+  height: 43px;
+  border: 1.5px solid #8aa353;
+  border-radius: 15px;
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #6e6e6e;
 `;
 
 const AddCareerButton = styled.button`
+  // 경력 추가 버튼
   border: 1px solid #8aa353;
   border-radius: 0.25rem;
   background: white;
