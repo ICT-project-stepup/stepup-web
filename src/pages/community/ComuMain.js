@@ -51,7 +51,7 @@ export default function ComuMain() {
     };
 
     const handleWritingClick = () => {
-        navigate("/publishJobAd");
+        navigate("/publishComuPost");
       };
 
     return(
