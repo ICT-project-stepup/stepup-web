@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
+import Calendar from "../../Calendar";
 
 const Career = () => {
   const [careerData, setCareerData] = useState([
@@ -81,24 +81,16 @@ const Career = () => {
       </PeriodWrapper>
     ),
     startDate: (
-      <DatePickerWrapper>
-        <DatePicker
-          selected={item.startDate}
-          onChange={(date) => handleDateChange(index, "startDate", date)}
-          dateFormat="yyyy년 MM월 dd일"
-          showMonthYearPicker
-        />
-      </DatePickerWrapper>
+      <Calendar
+        selectedDate={item.startDate}
+        handleDateChange={(date) => handleDateChange(index, "startDate", date)}
+      />
     ),
     endDate: (
-      <DatePickerWrapper>
-        <DatePicker
-          selected={item.endDate}
-          onChange={(date) => handleDateChange(index, "endDate", date)}
-          dateFormat="yyyy년 MM월 dd일"
-          showMonthYearPicker
-        />
-      </DatePickerWrapper>
+      <Calendar
+        selectedDate={item.endDate}
+        handleDateChange={(date) => handleDateChange(index, "endDate", date)}
+      />
     ),
   }));
 
@@ -232,35 +224,6 @@ const InputWork = styled.input`
   line-height: 24px;
 
   color: #6e6e6e;
-`;
-
-const DatePickerWrapper = styled.div`
-  .react-datepicker-wrapper {
-    width: 100%;
-  }
-  .react-datepicker__input-container {
-    input {
-      box-sizing: border-box;
-
-      //position: absolute;
-      width: 176px;
-      height: 43px;
-
-      border: 1.5px solid #8aa353;
-      border-radius: 15px;
-
-      font-family: "Pretendard-Medium";
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 24px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-
-      color: #6e6e6e;
-    }
-  }
 `;
 
 const PeriodWrapper = styled.div`

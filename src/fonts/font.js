@@ -3,6 +3,7 @@ import PretendardRegular from "./Pretendard-Regular.woff";
 import PretendardBold from "./Pretendard-Bold.woff";
 import PretendardSemiBold from "./Pretendard-SemiBold.woff";
 import PretendardMedium from "./Pretendard-Medium.woff";
+import InterMedium from "./Inter-Medium.ttf";
 
 
 export default createGlobalStyle`
@@ -33,5 +34,12 @@ export default createGlobalStyle`
         font-weight: 500;
         font-display: swap;
         src: url(${PretendardMedium}) format("woff");
+    }
+    @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(${InterMedium}) format("ttf");
     }
 `;
