@@ -38,7 +38,6 @@ const Container = styled.div`
   margin-top: 10rem;
   font-family: "Pretendard-Bold";
   font-size: 3rem;
-  color: #8aa353;
 `;
 
 const TitleWrapper = styled.div`

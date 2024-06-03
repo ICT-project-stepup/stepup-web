@@ -23,7 +23,7 @@ const ListWrapper = styled.div`
   height: auto;
   display: block;
   border-top: solid 0.2rem black;
-  border-bottom: solid 0.1rem black;
+  //border-bottom: solid 0.1rem black;
   margin-top: 1rem;
 `;
 
