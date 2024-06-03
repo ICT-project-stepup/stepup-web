@@ -103,16 +103,28 @@ const DatePickerWrapper = styled.div`
     margin: 1px; /* 간격 조정 */
   }
 
-  .react-datepicker__day--saturday {
-    color: #6698d2; /* 토요일 파란색 */
+  .react-datepicker__day:nth-child(7) {
+    color: #6698d2; /* 토요일 날짜 파란색 */
   }
 
-  .react-datepicker__day--sunday {
-    color: #d66f6f; /* 일요일 빨간색 */
+  .react-datepicker__day:nth-child(1) {
+    color: #d66f6f; /* 일요일 날짜 빨간색 */
+  }
+
+  .react-datepicker__day-name:nth-child(1) {
+    color: #d66f6f; /* 일요일 이름 빨간색 */
+  }
+
+  .react-datepicker__day-name:nth-child(7) {
+    color: #6698d2; /* 토요일 이름 빨간색 */
   }
 
   .react-datepicker__day--today {
     color: #8aa353;
+  }
+
+  .react-datepicker__day--outside-month {
+    visibility: hidden; /* 다음달과 이전달 날짜 숨기기 */
   }
 `;
 
