@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import JobAdList from './JobAdList';
-import Pagination from "react-js-pagination";
+import CustomPagination from '../../components/CustomPagination';
 
 
 const postData = [
@@ -88,10 +88,9 @@ export default function Main() {
     const [activePage, setActivePage] = useState(1);
 
     /* 페이지네이션에 필요한 변수들 */
-    const itemsPerPage = 7;
     const totalItemsCount = postData.length;
-    const indexOfLastPost = activePage * itemsPerPage;
-    const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+    const indexOfLastPost = activePage * 7;
+    const indexOfFirstPost = indexOfLastPost - 7;
     const currentPosts = postData.slice(indexOfFirstPost, indexOfLastPost);
 
     const toggleListMode = () => {
@@ -155,18 +154,11 @@ export default function Main() {
                         <span className="state">현황</span>
                     </ListTitle>
                     {currentPosts.map((postInfo, index) => ( <JobAdList key={index} postInfo={postInfo} /> ))}
-                    <PaginationWrapper>
-                        <Pagination
-                            activePage={activePage}
-                            itemsCountPerPage={itemsPerPage}
-                            totalItemsCount={totalItemsCount}
-                            pageRangeDisplayed={5}
-                            onChange={handlePageChange}
-                            prevPageText={<PageText style={{ opacity: activePage === 1 ? 0 : 1 }}>이전</PageText>}
-                            nextPageText={<PageText style={{ opacity: activePage === Math.ceil(totalItemsCount / itemsPerPage) ? 0 : 1 }}>다음</PageText>}
-                            hideFirstLastPages
-                        />
-                    </PaginationWrapper>
+                    <CustomPagination
+                        activePage={activePage}
+                        totalItemsCount={totalItemsCount}
+                        handlePageChange={handlePageChange}
+                    />
                 </JobAdListWrapper>
             ) : (
                 <MapWrapper>
@@ -258,52 +250,3 @@ const MapWrapper = styled.div`
     height: 45%;
     borderRadius: 2rem;
 `;
-
-const PaginationWrapper = styled.div`
-    margin: 3rem 0;
-    font-family: Pretendard-Regular;
-    font-size: 1.5rem;
-
-    .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    
-    ul.pagination li {
-        width: 3.5rem;
-        height: 2.8rem;
-        border: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #6E6E6E;
-    }
-    
-    ul.pagination li a {
-        text-decoration: none;
-        background-color: none;
-        padding: 0.55rem 1.1rem;
-        border-radius: 0.75rem;
-        color: #6E6E6E;
-    }
-    
-    ul.pagination li.active a {
-        color: white;
-        background-color: #8AA353;
-    }
-`;
-
-const PageText = styled.div`
-    width: 4rem;
-    display: flex;
-    justify-content: center;
-    pading: 0;
-    font-size: 1.188rem;
-`;
-

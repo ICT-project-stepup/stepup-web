@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
+import { Link } from 'react-router-dom';
 
 
 export default function JobAdList({ postInfo }) {
     return(
-        <PostListWrapper postState={postInfo.postState}>
+        <PostListWrapper postState={postInfo.postState} to="/JobAdDetail">
             <span className="area">{postInfo.area}</span>
             <span className="title">{postInfo.postTitle}</span>
             <div className="salary">
@@ -21,15 +22,17 @@ export default function JobAdList({ postInfo }) {
     );
 };
 
-const PostListWrapper = styled.div`
+const PostListWrapper = styled(Link)`
     width: 100%;
     height: 4.2rem;
     border-bottom: solid 0.1rem #6E6E6E;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    text-decoration: none;
     font-family: "Pretendard-Regular";
     font-size: 1.5rem;
+    color: black;
 
     .area,
     .date {
