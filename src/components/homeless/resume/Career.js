@@ -6,7 +6,6 @@ import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import { ReactComponent as DownArrowIcon } from "../../../icons/DownArrowIcon.svg";
 
-
 const Career = () => {
   const [careerData, setCareerData] = useState([
     {
@@ -69,7 +68,6 @@ const Career = () => {
               {i + 1}
             </option>
           ))}
-          <DownArrowIcon />
         </PeriodSelect>
         <PeriodUnitSelect
           value={item.periodUnit}
@@ -81,7 +79,6 @@ const Career = () => {
           <option value="주">주</option>
           <option value="개월">개월</option>
           <option value="년">년</option>
-          <DownArrowIcon />
         </PeriodUnitSelect>
       </PeriodWrapper>
     ),
@@ -108,11 +105,11 @@ const Career = () => {
           data={data}
           renderRow={(item) => (
             <Row>
-              <span className="institution">{item.institution}</span>
-              <span className="work">{item.work}</span>
-              <span className="period">{item.period}</span>
-              <span className="startDate">{item.startDate}</span>
-              <span className="endDate">{item.endDate}</span>
+              <div className="institution">{item.institution}</div>
+              <div className="work">{item.work}</div>
+              <div className="period">{item.period}</div>
+              <div className="startDate">{item.startDate}</div>
+              <div className="endDate">{item.endDate}</div>
             </Row>
           )}
         />
@@ -142,7 +139,6 @@ const Career = () => {
 const CareerBox = styled.div`
   display: flex;
   align-items: center;
-  //justify-content: center;
   flex-direction: column;
 `;
 
@@ -166,51 +162,43 @@ const Title = styled.h2`
 
 const Row = styled.div`
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 
-  .institution,
-  .work,
-  .period,
-  .startDate,
-  .endDate,
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+  }
 `;
 
 const InputInstitution = styled.input`
-  /* 기관 입력 */
-
   box-sizing: border-box;
-
   width: 242px;
   height: 43px;
-
   border: 1.5px solid #8aa353;
   border-radius: 15px;
-
   font-family: "Pretendard-Medium";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
-
   color: #6e6e6e;
 `;
 
 const InputWork = styled.input`
-  /* 업무 입력 */
-
   box-sizing: border-box;
-
-  width: 264px;
+  width: 242px;
   height: 43px;
-
   border: 1.5px solid #8aa353;
   border-radius: 15px;
-
   font-family: "Pretendard-Medium";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
-
   color: #6e6e6e;
 `;
 
@@ -220,33 +208,22 @@ const PeriodWrapper = styled.div`
 `;
 
 const PeriodSelect = styled.select`
-  //일 주 개월 년
-
   box-sizing: border-box;
-
   width: 83px;
   height: 43px;
-  left: 816px;
-
   border: 1.5px solid #8aa353;
   border-radius: 15px;
-
   display: flex;
   align-items: center;
   text-align: center;
-  overflow-y: auto; /* 스크롤을 가능하게 하기 위해 추가 */
-  max-height: 120px; /* 처음에 4개까지만 보이도록 설정 */
-
+  overflow-y: auto;
+  max-height: 120px;
   margin-right: 8px;
-
-  // 글씨체
-
   font-family: "Pretendard-Medium";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
-
   color: #6e6e6e;
 `;
 
@@ -268,12 +245,9 @@ const PeriodUnitSelect = styled.select`
 `;
 
 const AddCareerButton = styled.button`
-  // 경력 추가 버튼
-
-  width: 75px;
-  height: 24px;
-  
-  font-family: 'Pretendard-Medium';
+  width: 189px;
+  height: 43px;
+  font-family: "Pretendard-Medium";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -281,28 +255,18 @@ const AddCareerButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  color: #6E6E6E;
-  background-color: #FFFFFF;
-  
-  
-
-cursor: pointer;
-
-
-box-sizing: border-box;
-
-width: 189px;
-height: 43px;
-
-border: 1.5px dashed #8AA353;
-border-radius: 15px;
-margin-top: 1rem;
-
+  color: #6e6e6e;
+  background-color: #ffffff;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1.5px dashed #8aa353;
+  border-radius: 15px;
+  margin-top: 1rem;
+  padding-right: 20px;
 `;
 
 const StyledAddIcon = styled(AddIcon)`
-margin: 10px;
-`
+  margin: 10px;
+`;
 
 export default Career;
