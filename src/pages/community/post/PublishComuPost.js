@@ -160,8 +160,6 @@ const SearchInput = styled.input`
     background-color: #F5F5F5;
     &:focus {
         outline: none;
-        display: flex;
-        justify-contnet: center;
         color: black;
 `;
 
