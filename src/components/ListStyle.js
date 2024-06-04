@@ -23,7 +23,6 @@ const ListWrapper = styled.div`
   height: auto;
   display: block;
   border-top: solid 0.2rem black;
-  //border-bottom: solid 0.1rem black;
   margin-top: 1rem;
 `;
 
@@ -37,63 +36,97 @@ const ListHeader = styled.div`
   font-size: 1.5rem;
   border-bottom: solid 0.1rem black;
 
-  span {
+  .institution,
+  .startDate,
+  .endDate {
+    width: 20rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .institution,
-  .date,
-  .state {
-    width: 12rem;
+  .period {
+    width: 40rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
+  .startDate,
+  .endDate {
+    width: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .work {
     width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Pretendard-SemiBold";
   }
 
+  .institution,
+  .work,
   .period,
-  .time {
-    width: 15rem;
+  .startDate,
+  .endDate {
+    display: flex;
+    justify-content: center;
+    width: 30%; /* 각 열의 너비를 줄임 */
   }
 `;
 
 const ListItem = styled.div`
   width: 100%;
   height: 4.2rem;
-  border-bottom: solid 0.1rem black;
+  border-bottom: solid 0.1rem #6e6e6e;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-decoration: none;
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
+  color: black;
 
-  span {
+  .institution,
+  .startDate,
+  .endDate {
+    width: 20rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .institution,
-  .date {
-    width: 12rem;
-  }
-
-  .state {
-    width: 12rem;
-    font-family: "Pretendard-SemiBold";
-    color: ${({ postState }) => (postState === "모집 중" ? "#6698D2" : "#D66F6F")};
-  }
-
-  .work,
-  .time {
-    width: 15rem;
-  }
-
   .period {
+    width: 40rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .startDate,
+  .endDate {
+    width: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .work {
     width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: "Pretendard-SemiBold";
+  }
+
+  .institution,
+  .work,
+  .period,
+  .startDate,
+  .endDate {
+    display: flex;
+    justify-content: center;
+    width: 30%; /* 각 열의 너비를 줄임 */
   }
 `;
 
