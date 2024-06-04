@@ -3,6 +3,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 import ko from "date-fns/locale/ko"; // 한국어 로케일 임포트
+import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 
 // 한국어 로케일 등록
 registerLocale("ko", ko);
@@ -16,6 +17,7 @@ const Calendar = ({ selectedDate, handleDateChange }) => {
         dateFormat="yyyy년 MM월 dd일"
         locale="ko" // 로케일 설정
       />
+      <CalendarIcon />
     </DatePickerWrapper>
   );
 };
@@ -37,6 +39,8 @@ const DatePickerWrapper = styled.div`
 
   .react-datepicker__input-container {
     input {
+      // 날짜 박스
+
       box-sizing: border-box;
       width: 176px;
       height: 43px;
@@ -48,7 +52,7 @@ const DatePickerWrapper = styled.div`
       font-size: 20px;
       line-height: 24px;
       display: flex;
-      align-items: center;
+      //align-items: center;
       text-align: center;
       color: #6e6e6e;
     }
@@ -60,7 +64,6 @@ const DatePickerWrapper = styled.div`
     font-weight: 600;
     font-size: 19px;
     line-height: 23px;
-    align-items: center;
     color: #8aa353;
   }
 
