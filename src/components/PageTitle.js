@@ -12,7 +12,7 @@ export default function PageTitle( {text} ) {
 const Title = styled.div`
     box-sizing: border-box;
     position: absolute;
-    width: 12.3125rem;
+    width: 15rem;
     height: 2.375rem;
     background: #ffffff;
     border-left: 0.125rem solid #2b2b2b;

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 
-export default function RoundGreenBtn({
+export default function RoundWhiteBtn({
     text,
     style,
     onClick,
