@@ -3,6 +3,9 @@ import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
 import Calendar from "../../Calendar";
+import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
+import { ReactComponent as DownArrowIcon } from "../../../icons/DownArrowIcon.svg";
+
 
 const Career = () => {
   const [careerData, setCareerData] = useState([
@@ -39,7 +42,7 @@ const Career = () => {
   const data = careerData.map((item, index) => ({
     institution: (
       <InputInstitution
-        placeholder="기관을 입력하세요."
+        placeholder="입력하세요."
         value={item.institution}
         onChange={(e) =>
           handleInputChange(index, "institution", e.target.value)
@@ -48,7 +51,7 @@ const Career = () => {
     ),
     work: (
       <InputWork
-        placeholder="업무를 입력하세요."
+        placeholder="입력하세요."
         value={item.work}
         onChange={(e) => handleInputChange(index, "work", e.target.value)}
       />
@@ -66,6 +69,7 @@ const Career = () => {
               {i + 1}
             </option>
           ))}
+          <DownArrowIcon />
         </PeriodSelect>
         <PeriodUnitSelect
           value={item.periodUnit}
@@ -77,6 +81,7 @@ const Career = () => {
           <option value="주">주</option>
           <option value="개월">개월</option>
           <option value="년">년</option>
+          <DownArrowIcon />
         </PeriodUnitSelect>
       </PeriodWrapper>
     ),
@@ -126,7 +131,8 @@ const Career = () => {
             ])
           }
         >
-          + 경력 추가
+          <StyledAddIcon />
+          경력 추가
         </AddCareerButton>
       </CareerBox>
     </Container>
@@ -160,26 +166,12 @@ const Title = styled.h2`
 
 const Row = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 1rem 0;
-  width: 100%;
 
   .institution,
   .work,
   .period,
   .startDate,
-  .endDate {
-    flex: 1;
-    margin-right: 1rem;
-  }
-
-  .institution {
-    flex: 2;
-  }
-
-  .work {
-    flex: 2;
-  }
+  .endDate,
 `;
 
 const InputInstitution = styled.input`
@@ -187,10 +179,8 @@ const InputInstitution = styled.input`
 
   box-sizing: border-box;
 
-  position: absolute;
   width: 242px;
   height: 43px;
-  left: 112px;
 
   border: 1.5px solid #8aa353;
   border-radius: 15px;
@@ -209,10 +199,8 @@ const InputWork = styled.input`
 
   box-sizing: border-box;
 
-  position: absolute;
   width: 264px;
   height: 43px;
-  left: 409px;
 
   border: 1.5px solid #8aa353;
   border-radius: 15px;
@@ -281,20 +269,40 @@ const PeriodUnitSelect = styled.select`
 
 const AddCareerButton = styled.button`
   // 경력 추가 버튼
-  border: 1px solid #8aa353;
-  border-radius: 0.25rem;
-  background: white;
-  color: #8aa353;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin-bottom: 2rem;
-  margin-top: 1rem;
 
-  &:hover {
-    background: #8aa353;
-    color: white;
-  }
+  width: 75px;
+  height: 24px;
+  
+  font-family: 'Pretendard-Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: #6E6E6E;
+  background-color: #FFFFFF;
+  
+  
+
+cursor: pointer;
+
+
+box-sizing: border-box;
+
+width: 189px;
+height: 43px;
+
+border: 1.5px dashed #8AA353;
+border-radius: 15px;
+margin-top: 1rem;
+
 `;
+
+const StyledAddIcon = styled(AddIcon)`
+margin: 10px;
+`
 
 export default Career;

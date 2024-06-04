@@ -3,6 +3,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 import ko from "date-fns/locale/ko"; // 한국어 로케일 임포트
+import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 
 // 한국어 로케일 등록
 registerLocale("ko", ko);
@@ -16,6 +17,7 @@ const Calendar = ({ selectedDate, handleDateChange }) => {
         dateFormat="yyyy년 MM월 dd일"
         locale="ko" // 로케일 설정
       />
+      <CalendarIcon />
     </DatePickerWrapper>
   );
 };
@@ -37,6 +39,8 @@ const DatePickerWrapper = styled.div`
 
   .react-datepicker__input-container {
     input {
+      // 날짜 박스
+
       box-sizing: border-box;
       width: 176px;
       height: 43px;
@@ -48,7 +52,7 @@ const DatePickerWrapper = styled.div`
       font-size: 20px;
       line-height: 24px;
       display: flex;
-      align-items: center;
+      //align-items: center;
       text-align: center;
       color: #6e6e6e;
     }
@@ -60,7 +64,6 @@ const DatePickerWrapper = styled.div`
     font-weight: 600;
     font-size: 19px;
     line-height: 23px;
-    align-items: center;
     color: #8aa353;
   }
 
@@ -103,16 +106,28 @@ const DatePickerWrapper = styled.div`
     margin: 1px; /* 간격 조정 */
   }
 
-  .react-datepicker__day--saturday {
-    color: #6698d2; /* 토요일 파란색 */
+  .react-datepicker__day:nth-child(7) {
+    color: #6698d2; /* 토요일 날짜 파란색 */
   }
 
-  .react-datepicker__day--sunday {
-    color: #d66f6f; /* 일요일 빨간색 */
+  .react-datepicker__day:nth-child(1) {
+    color: #d66f6f; /* 일요일 날짜 빨간색 */
+  }
+
+  .react-datepicker__day-name:nth-child(1) {
+    color: #d66f6f; /* 일요일 이름 빨간색 */
+  }
+
+  .react-datepicker__day-name:nth-child(7) {
+    color: #6698d2; /* 토요일 이름 빨간색 */
   }
 
   .react-datepicker__day--today {
     color: #8aa353;
+  }
+
+  .react-datepicker__day--outside-month {
+    visibility: hidden; /* 다음달과 이전달 날짜 숨기기 */
   }
 `;
 
