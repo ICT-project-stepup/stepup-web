@@ -3,6 +3,8 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 import ko from "date-fns/locale/ko"; // 한국어 로케일 임포트
+import { ReactComponent as LeftArrowIcon } from "../icons/LeftArrowIcon.svg";
+import { ReactComponent as RightArrowIcon } from "../icons/RightArrowIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 
 // 한국어 로케일 등록
@@ -11,16 +13,54 @@ registerLocale("ko", ko);
 const Calendar = ({ selectedDate, handleDateChange }) => {
   return (
     <DatePickerWrapper>
-      <StyledDatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
-        dateFormat="yyyy년 MM월 dd일"
-        locale="ko" // 로케일 설정
-      />
-      <CalendarIcon />
+      <DatePickerContainer>
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          dateFormat="yyyy년 MM월 dd일"
+          locale="ko" // 로케일 설정
+          renderCustomHeader={({
+            date,
+            decreaseMonth,
+            increaseMonth,
+            prevMonthButtonDisabled,
+            nextMonthButtonDisabled,
+          }) => (
+            <div className="custom-header">
+              <button
+                className="icon-button"
+                onClick={decreaseMonth}
+                disabled={prevMonthButtonDisabled}
+              >
+                <LeftArrowIcon />
+              </button>
+              <span className="current-month">
+                {date.getFullYear()}년 {date.getMonth() + 1}월
+              </span>
+              <button
+                className="icon-button"
+                onClick={increaseMonth}
+                disabled={nextMonthButtonDisabled}
+              >
+                <RightArrowIcon />
+              </button>
+            </div>
+          )}
+        />
+
+        <CalendarIconWrapper>
+          <CalendarIcon />
+        </CalendarIconWrapper>
+      </DatePickerContainer>
     </DatePickerWrapper>
   );
 };
+
+const DatePickerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
 
 const DatePickerWrapper = styled.div`
   .react-datepicker {
@@ -30,19 +70,25 @@ const DatePickerWrapper = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .react-datepicker__header {
     background: #f5f5f5;
     border-bottom: none;
+    padding: 10px;
   }
 
   .react-datepicker__input-container {
+    display: flex;
+    align-items: center;
+
     input {
       // 날짜 박스
-
       box-sizing: border-box;
-      width: 176px;
+      width: 210px;
       height: 43px;
       border: 1.5px solid #8aa353;
       border-radius: 15px;
@@ -51,10 +97,12 @@ const DatePickerWrapper = styled.div`
       font-weight: 500;
       font-size: 20px;
       line-height: 24px;
-      display: flex;
-      //align-items: center;
       text-align: center;
       color: #6e6e6e;
+      padding-right: 40px; // 아이콘 공간 확보
+      padding-left: 10px;
+
+      cursor: pointer;
     }
   }
 
@@ -72,38 +120,18 @@ const DatePickerWrapper = styled.div`
     border-radius: 10px;
     width: 63px;
     height: 35px;
+    align-items: center;
   }
 
-  .react-datepicker__day {
-    font-family: "Inter-Medium";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19.36px;
-    text-align: center;
-    text-transform: uppercase;
-    color: #6e6e6e;
-
-    width: 36px; /* 크기 조정 */
-    height: 36px; /* 크기 조정 */
-
-    margin: 1px; /* 간격 조정 */
-  }
-
+  .react-datepicker__day,
   .react-datepicker__day-name {
     font-family: "Inter-Medium";
-    font-style: normal;
     font-weight: 500;
-    font-size: 15px;
-    line-height: 18px;
+    font-size: 16px;
     text-align: center;
-    text-transform: uppercase;
-
     color: #6e6e6e;
-
-    width: 36px; /* 크기 조정 */
-    height: 36px; /* 크기 조정 */
-    margin: 1px; /* 간격 조정 */
+    width: 47px;
+    height: 28px;
   }
 
   .react-datepicker__day:nth-child(7) {
@@ -129,27 +157,42 @@ const DatePickerWrapper = styled.div`
   .react-datepicker__day--outside-month {
     visibility: hidden; /* 다음달과 이전달 날짜 숨기기 */
   }
+
+  .custom-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .custom-header .icon-button {
+    // 화살표 버튼
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .custom-header .current-month {
+    font-family: "Pretendard-SemiBold";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 23px;
+    margin-top: 10px;
+    color: #8aa353;
+    padding-bottom: 10px;
+
+  }
 `;
 
-const StyledDatePicker = styled(DatePicker)`
-  .react-datepicker__input-container input {
-    box-sizing: border-box;
-    width: 176px;
-    height: 43px;
-    left: 942px;
-    top: 949px;
-    border: 1.5px solid #8aa353;
-    border-radius: 15px;
-    font-family: "Pretendard-Medium";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #6e6e6e;
-  }
+const CalendarIconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  right: 7px;
 `;
 
 export default Calendar;
