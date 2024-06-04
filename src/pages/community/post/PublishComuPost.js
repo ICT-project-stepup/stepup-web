@@ -43,7 +43,7 @@ export default function PublishComuPost() {
                             width: "15rem", height: "4.1rem",
                             fontFamily: "Pretendard-SemiBold",
                             fontSize: "1.75rem",
-                            border: "0.15rem solid #AFBFA5"
+                            border: "0.15rem solid #8AA353"
                         }}
                     />
                 </PostingBtn>
@@ -83,6 +83,7 @@ const PostTitleInput = styled.input`
     font-family: Pretendard-SemiBold;
     font-size: 2.25rem;
     border: none;
+    color: #8AA353;
 
     &::placeholder {
         color: #8AA353;
@@ -98,11 +99,11 @@ const PostContentInput = styled.textarea`
     height: 12rem;
     font-family: Pretendard-Medium;
     font-size: 1.5rem;
-    color: #6E6E6E;
     border-top: 0.15rem solid #AFBFA5;
     border-bottom: 0.15rem solid #AFBFA5;
     border-left: none;
     border-right: none;
+    color: #2B2B2B;
     padding: 1.5rem 0;
 
     &::placeholder {
@@ -166,7 +167,7 @@ const SearchInput = styled.input`
 
 const PostingBtn = styled.div`
     width: 100%;
-    height: 12rem;
+    height: 13rem;
     display: flex;
     justify-content: center;
     align-items: center;
