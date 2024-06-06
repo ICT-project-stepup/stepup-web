@@ -11,7 +11,7 @@ const comuPosts = [
     {
         area: "경남 창녕군",
         comuTitle: "마늘 같이 뽑으러 가실 분~~",
-        comuWriter: "홍대익",
+        comuWriter: "홍익인간",
         NumOfComment: "5",
         NumOfView: "67",
         comuDate: "2024.05.17",
