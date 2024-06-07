@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
-import Select from "react-select";
+import CustomSelect from "../../CustomSelect";
 
 const Career = () => {
   const [careerData, setCareerData] = useState([
@@ -51,63 +51,6 @@ const Career = () => {
     { value: "년", label: "년" },
   ];
 
-  const customStyles = {
-    control: (provided) => ({
-      // 드롭다운의 기본 컨테이너 스타일
-      ...provided, // react-select가 기본 제공하는 스타일 포함
-      width: 83,
-      height: 43,
-      border: "1.5px solid #8AA353",
-      borderRadius: 15,
-      fontFamily: "Pretendard-Medium",
-      fontSize: "20px",
-      lineHeight: "24px",
-      color: "#6E6E6E",
-    }),
-
-    menu: (provided) => ({
-      // 드롭다운의 메뉴 스타일
-      ...provided,
-      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-      borderRadius: 15,
-      backgroundColor: "#F5F5F5",
-      fontFamily: "Pretendard-Regular",
-      fontSize: "20px",
-    }),
-
-    option: (provided, state) => ({
-      // 각 옵션의 스타일
-      ...provided,
-      color: state.isSelected ? "#000000" : "#6E6E6E", // 현재 옵션이 선택되었는지에 따라 색상 변경
-      backgroundColor: state.isSelected ? "#AFBFA540" : "#F5F5F5", // 옵션이 선택되었는지에 따라 배경 색상 변경
-    }),
-
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#6E6E6E", // 선택된 항목의 텍스트 색상
-    }),
-
-    dropdownIndicator: (provided) => ({
-      ...provided,
-      padding: 0,
-      color: "#8AA353", // 커스텀 화살표 색상
-      "> svg": {
-        width: 30,
-        height: 20,
-      },
-    }),
-
-    indicatorSeparator: () => ({
-      display: "none", // 기본으로 있던 작대기 없애기
-    }),
-
-    menuList: (provided) => ({
-      ...provided,
-      maxHeight: 160, // 4까지만 보이도록
-      overflowY: "auto", // 스크롤 추가
-    }),
-  };
-
   const data = careerData.map((item, index) => ({
     institution: (
       <InputInstitution
@@ -129,8 +72,7 @@ const Career = () => {
 
     period: (
       <PeriodWrapper>
-        <Select
-          styles={customStyles}
+        <CustomSelect
           value={periodOptions.find(
             (option) => option.value === item.periodValue
           )}
@@ -140,8 +82,7 @@ const Career = () => {
           options={periodOptions}
           placeholder=""
         />
-        <Select
-          styles={customStyles}
+        <CustomSelect
           value={periodUnitOptions.find(
             (option) => option.value === item.periodUnit
           )}
