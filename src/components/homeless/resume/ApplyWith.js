@@ -46,11 +46,11 @@ const ApplyWith = () => {
   return (
     <Container>
       <Header>
-
-      <Title>같이 지원하기</Title>
-      <Description>
-        같이 지원하고 싶은 사람이 있다면, 아이디와 이름을 적어서 같이 지원해보아요.
-      </Description>
+        <Title>같이 지원하기</Title>
+        <Description>
+          같이 지원하고 싶은 사람이 있다면, 아이디와 이름을 적어서 같이
+          지원해보아요.
+        </Description>
       </Header>
       <ApplyWithBox>
         <ListStyle
@@ -88,7 +88,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-`
+`;
 
 const ApplyWithBox = styled.div`
   display: flex;
@@ -97,7 +97,7 @@ const ApplyWithBox = styled.div`
 `;
 
 const Container = styled.div`
-    position: relative;
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;

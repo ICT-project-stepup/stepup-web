@@ -18,7 +18,7 @@ const SelfIntroduction = () => {
 };
 
 const Container = styled.div`
-    position: relative;
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@ const StyledTextarea = styled.textarea`
   background: ${(props) => (props.isFocused ? "#E4ECD1" : "#D9D9D9")};
   border: 1px solid #dcdcdc;
   font-family: "Pretendard-Medium";
-  color: #6E6E6E;
+  color: #6e6e6e;
   resize: none; // 크기 고정
 `;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
-import RoundGreenBtn from "../../buttons/RoundWhiteBtn";
+import RoundGreenBtn from "../../buttons/RoundGreenBtn";
 import { useNavigate } from "react-router-dom";
 
 const ProfileInfo = ({ profileData }) => {
@@ -161,9 +161,6 @@ const BtnContainer = styled.div`
 const btnStyle = {
   width: "11.5rem",
   height: "2.75rem",
-  cursor: "pointer",
-  background: "#8aa353",
-  color: "#ffffff",
 };
 
 export default ProfileInfo;
