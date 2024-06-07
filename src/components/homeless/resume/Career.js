@@ -4,17 +4,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
-import { ReactComponent as DownArrowIcon } from "../../../icons/DownArrowIcon.svg";
+import CustomSelect from "../../CustomSelect";
 
 const Career = () => {
   const [careerData, setCareerData] = useState([
     {
       institution: "",
       work: "",
-      periodValue: 1,
-      periodUnit: "개월",
-      startDate: new Date(),
-      endDate: new Date(),
+      periodValue: "",
+      periodUnit: "",
+      startDate: null,
+      endDate: null,
     },
   ]);
 
@@ -38,6 +38,19 @@ const Career = () => {
     setCareerData(newCareerData);
   };
 
+  const periodOptions = Array.from({ length: 11 }, (_, i) => ({
+    // 1부터 11까지
+    value: i + 1,
+    label: `${i + 1}`,
+  }));
+
+  const periodUnitOptions = [
+    { value: "일", label: "일" },
+    { value: "주", label: "주" },
+    { value: "개월", label: "개월" },
+    { value: "년", label: "년" },
+  ];
+
   const data = careerData.map((item, index) => ({
     institution: (
       <InputInstitution
@@ -48,6 +61,7 @@ const Career = () => {
         }
       />
     ),
+
     work: (
       <InputWork
         placeholder="입력하세요."
@@ -55,39 +69,39 @@ const Career = () => {
         onChange={(e) => handleInputChange(index, "work", e.target.value)}
       />
     ),
+
     period: (
       <PeriodWrapper>
-        <PeriodSelect
-          value={item.periodValue}
-          onChange={(e) =>
-            handleInputChange(index, "periodValue", e.target.value)
+        <CustomSelect
+          value={periodOptions.find(
+            (option) => option.value === item.periodValue
+          )}
+          onChange={(selectedOption) =>
+            handleInputChange(index, "periodValue", selectedOption.value)
           }
-        >
-          {Array.from({ length: 11 }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {i + 1}
-            </option>
-          ))}
-        </PeriodSelect>
-        <PeriodUnitSelect
-          value={item.periodUnit}
-          onChange={(e) =>
-            handleInputChange(index, "periodUnit", e.target.value)
+          options={periodOptions}
+          placeholder=""
+        />
+        <CustomSelect
+          value={periodUnitOptions.find(
+            (option) => option.value === item.periodUnit
+          )}
+          onChange={(selectedOption) =>
+            handleInputChange(index, "periodUnit", selectedOption.value)
           }
-        >
-          <option value="일">일</option>
-          <option value="주">주</option>
-          <option value="개월">개월</option>
-          <option value="년">년</option>
-        </PeriodUnitSelect>
+          options={periodUnitOptions}
+          placeholder=""
+        />
       </PeriodWrapper>
     ),
+
     startDate: (
       <Calendar
         selectedDate={item.startDate}
         handleDateChange={(date) => handleDateChange(index, "startDate", date)}
       />
     ),
+
     endDate: (
       <Calendar
         selectedDate={item.endDate}
@@ -120,10 +134,10 @@ const Career = () => {
               {
                 institution: "",
                 work: "",
-                periodValue: 1,
-                periodUnit: "개월",
-                startDate: new Date(),
-                endDate: new Date(),
+                periodValue: "",
+                periodUnit: "",
+                startDate: null,
+                endDate: null,
               },
             ])
           }
@@ -186,6 +200,11 @@ const InputInstitution = styled.input`
   font-size: 20px;
   line-height: 24px;
   color: #6e6e6e;
+
+  &::placeholder {
+    color: #8aa353;
+    font-size: 16px;
+  }
 `;
 
 const InputWork = styled.input`
@@ -200,48 +219,17 @@ const InputWork = styled.input`
   font-size: 20px;
   line-height: 24px;
   color: #6e6e6e;
+
+  &::placeholder {
+    // 입력시 글씨크기와 색상 바뀜
+    color: #8aa353;
+    font-size: 16px;
+  }
 `;
 
 const PeriodWrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const PeriodSelect = styled.select`
-  box-sizing: border-box;
-  width: 83px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  overflow-y: auto;
-  max-height: 120px;
-  margin-right: 8px;
-  font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  color: #6e6e6e;
-`;
-
-const PeriodUnitSelect = styled.select`
-  box-sizing: border-box;
-  width: 83px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
-  font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #6e6e6e;
 `;
 
 const AddCareerButton = styled.button`

@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const SelfIntroduction = () => {
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <Container>
       <Title>자기소개</Title>
-      <Textarea placeholder="입력하세요." />
+      <StyledTextarea
+        placeholder="입력하세요."
+        onFocus={() => setIsFocused(true)}
+        onBlur={(e) => setIsFocused(e.target.value.length > 0)}
+        isFocused={isFocused}
+      />
     </Container>
   );
 };
 
 const Container = styled.div`
-position: absolute;
-top: 74rem;
-left: 5.3125rem;
+  position: relative;
+  margin-top: 45rem;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  left: 5.3125rem;
 `;
 
 const Title = styled.h2`
@@ -28,13 +37,18 @@ const Title = styled.h2`
   margin-bottom: 1rem;
 `;
 
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 8rem;
+const StyledTextarea = styled.textarea`
+  box-sizing: border-box;
+  width: 1270px;
+  height: 160px;
+  border-radius: 20px;
+  padding: 1rem;
+  font-size: 22px;
+  background: ${(props) => (props.isFocused ? "#E4ECD1" : "#D9D9D9")};
   border: 1px solid #dcdcdc;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  font-size: 1rem;
+  font-family: "Pretendard-Medium";
+  color: #6E6E6E;
+  resize: none; // 크기 고정
 `;
 
 export default SelfIntroduction;
