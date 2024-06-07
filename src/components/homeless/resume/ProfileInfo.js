@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
-import RoundGreenBtn from "../../buttons/RoundWhiteBtn";
+import RoundGreenBtn from "../../buttons/RoundGreenBtn";
 import { useNavigate } from "react-router-dom";
 
 const ProfileInfo = ({ profileData }) => {
@@ -17,12 +17,14 @@ const ProfileInfo = ({ profileData }) => {
 
   return (
     <Container>
-      <Title>기본 정보</Title>
+      <Header>
+        <Title>기본 정보</Title>
 
-      <Description>
-        아래의 정보가 맞는지 확인해주세요. 다르다면 아래의
-        <Highlight> 내 정보 수정</Highlight> 버튼을 눌러주세요.
-      </Description>
+        <Description>
+          아래의 정보가 맞는지 확인해주세요. 다르다면 아래의
+          <Highlight> 내 정보 수정</Highlight> 버튼을 눌러주세요.
+        </Description>
+      </Header>
 
       <InformBox>
         <InfoWrapper>
@@ -51,6 +53,12 @@ const ProfileInfo = ({ profileData }) => {
   );
 };
 
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
+
 const InfoWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -58,13 +66,11 @@ const InfoWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  position: absolute;
-  top: 18rem;
-  left: 5.3125rem;
-  //align-items: center;
-  //margin-bottom: 2rem;
-  //width: 100%;
-  //margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
 `;
 
 const Title = styled.div`
@@ -162,9 +168,6 @@ const BtnContainer = styled.div`
 const btnStyle = {
   width: "11.5rem",
   height: "2.75rem",
-  cursor: "pointer",
-  background: "#8aa353",
-  color: "#ffffff",
 };
 
 export default ProfileInfo;
