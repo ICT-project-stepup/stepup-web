@@ -26,14 +26,18 @@ export default function SignIn() {
       </SubTitleWrapper>
       <ButtonBox>
         <SignInBox onClick={handleFarmSignInClick}>
-          <SubText>구직을 원하는</SubText>
-          <StyledFarm />
-          구직자
+          <SubText>구인을 원하는</SubText>
+          <SubBox>
+            <StyledFarm />
+            <TypeText>구인자</TypeText>
+          </SubBox>
         </SignInBox>
         <SignInBox onClick={handleHmlsSignInClick}>
-          <SubText>구인을 원하는</SubText>
-          <StyledHmls />
-          구인자
+          <SubText>구직을 원하는</SubText>
+          <SubBox>
+            <StyledHmls />
+            <TypeText>구직자</TypeText>
+          </SubBox>
         </SignInBox>
       </ButtonBox>
     </Container>
@@ -57,12 +61,12 @@ const SubTitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2.125rem;
+  margin-top: 4.5rem;
 `;
 
 const ButtonBox = styled.div`
   display: flex;
-  margin-top: 17.1875rem;
+  margin-top: 8.5625rem;
   flex-direction: row;
   justify-content: center;
 `;
@@ -76,27 +80,41 @@ const SignInBox = styled.button`
   border-radius: 2.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-right: 3.125rem;
+  margin-right: 4.125rem;
   background-color: white;
   cursor: pointer;
-  font-family: "Pretendard-Medium";
-  font-size: 2.25rem;
-  line-height: 2.6875rem;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #6e6e6e;
 `;
 
 const SubText = styled.div`
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
+  color: #6e6e6e;
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 `;
-const StyledFarm = styled(FarmIcon)`
-  margin-bottom: 0.625rem;
+
+const SubBox = styled.div`
+  display: flex;
+  align-items: row;
+  margin-left: 1.25rem;
+  margin-right: 6.125rem;
 `;
-const StyledHmls = styled(HmlsIcon)`
-  margin-bottom: 0.625rem;
+
+const TypeText = styled.div`
+  font-family: "Pretendard-Medium";
+  font-size: 2.25rem;
+  width: 5.875rem;
+  height: 2.6875rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #6e6e6e;
+  margin-top: 0.25rem;
+  margin-left: 0.8125rem;
+  margin-bottom: 1.125rem;
 `;
+const StyledFarm = styled(FarmIcon)``;
+const StyledHmls = styled(HmlsIcon)``;
