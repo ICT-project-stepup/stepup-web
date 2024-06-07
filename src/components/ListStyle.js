@@ -63,7 +63,6 @@ const ListHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Pretendard-SemiBold";
   }
 
   .institution,
