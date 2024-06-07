@@ -17,12 +17,14 @@ const ProfileInfo = ({ profileData }) => {
 
   return (
     <Container>
-      <Title>기본 정보</Title>
+      <Header>
+        <Title>기본 정보</Title>
 
-      <Description>
-        아래의 정보가 맞는지 확인해주세요. 다르다면 아래의
-        <Highlight> 내 정보 수정</Highlight> 버튼을 눌러주세요.
-      </Description>
+        <Description>
+          아래의 정보가 맞는지 확인해주세요. 다르다면 아래의
+          <Highlight> 내 정보 수정</Highlight> 버튼을 눌러주세요.
+        </Description>
+      </Header>
 
       <InformBox>
         <InfoWrapper>
@@ -50,6 +52,12 @@ const ProfileInfo = ({ profileData }) => {
     </Container>
   );
 };
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
 
 const InfoWrapper = styled.div`
   display: flex;
