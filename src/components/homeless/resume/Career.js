@@ -157,10 +157,12 @@ const CareerBox = styled.div`
 `;
 
 const Container = styled.div`
-  position: absolute;
-  top: 51rem;
-  left: 5.3125rem;
+    position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  left: 5.3125rem;
+  margin-top: 2rem;
 `;
 
 const Title = styled.h2`

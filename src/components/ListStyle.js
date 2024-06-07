@@ -78,7 +78,7 @@ const ListHeader = styled.div`
   .number,
   .id,
   .name {
-    width: 20rem;
+    width: 18rem;
     display: flex;
     align-items: center;
     justify-content: center;

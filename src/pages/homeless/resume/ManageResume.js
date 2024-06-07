@@ -32,12 +32,7 @@ export default function ManageResume() {
 
 const Container = styled.div`
   text-align: left; // App.js의 text-align: center 덮어쓰기
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10rem;
+ margin-top: 6rem;
   font-family: "Pretendard-Bold";
   font-size: 3rem;
 `;

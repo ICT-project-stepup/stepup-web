@@ -97,12 +97,13 @@ const ApplyWithBox = styled.div`
 `;
 
 const Container = styled.div`
-  position: relative;
-  margin-top: 4rem;
+    position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   left: 5.3125rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 `;
 
 const Title = styled.h2`

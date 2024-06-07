@@ -58,13 +58,12 @@ const InfoWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  position: absolute;
-  top: 18rem;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   left: 5.3125rem;
-  //align-items: center;
-  //margin-bottom: 2rem;
-  //width: 100%;
-  //margin-bottom: 2rem;
+  margin-top: 2rem;
 `;
 
 const Title = styled.div`
