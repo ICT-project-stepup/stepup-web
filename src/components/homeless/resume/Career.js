@@ -4,17 +4,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
-import { ReactComponent as DownArrowIcon } from "../../../icons/DownArrowIcon.svg";
+import Select from "react-select";
 
 const Career = () => {
   const [careerData, setCareerData] = useState([
     {
       institution: "",
       work: "",
-      periodValue: 1,
-      periodUnit: "개월",
-      startDate: new Date(),
-      endDate: new Date(),
+      periodValue: "",
+      periodUnit: "",
+      startDate: null,
+      endDate: null,
     },
   ]);
 
@@ -38,6 +38,76 @@ const Career = () => {
     setCareerData(newCareerData);
   };
 
+  const periodOptions = Array.from({ length: 11 }, (_, i) => ({
+    // 1부터 11까지
+    value: i + 1,
+    label: `${i + 1}`,
+  }));
+
+  const periodUnitOptions = [
+    { value: "일", label: "일" },
+    { value: "주", label: "주" },
+    { value: "개월", label: "개월" },
+    { value: "년", label: "년" },
+  ];
+
+  const customStyles = {
+    control: (provided) => ({
+      // 드롭다운의 기본 컨테이너 스타일
+      ...provided, // react-select가 기본 제공하는 스타일 포함
+      width: 83,
+      height: 43,
+      border: "1.5px solid #8AA353",
+      borderRadius: 15,
+      fontFamily: "Pretendard-Medium",
+      fontSize: "20px",
+      lineHeight: "24px",
+      color: "#6E6E6E",
+    }),
+
+    menu: (provided) => ({
+      // 드롭다운의 메뉴 스타일
+      ...provided,
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      borderRadius: 15,
+      backgroundColor: "#F5F5F5",
+      fontFamily: "Pretendard-Regular",
+      fontSize: "20px",
+    }),
+
+    option: (provided, state) => ({
+      // 각 옵션의 스타일
+      ...provided,
+      color: state.isSelected ? "#000000" : "#6E6E6E", // 현재 옵션이 선택되었는지에 따라 색상 변경
+      backgroundColor: state.isSelected ? "#AFBFA540" : "#F5F5F5", // 옵션이 선택되었는지에 따라 배경 색상 변경
+    }),
+
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#6E6E6E", // 선택된 항목의 텍스트 색상
+    }),
+
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      padding: 0,
+      color: "#8AA353", // 커스텀 화살표 색상
+      "> svg": {
+        width: 30,
+        height: 20,
+      },
+    }),
+
+    indicatorSeparator: () => ({
+      display: "none", // 기본으로 있던 작대기 없애기
+    }),
+
+    menuList: (provided) => ({
+      ...provided,
+      maxHeight: 160, // 4까지만 보이도록
+      overflowY: "auto", // 스크롤 추가
+    }),
+  };
+
   const data = careerData.map((item, index) => ({
     institution: (
       <InputInstitution
@@ -48,6 +118,7 @@ const Career = () => {
         }
       />
     ),
+
     work: (
       <InputWork
         placeholder="입력하세요."
@@ -55,39 +126,41 @@ const Career = () => {
         onChange={(e) => handleInputChange(index, "work", e.target.value)}
       />
     ),
+
     period: (
       <PeriodWrapper>
-        <PeriodSelect
-          value={item.periodValue}
-          onChange={(e) =>
-            handleInputChange(index, "periodValue", e.target.value)
+        <Select
+          styles={customStyles}
+          value={periodOptions.find(
+            (option) => option.value === item.periodValue
+          )}
+          onChange={(selectedOption) =>
+            handleInputChange(index, "periodValue", selectedOption.value)
           }
-        >
-          {Array.from({ length: 11 }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {i + 1}
-            </option>
-          ))}
-        </PeriodSelect>
-        <PeriodUnitSelect
-          value={item.periodUnit}
-          onChange={(e) =>
-            handleInputChange(index, "periodUnit", e.target.value)
+          options={periodOptions}
+          placeholder=""
+        />
+        <Select
+          styles={customStyles}
+          value={periodUnitOptions.find(
+            (option) => option.value === item.periodUnit
+          )}
+          onChange={(selectedOption) =>
+            handleInputChange(index, "periodUnit", selectedOption.value)
           }
-        >
-          <option value="일">일</option>
-          <option value="주">주</option>
-          <option value="개월">개월</option>
-          <option value="년">년</option>
-        </PeriodUnitSelect>
+          options={periodUnitOptions}
+          placeholder=""
+        />
       </PeriodWrapper>
     ),
+
     startDate: (
       <Calendar
         selectedDate={item.startDate}
         handleDateChange={(date) => handleDateChange(index, "startDate", date)}
       />
     ),
+
     endDate: (
       <Calendar
         selectedDate={item.endDate}
@@ -120,10 +193,10 @@ const Career = () => {
               {
                 institution: "",
                 work: "",
-                periodValue: 1,
-                periodUnit: "개월",
-                startDate: new Date(),
-                endDate: new Date(),
+                periodValue: "",
+                periodUnit: "",
+                startDate: null,
+                endDate: null,
               },
             ])
           }
@@ -186,6 +259,11 @@ const InputInstitution = styled.input`
   font-size: 20px;
   line-height: 24px;
   color: #6e6e6e;
+
+  &::placeholder {
+    color: #8aa353;
+    font-size: 16px;
+  }
 `;
 
 const InputWork = styled.input`
@@ -200,48 +278,17 @@ const InputWork = styled.input`
   font-size: 20px;
   line-height: 24px;
   color: #6e6e6e;
+
+  &::placeholder {
+    // 입력시 글씨크기와 색상 바뀜
+    color: #8aa353;
+    font-size: 16px;
+  }
 `;
 
 const PeriodWrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const PeriodSelect = styled.select`
-  box-sizing: border-box;
-  width: 83px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  overflow-y: auto;
-  max-height: 120px;
-  margin-right: 8px;
-  font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  color: #6e6e6e;
-`;
-
-const PeriodUnitSelect = styled.select`
-  box-sizing: border-box;
-  width: 83px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
-  font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #6e6e6e;
 `;
 
 const AddCareerButton = styled.button`
