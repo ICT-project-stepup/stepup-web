@@ -4,6 +4,7 @@ import ProfileInfo from "../../../components/homeless/resume/ProfileInfo";
 import Career from "../../../components/homeless/resume/Career";
 import SelfIntroduction from "../../../components/homeless/resume/SelfIntroduction";
 import PageTitle from "../../../components/PageTitle";
+import ApplyWith from "../../../components/homeless/resume/ApplyWith";
 
 /* 채은 */
 export default function ManageResume() {
@@ -24,6 +25,7 @@ export default function ManageResume() {
       <ProfileInfo profileData={profileData} />
       <Career />
       <SelfIntroduction />
+      <ApplyWith />
     </Container>
   );
 }

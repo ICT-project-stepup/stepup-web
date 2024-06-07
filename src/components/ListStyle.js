@@ -74,6 +74,15 @@ const ListHeader = styled.div`
     justify-content: center;
     width: 30%; /* 각 열의 너비를 줄임 */
   }
+
+  .number,
+  .id,
+  .name {
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const ListItem = styled.div`
