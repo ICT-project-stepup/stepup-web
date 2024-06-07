@@ -38,6 +38,11 @@ const Career = () => {
     setCareerData(newCareerData);
   };
 
+  const handleDeleteRow = (index) => { // 행 삭제
+    const newCareerData = careerData.filter((_, i) => i !== index);
+    setCareerData(newCareerData);
+  };
+
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
     // 1부터 11까지
     value: i + 1,
@@ -126,6 +131,7 @@ const Career = () => {
               <div className="endDate">{item.endDate}</div>
             </Row>
           )}
+          onDelete={handleDeleteRow}
         />
         <AddCareerButton
           onClick={() =>

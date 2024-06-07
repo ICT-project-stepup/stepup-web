@@ -25,6 +25,11 @@ const ApplyWith = () => {
     setApplyWithData(newApplyWithData);
   };
 
+  const handleDeleteRow = (index) => { // 행 삭제
+    const newApplyData = applyWithData.filter((_, i) => i !== index);
+    setApplyWithData(newApplyData);
+  };
+
   const data = applyWithData.map((item, index) => ({
     number: index + 1, // 번호는 인덱스 + 1로 설정
     id: (
@@ -63,6 +68,7 @@ const ApplyWith = () => {
               <div className="name">{item.name}</div>
             </Row>
           )}
+          onDelete={handleDeleteRow}
         />
         <AddPersonButton
           onClick={() =>

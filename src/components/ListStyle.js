@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { ReactComponent as DeleteIcon } from "../icons/DeleteIcon.svg";
 
-const ListStyle = ({ headers, data, renderRow }) => {
+const ListStyle = ({ headers, data, renderRow, onDelete }) => {
   return (
     <ListWrapper>
       <ListHeader>
@@ -12,7 +13,12 @@ const ListStyle = ({ headers, data, renderRow }) => {
         ))}
       </ListHeader>
       {data.map((item, index) => (
-        <ListItem key={index}>{renderRow(item)}</ListItem>
+        <ListItem key={index}>
+          {renderRow(item)}
+          <DeleteButton onClick={() => onDelete(index)}>
+            <StyledDeleteIcon />
+          </DeleteButton>
+        </ListItem>
       ))}
     </ListWrapper>
   );
@@ -120,6 +126,21 @@ const ListItem = styled.div`
     justify-content: center;
     width: 50%; /* 각 열의 너비를 줄임 */
   }
+`;
+
+const DeleteButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledDeleteIcon = styled(DeleteIcon)`
+  width: 24px;
+  height: 24px;
+  fill: #6e6e6e;
 `;
 
 export default ListStyle;
