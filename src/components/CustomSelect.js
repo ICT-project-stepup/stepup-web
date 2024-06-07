@@ -56,7 +56,7 @@ const customStyles = {
 
   menuList: (provided) => ({
     ...provided,
-    maxHeight: 160, // 4까지만 보이도록
+    maxHeight: 170, // 4까지만 보이도록
     overflowY: "auto", // 스크롤 추가
   }),
 };
