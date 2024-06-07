@@ -54,6 +54,8 @@ const Container = styled.div`
   margin-top: 6rem;
   font-family: "Pretendard-Bold";
   font-size: 3rem;
+
+  padding: 2rem 6rem 0 6rem; // 페이지 여백 조절
 `;
 
 const TitleWrapper = styled.div`
@@ -70,6 +72,6 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-bottom: 7rem;
 `;

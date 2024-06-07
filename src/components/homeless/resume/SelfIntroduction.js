@@ -22,7 +22,6 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  left: 5.3125rem;
   margin-top: 2rem;
 `;
 
@@ -39,8 +38,8 @@ const Title = styled.h2`
 
 const StyledTextarea = styled.textarea`
   box-sizing: border-box;
-  width: 1270px;
-  height: 160px;
+  width: auto;
+  height: 180px;
   border-radius: 20px;
   padding: 1rem;
   font-size: 22px;

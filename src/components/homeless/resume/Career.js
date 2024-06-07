@@ -161,7 +161,6 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  left: 5.3125rem;
   margin-top: 2rem;
 `;
 

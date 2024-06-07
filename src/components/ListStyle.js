@@ -24,6 +24,7 @@ const ListWrapper = styled.div`
   display: block;
   border-top: solid 0.2rem black;
   margin-top: 1rem;
+  box-sizing: border-box;
 `;
 
 const ListHeader = styled.div`
@@ -35,6 +36,7 @@ const ListHeader = styled.div`
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
   border-bottom: solid 0.1rem black;
+  box-sizing: border-box;
 
   .institution,
   .startDate,
@@ -51,6 +53,7 @@ const ListHeader = styled.div`
     align-items: center;
     justify-content: center;
   }
+
   .startDate,
   .endDate {
     width: 30rem;
@@ -58,6 +61,7 @@ const ListHeader = styled.div`
     align-items: center;
     justify-content: center;
   }
+
   .work {
     width: 20rem;
     display: flex;
@@ -96,6 +100,7 @@ const ListItem = styled.div`
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
   color: black;
+  box-sizing: border-box;
 
   .institution,
   .startDate,
@@ -104,27 +109,6 @@ const ListItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .period {
-    width: 40rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .startDate,
-  .endDate {
-    width: 30rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .work {
-    width: 20rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Pretendard-SemiBold";
   }
 
   .institution,
@@ -134,7 +118,7 @@ const ListItem = styled.div`
   .endDate {
     display: flex;
     justify-content: center;
-    width: 30%; /* 각 열의 너비를 줄임 */
+    width: 50%; /* 각 열의 너비를 줄임 */
   }
 `;
 
