@@ -19,10 +19,6 @@ export default function PublishComuPost() {
                     placeholder="내용을 입력해주세요."
                 />
                 <SearchPostWrapper>
-                    <PostLink to="/jobaddetail">
-                        <LinkIcon />
-                        <span style={{marginLeft: "1rem"}}>해당 글 바로가기 클릭</span>
-                    </PostLink>
                     <SearchPost>
                         <SearchInput 
                             placeholder="돋보기 버튼을 눌러, 사람들과 같이 보고 싶은 글을 찾아보세요."
@@ -126,29 +122,15 @@ const SearchPostWrapper = styled.div`
     margin-top: 2rem;
 `;
 
-const PostLink = styled(Link)`
-    width: 24%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-family: "Pretendard-SemiBold";
-    font-size: 1.5rem;
-    color: #8AA353;
-    background-color: #E4ECD1;
-    border-radius: 1.5rem 0 0 1.5rem;
-`;
-
 const SearchPost = styled.div`
-    width: 76%;
+    width: 100%;
     height: 100%;
     background-color: #F5F5F5;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
-    border-radius: 0 1.5rem 1.5rem 0;
+    border-radius: 1.5rem;
 `;
 
 const SearchInput = styled.input`
