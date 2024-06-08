@@ -52,7 +52,7 @@ export default function ComuMain() {
 
     const handleWritingClick = () => {
         navigate("/publishComuPost");
-      };
+    };
 
     return(
         <ComuMainContainer>

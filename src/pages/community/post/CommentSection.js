@@ -122,7 +122,7 @@ export default function CommentSection() {
             fontSize: "1.5rem",
             backgroundColor: "#AFBFA5",
             alignSelf: "flex-end",
-            margin: "0 1rem"
+            margin: "0.4rem 1rem"
           }}
         />
       </CommentForm>
@@ -186,6 +186,7 @@ const CommentForm = styled.div`
   height: 9rem;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin: 2rem 0;
 `;
 
@@ -196,7 +197,7 @@ const CommentInput = styled.textarea`
   font-size: 1.5rem;
   border: 0.18rem solid #AFBFA5;
   border-radius: 1.5rem;
-  padding: 1rem 0 0 1rem;
+  padding: 1rem 10rem 0 1rem;
 
   &::placeholder {
     color: #AFBFA5;
