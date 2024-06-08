@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import PageTitle from "../../../components/PageTitle";
 import { ReactComponent as LinkIcon} from "../../../icons/LinkIcon.svg";
@@ -21,6 +22,12 @@ const adPostInfo = {
 
 /* 채민 */
 export default function ComuPostDetail() {
+    const navigate = useNavigate();
+
+    const handleGoListClick = () => {
+        navigate("/communitymain");
+    };
+
     return(
         <ComuDetailContainer>
             <PageTitle text="커뮤니티" />
@@ -53,9 +60,10 @@ export default function ComuPostDetail() {
                     </AdPostTitle>
                 </AdPostLinkWrapper>
                 <CommentSection />
-                <ReturnListBtn to="/communitymain">
+                <ReturnListBtn>
                     <RoundWhiteBtn 
                         text="목록으로"
+                        onClick={handleGoListClick}
                         style={{
                             width: "15rem", height: "4.1rem",
                             fontFamily: "Pretendard-SemiBold",
@@ -157,7 +165,7 @@ const AdPostTitle = styled.div`
     border-radius: 0 1.5rem 1.5rem 0;
 `;
 
-const ReturnListBtn = styled(Link)`
+const ReturnListBtn = styled.div`
     width: 100%;
     height: 13rem;
     display: flex;
