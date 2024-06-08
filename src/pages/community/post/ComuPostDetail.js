@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
 import PageTitle from "../../../components/PageTitle";
 import { ReactComponent as LinkIcon} from "../../../icons/LinkIcon.svg";
+import CommentSection from "./CommentSection";
+import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 
 
 const comuPostInfo = {
@@ -50,6 +52,18 @@ export default function ComuPostDetail() {
                         }}>{adPostInfo.postTitle}</span>
                     </AdPostTitle>
                 </AdPostLinkWrapper>
+                <CommentSection />
+                <ReturnListBtn to="/communitymain">
+                    <RoundWhiteBtn 
+                        text="목록으로"
+                        style={{
+                            width: "15rem", height: "4.1rem",
+                            fontFamily: "Pretendard-SemiBold",
+                            fontSize: "1.75rem",
+                            border: "0.15rem solid #8AA353"
+                        }}
+                    />
+                </ReturnListBtn>
             </PostDetailWrapper>
         </ComuDetailContainer>
     )
@@ -57,7 +71,7 @@ export default function ComuPostDetail() {
 
 const ComuDetailContainer = styled.div`
     width: auto;
-    height: 52rem;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -105,7 +119,7 @@ const PostContentWrapper = styled.div`
     border-left: none;
     border-right: none;
     padding: 2rem 0;
-    white-space: pre-line
+    white-space: pre-line;
 `;
 
 const AdPostLinkWrapper = styled.div`
@@ -141,4 +155,12 @@ const AdPostTitle = styled.div`
     align-items: center;
     padding: 0 2rem;
     border-radius: 0 1.5rem 1.5rem 0;
+`;
+
+const ReturnListBtn = styled(Link)`
+    width: 100%;
+    height: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
