@@ -252,6 +252,6 @@ const ReplyButton = styled.button`
 
 const Replies = styled.div`
   .commentContainer {
-    padding-left: 5rem;
+    padding-left: 6rem;
   }
 `;
