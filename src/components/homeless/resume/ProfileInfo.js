@@ -4,7 +4,7 @@ import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
 import RoundGreenBtn from "../../buttons/RoundGreenBtn";
 import { useNavigate } from "react-router-dom";
 
-const ProfileInfo = ({ profileData }) => {
+const ProfileInfo = ({ profileData, isEditing }) => {
   const navigate = useNavigate();
 
   const profileInfoLabel = [
@@ -21,8 +21,14 @@ const ProfileInfo = ({ profileData }) => {
         <Title>기본 정보</Title>
 
         <Description>
-          아래의 정보가 맞는지 확인해주세요. 다르다면 아래의
-          <Highlight> 내 정보 수정</Highlight> 버튼을 눌러주세요.
+          아래의 정보가 맞는지 확인해주세요.
+          {isEditing && (
+            <>
+              {" "}
+              다르다면 아래의
+              <Highlight> 내 정보 수정</Highlight> 버튼을 눌러주세요.
+            </>
+          )}
         </Description>
       </Header>
 
@@ -39,15 +45,17 @@ const ProfileInfo = ({ profileData }) => {
           </Info>
         </InfoWrapper>
 
-        <BtnContainer>
-          <RoundGreenBtn
-            text="내 정보 수정"
-            style={btnStyle}
-            onClick={() => {
-              navigate("/homelessmodifyinfo"); // 버튼 클릭시 노숙인 회원정보수정으로 이동
-            }}
-          />
-        </BtnContainer>
+        {isEditing && (
+          <BtnContainer>
+            <RoundGreenBtn
+              text="내 정보 수정"
+              style={btnStyle}
+              onClick={() => {
+                navigate("/homelessmodifyinfo"); // 버튼 클릭시 노숙인 회원정보수정으로 이동
+              }}
+            />
+          </BtnContainer>
+        )}
       </InformBox>
     </Container>
   );

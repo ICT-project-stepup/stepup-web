@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as DeleteIcon } from "../icons/DeleteIcon.svg";
 
-const ListStyle = ({ headers, data, renderRow, onDelete }) => {
+const ListStyle = ({ headers, data, renderRow, onDelete, isEditing }) => {
   return (
     <ListWrapper>
       <ListHeader>
@@ -13,12 +13,16 @@ const ListStyle = ({ headers, data, renderRow, onDelete }) => {
         ))}
       </ListHeader>
       {data.map((item, index) => (
-        <ListItem key={index}>
-          {renderRow(item)}
-          <DeleteButton onClick={() => onDelete(index)}>
-            <StyledDeleteIcon />
-          </DeleteButton>
-        </ListItem>
+        <ItemWrapper key={index}>
+          <ListItem>{renderRow(item)}</ListItem>
+          {isEditing && (
+            <DeleteButtonWrapper>
+              <DeleteButton onClick={() => onDelete(index)}>
+                <StyledDeleteIcon />
+              </DeleteButton>
+            </DeleteButtonWrapper>
+          )}
+        </ItemWrapper>
       ))}
     </ListWrapper>
   );
@@ -38,71 +42,39 @@ const ListHeader = styled.div`
   height: 4.2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
   border-bottom: solid 0.1rem black;
   box-sizing: border-box;
+  justify-content: space-between;
 
   .institution,
   .startDate,
-  .endDate {
-    width: 20rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .period {
-    width: 40rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .startDate,
-  .endDate {
-    width: 30rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .work {
-    width: 20rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .institution,
-  .work,
+  .endDate,
   .period,
-  .startDate,
-  .endDate {
-    display: flex;
-    justify-content: center;
-    width: 30%; /* 각 열의 너비를 줄임 */
-  }
-
+  .work,
   .number,
   .id,
   .name {
-    width: 18rem;
+    flex: 1; /* Flex 속성 사용 */
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    margin: 1rem;
   }
 `;
 
-const ListItem = styled.div`
-  width: 100%;
-  height: 4.2rem;
+const ItemWrapper = styled.div`
+  display: flex;
   border-bottom: solid 0.1rem #6e6e6e;
+`;
+
+const ListItem = styled.div`
+  flex: 1;
+  height: 4.2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  text-decoration: none;
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
   color: black;
@@ -110,37 +82,36 @@ const ListItem = styled.div`
 
   .institution,
   .startDate,
-  .endDate {
-    width: 20rem;
+  .endDate,
+  .period,
+  .work,
+  .number,
+  .id,
+  .name {
+    flex: 1; /* Flex 속성 사용 */
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    margin: 0.5rem;
   }
+`;
 
-  .institution,
-  .work,
-  .period,
-  .startDate,
-  .endDate {
-    display: flex;
-    justify-content: center;
-    width: 50%; /* 각 열의 너비를 줄임 */
-  }
+const DeleteButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const DeleteButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const StyledDeleteIcon = styled(DeleteIcon)`
   width: 24px;
   height: 24px;
-  fill: #6e6e6e;
 `;
 
 export default ListStyle;

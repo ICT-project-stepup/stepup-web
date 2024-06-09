@@ -61,14 +61,14 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
+  height: 100vh;
 `;
 
 const Test = styled.div`
   /* 전체 네모 박스 */
 
-  width: 75.375rem;
-  height: 29.1875rem;
+  width: 74rem;
+  height: 28rem;
   border: 0.1875rem solid rgba(175, 191, 165, 0.4);
   border-radius: 2.5rem;
   display: flex;

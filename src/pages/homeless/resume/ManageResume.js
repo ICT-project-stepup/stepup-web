@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileInfo from "../../../components/homeless/resume/ProfileInfo";
 import Career from "../../../components/homeless/resume/Career";
@@ -13,7 +13,7 @@ export default function ManageResume() {
   const navigate = useNavigate();
 
   // ProfileInfo 더미데이터
-  const profileData = {
+  const initialProfileData = {
     name: "이공주",
     age: "61세",
     phone: "010-1964-0711",
@@ -21,24 +21,63 @@ export default function ManageResume() {
     address: "서울 용산구 한강대로92길 6 갈월동빌딩",
   };
 
+  // SelfIntroduction 더미데이터
+  const [introduction, setIntroduction] = useState("");
+
+  const [profileData, setProfileData] = useState(initialProfileData);
+  const [careerData, setCareerData] = useState([]);
+  const [selfIntroduction, setSelfIntroduction] = useState("");
+  const [applyWithData, setApplyWithData] = useState([]);
+  const [isEditing, setIsEditing] = useState(true); // 초기 모드를 편집 모드로 설정
+
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
   return (
     <Container>
       <TitleWrapper>
         <PageTitle text="이력서 관리" /> {/* PageTitle 컴포넌트 사용 */}
       </TitleWrapper>
-      <ProfileInfo profileData={profileData} />
-      <Career />
-      <SelfIntroduction />
-      <ApplyWith />
+      <ProfileInfo
+        profileData={profileData}
+        isEditing={isEditing}
+        setProfileData={setProfileData}
+      />
+      <Career
+        isEditing={isEditing}
+        careerData={careerData}
+        setCareerData={setCareerData}
+      />
+      <SelfIntroduction
+        introduction={introduction}
+        setIntroduction={setIntroduction}
+        isEditing={isEditing}
+      />
+      <ApplyWith
+        isEditing={isEditing}
+        applyWithData={applyWithData}
+        setApplyWithData={setApplyWithData}
+      />
 
       <ButtonContainer>
-        <RoundWhiteBtn
-          text="저장하기"
-          style={btnStyle}
-          onClick={() => {
-            navigate("/");
-          }}
-        />
+        {isEditing ? (
+          <RoundWhiteBtn
+            text="저장하기"
+            style={btnStyle}
+            onClick={handleSave}
+          />
+        ) : (
+          <RoundWhiteBtn
+            text="수정하기"
+            style={btnStyle}
+            onClick={handleEdit}
+          />
+        )}
       </ButtonContainer>
     </Container>
   );

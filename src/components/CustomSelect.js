@@ -6,7 +6,9 @@ const customStyles = {
 
   control: (provided) => ({
     ...provided, // react-select가 기본 제공하는 스타일 포함
+    width: "100%", /* 너비를 100%로 설정하여 가변적으로 조정 */
     width: 83,
+    margin: 3,
     height: 43,
     border: "1.5px solid #8AA353",
     borderRadius: 15,
