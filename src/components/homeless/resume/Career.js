@@ -38,7 +38,8 @@ const Career = () => {
     setCareerData(newCareerData);
   };
 
-  const handleDeleteRow = (index) => { // 행 삭제
+  const handleDeleteRow = (index) => {
+    // 행 삭제
     const newCareerData = careerData.filter((_, i) => i !== index);
     setCareerData(newCareerData);
   };
@@ -197,7 +198,8 @@ const Row = styled.div`
 
 const InputInstitution = styled.input`
   box-sizing: border-box;
-  width: 220px;
+  width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
+  max-width: 220px;
   height: 43px;
   border: 1.5px solid #8aa353;
   border-radius: 15px;
@@ -216,7 +218,8 @@ const InputInstitution = styled.input`
 
 const InputWork = styled.input`
   box-sizing: border-box;
-  width: 220px;
+  width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
+  max-width: 220px;
   height: 43px;
   border: 1.5px solid #8aa353;
   border-radius: 15px;

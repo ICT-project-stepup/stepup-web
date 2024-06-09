@@ -25,7 +25,8 @@ const ApplyWith = () => {
     setApplyWithData(newApplyWithData);
   };
 
-  const handleDeleteRow = (index) => { // 행 삭제
+  const handleDeleteRow = (index) => {
+    // 행 삭제
     const newApplyData = applyWithData.filter((_, i) => i !== index);
     setApplyWithData(newApplyData);
   };
@@ -146,7 +147,8 @@ const Row = styled.div`
 
 const InputId = styled.input`
   box-sizing: border-box;
-  width: 220px;
+  width: 100%;
+  max-width: 220px;
   height: 43px;
   border: 1.5px solid #8aa353;
   border-radius: 15px;
@@ -165,7 +167,8 @@ const InputId = styled.input`
 
 const InputName = styled.input`
   box-sizing: border-box;
-  width: 220px;
+  width: 100%;
+  max-width: 220px;
   height: 43px;
   border: 1.5px solid #8aa353;
   border-radius: 15px;

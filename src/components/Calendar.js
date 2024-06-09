@@ -60,6 +60,7 @@ const DatePickerContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  width: 100%;
 `;
 
 const DatePickerWrapper = styled.div`
@@ -84,11 +85,12 @@ const DatePickerWrapper = styled.div`
   .react-datepicker__input-container {
     display: flex;
     align-items: center;
-
+    width: 100%;
     input {
       // 날짜 박스
       box-sizing: border-box;
-      width: 210px;
+      width: 100%;
+      max-width: 210px;
       height: 43px;
       border: 1.5px solid #8aa353;
       border-radius: 15px;
@@ -185,7 +187,6 @@ const DatePickerWrapper = styled.div`
     margin-top: 10px;
     color: #8aa353;
     padding-bottom: 10px;
-
   }
 `;
 
