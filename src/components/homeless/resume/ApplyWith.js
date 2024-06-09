@@ -1,18 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 
-const ApplyWith = () => {
-  const [applyWithData, setApplyWithData] = useState([
-    {
-      number: 1,
-      id: "",
-      name: "",
-    },
-  ]);
-
+const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
   const applyWithLabel = [
     { label: "번호", key: "number", className: "number" },
     { label: "아이디", key: "id", className: "id" },
@@ -33,19 +25,23 @@ const ApplyWith = () => {
 
   const data = applyWithData.map((item, index) => ({
     number: index + 1, // 번호는 인덱스 + 1로 설정
-    id: (
+    id: isEditing ? (
       <InputId
         placeholder="입력하세요."
         value={item.id}
         onChange={(e) => handleInputChange(index, "id", e.target.value)}
       />
+    ) : (
+      <Text>{item.id}</Text>
     ),
-    name: (
+    name: isEditing ? (
       <InputName
         placeholder="입력하세요."
         value={item.name}
         onChange={(e) => handleInputChange(index, "name", e.target.value)}
       />
+    ) : (
+      <Text>{item.name}</Text>
     ),
   }));
 
@@ -67,25 +63,29 @@ const ApplyWith = () => {
               <div className="number">{item.number}</div>
               <div className="id">{item.id}</div>
               <div className="name">{item.name}</div>
+              <div className="delete">{item.delete}</div>
             </Row>
           )}
           onDelete={handleDeleteRow}
+          isEditing={isEditing} // isEditing prop 추가
         />
-        <AddPersonButton
-          onClick={() =>
-            setApplyWithData([
-              ...applyWithData,
-              {
-                number: applyWithData.length + 1,
-                id: "",
-                name: "",
-              },
-            ])
-          }
-        >
-          <StyledAddIcon />
-          인원 추가
-        </AddPersonButton>
+        {isEditing && (
+          <AddPersonButton
+            onClick={() =>
+              setApplyWithData([
+                ...applyWithData,
+                {
+                  number: applyWithData.length + 1,
+                  id: "",
+                  name: "",
+                },
+              ])
+            }
+          >
+            <StyledAddIcon />
+            인원 추가
+          </AddPersonButton>
+        )}
       </ApplyWithBox>
     </Container>
   );
@@ -208,6 +208,21 @@ const AddPersonButton = styled.button`
 
 const StyledAddIcon = styled(AddIcon)`
   margin: 10px;
+`;
+
+const Text = styled.p`
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 15px;
+  font-family: "Pretendard-Medium";
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 220px;
+  color: ${({ isEditing }) =>
+    isEditing ? "#6e6e6e" : "#2B2B2B"}; // 읽기모드와 편집모드에 따라 다름
+  background: ${({ isEditing }) => (isEditing ? "#f5f5f5" : "none")};
 `;
 
 export default ApplyWith;

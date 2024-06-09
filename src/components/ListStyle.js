@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as DeleteIcon } from "../icons/DeleteIcon.svg";
 
-const ListStyle = ({ headers, data, renderRow, onDelete }) => {
+const ListStyle = ({ headers, data, renderRow, onDelete, isEditing }) => {
   return (
     <ListWrapper>
       <ListHeader>
@@ -15,9 +15,13 @@ const ListStyle = ({ headers, data, renderRow, onDelete }) => {
       {data.map((item, index) => (
         <ItemWrapper key={index}>
           <ListItem>{renderRow(item)}</ListItem>
-          <DeleteButton onClick={() => onDelete(index)}>
-            <StyledDeleteIcon />
-          </DeleteButton>
+          {isEditing && (
+            <DeleteButtonWrapper>
+              <DeleteButton onClick={() => onDelete(index)}>
+                <StyledDeleteIcon />
+              </DeleteButton>
+            </DeleteButtonWrapper>
+          )}
         </ItemWrapper>
       ))}
     </ListWrapper>
@@ -57,7 +61,6 @@ const ListHeader = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    
     margin: 1rem;
   }
 `;
@@ -94,12 +97,16 @@ const ListItem = styled.div`
   }
 `;
 
+const DeleteButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
 const DeleteButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  margin-left: -1rem;
 `;
 
 const StyledDeleteIcon = styled(DeleteIcon)`

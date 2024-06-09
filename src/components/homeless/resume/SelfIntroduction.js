@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const SelfIntroduction = () => {
+const SelfIntroduction = ({ isEditing, introduction, setIntroduction }) => {
   const [isFocused, setIsFocused] = useState(false);
+
+  const handleTextareaChange = (e) => {
+    setIntroduction(e.target.value);
+  };
 
   return (
     <Container>
       <Title>자기소개</Title>
-      <StyledTextarea
-        placeholder="입력하세요."
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => setIsFocused(e.target.value.length > 0)}
-        isFocused={isFocused}
-      />
+      {isEditing ? (
+        <StyledTextarea
+          placeholder="입력하세요."
+          value={introduction}
+          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => setIsFocused(e.target.value.length > 0)}
+          onChange={handleTextareaChange}
+          isFocused={isFocused}
+        />
+      ) : (
+        <ReadOnlyTextarea>{introduction || "자기소개가 없습니다."}</ReadOnlyTextarea>
+      )}
     </Container>
   );
 };
@@ -48,6 +58,21 @@ const StyledTextarea = styled.textarea`
   font-family: "Pretendard-Medium";
   color: #6e6e6e;
   resize: none; // 크기 고정
+`;
+
+const ReadOnlyTextarea = styled.div`
+  box-sizing: border-box;
+  width: auto;
+  height: 180px;
+  border-radius: 20px;
+  padding: 1rem;
+  font-size: 22px;
+  background: #E4ECD1;
+  border: 1px solid #dcdcdc;
+  font-family: "Pretendard-Medium";
+  color: #6e6e6e;
+  resize: none; // 크기 고정
+  white-space: pre-wrap; // 줄 바꿈을 유지
 `;
 
 export default SelfIntroduction;

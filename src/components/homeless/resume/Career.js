@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "../../ListStyle";
@@ -6,18 +6,7 @@ import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import CustomSelect from "../../CustomSelect";
 
-const Career = () => {
-  const [careerData, setCareerData] = useState([
-    {
-      institution: "",
-      work: "",
-      periodValue: "",
-      periodUnit: "",
-      startDate: null,
-      endDate: null,
-    },
-  ]);
-
+const Career = ({ isEditing, careerData, setCareerData }) => {
   const careerLabel = [
     { label: "기관", key: "institution", className: "institution" },
     { label: "업무", key: "work", className: "work" },
@@ -39,13 +28,11 @@ const Career = () => {
   };
 
   const handleDeleteRow = (index) => {
-    // 행 삭제
     const newCareerData = careerData.filter((_, i) => i !== index);
     setCareerData(newCareerData);
   };
 
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
-    // 1부터 11까지
     value: i + 1,
     label: `${i + 1}`,
   }));
@@ -58,7 +45,7 @@ const Career = () => {
   ];
 
   const data = careerData.map((item, index) => ({
-    institution: (
+    institution: isEditing ? (
       <InputInstitution
         placeholder="입력하세요."
         value={item.institution}
@@ -66,17 +53,21 @@ const Career = () => {
           handleInputChange(index, "institution", e.target.value)
         }
       />
+    ) : (
+      <Text>{item.institution}</Text>
     ),
 
-    work: (
+    work: isEditing ? (
       <InputWork
         placeholder="입력하세요."
         value={item.work}
         onChange={(e) => handleInputChange(index, "work", e.target.value)}
       />
+    ) : (
+      <Text>{item.work}</Text>
     ),
 
-    period: (
+    period: isEditing ? (
       <PeriodWrapper>
         <CustomSelect
           value={periodOptions.find(
@@ -99,20 +90,26 @@ const Career = () => {
           placeholder=""
         />
       </PeriodWrapper>
+    ) : (
+      <Text>{`${item.periodValue} ${item.periodUnit}`}</Text>
     ),
 
-    startDate: (
+    startDate: isEditing ? (
       <Calendar
         selectedDate={item.startDate}
         handleDateChange={(date) => handleDateChange(index, "startDate", date)}
       />
+    ) : (
+      <Text>{item.startDate ? item.startDate.toLocaleDateString() : ""}</Text>
     ),
 
-    endDate: (
+    endDate: isEditing ? (
       <Calendar
         selectedDate={item.endDate}
         handleDateChange={(date) => handleDateChange(index, "endDate", date)}
       />
+    ) : (
+      <Text>{item.endDate ? item.endDate.toLocaleDateString() : ""}</Text>
     ),
   }));
 
@@ -133,25 +130,28 @@ const Career = () => {
             </Row>
           )}
           onDelete={handleDeleteRow}
+          isEditing={isEditing} // isEditing prop 추가
         />
-        <AddCareerButton
-          onClick={() =>
-            setCareerData([
-              ...careerData,
-              {
-                institution: "",
-                work: "",
-                periodValue: "",
-                periodUnit: "",
-                startDate: null,
-                endDate: null,
-              },
-            ])
-          }
-        >
-          <StyledAddIcon />
-          경력 추가
-        </AddCareerButton>
+        {isEditing && (
+          <AddCareerButton
+            onClick={() =>
+              setCareerData([
+                ...careerData,
+                {
+                  institution: "",
+                  work: "",
+                  periodValue: "",
+                  periodUnit: "",
+                  startDate: null,
+                  endDate: null,
+                },
+              ])
+            }
+          >
+            <StyledAddIcon />
+            경력 추가
+          </AddCareerButton>
+        )}
       </CareerBox>
     </Container>
   );
@@ -231,7 +231,6 @@ const InputWork = styled.input`
   color: #6e6e6e;
 
   &::placeholder {
-    // 입력시 글씨크기와 색상 바뀜
     color: #8aa353;
     font-size: 16px;
   }
@@ -265,6 +264,24 @@ const AddCareerButton = styled.button`
 
 const StyledAddIcon = styled(AddIcon)`
   margin: 10px;
+`;
+
+const Text = styled.p`
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 15px;
+  font-family: "Pretendard-Medium";
+  font-size: 20px;
+  color: #6e6e6e;
+  text-align: center;
+  width: 100%;
+  max-width: 220px;
+
+  color: ${({ isEditing }) =>
+    isEditing ? "#6e6e6e" : "#2B2B2B"}; // 읽기모드와 편집모드에 따라 다름
+  background: ${({ isEditing }) => (isEditing ? "#f5f5f5" : "none")};
 `;
 
 export default Career;
