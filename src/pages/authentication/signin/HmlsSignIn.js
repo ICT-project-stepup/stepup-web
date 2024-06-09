@@ -1,22 +1,31 @@
-import { styled } from "styled-components";
+import React from "react";
+import styled from "styled-components";
+import PageTitle from "../../../components/PageTitle";
 
 /* 예은 */
 export default function HmlsSignIn() {
-    return(
-        <Test>
-            <span>회원가입 - 노숙인</span>
-        </Test>
-    )
+  return (
+    <Container>
+      <PageTitle text="회원가입" />
+      <SubText>사진</SubText>
+    </Container>
+  );
 }
 
-const Test = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 10rem;
+const Container = styled.div`
+  width: auto;
+  height: 52rem;
+  display: block;
+  align-items: flex-start;
+  padding: 2rem 6rem 0 6rem;
+`;
 
-    font-family: "Pretendard-Bold";
-    font-size: 3rem;
-    color: #8AA353;
+const SubText = styled.div`
+  font-family: "Pretendard-Regular";
+  font-size: 1.5rem;
+  color: #6e6e6e;
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  text-align: center;
 `;
