@@ -46,7 +46,8 @@ const PostListWrapper = styled(Link)`
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "Pretendard-SemiBold";
+        font-family: "Pretendard-Regular";
+        color: #6E6E6E;
     }
     .salary,
     .time {

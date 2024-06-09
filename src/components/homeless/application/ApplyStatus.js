@@ -2,7 +2,21 @@ import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
 
 
+const getStateColor = (postState) => {
+    switch (postState) {
+        case "지원 중":
+            return "#6698D2";
+        case "성사됨":
+            return "#8AA353";
+        case "마감":
+            return "#D66F6F";
+        default:
+            return "#000000"; // 기본 색상
+    }
+};
+
 export default function ApplyStatus({ postInfo }) {
+
     return(
         <PostListWrapper postState={postInfo.postState} to="/JobAdDetail">
             <span className="area">{postInfo.area}</span>
@@ -47,6 +61,7 @@ const PostListWrapper = styled(Link)`
         align-items: center;
         justify-content: center;
         font-family: "Pretendard-SemiBold";
+        color: ${({ postState }) => getStateColor(postState)};
     }
     .salary,
     .time {
