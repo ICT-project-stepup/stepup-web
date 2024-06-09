@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as DeleteIcon } from "../icons/DeleteIcon.svg";
+import { ReactComponent as DeleteIcon } from "../../../icons/DeleteIcon.svg";
 
 const ListStyle = ({ headers, data, renderRow, onDelete, isEditing }) => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
-import ListStyle from "../../ListStyle";
+import ListStyle from "./ListStyle";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 
 const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
