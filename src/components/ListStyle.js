@@ -47,7 +47,7 @@ const ListHeader = styled.div`
   .institution,
   .startDate,
   .endDate {
-    width: 20rem;
+    width: 18rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,9 +108,31 @@ const ListItem = styled.div`
   color: black;
   box-sizing: border-box;
 
-  .institution,
+.institution,
   .startDate,
   .endDate {
+    width: 18rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .period {
+    width: 40rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .startDate,
+  .endDate {
+    width: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .work {
     width: 20rem;
     display: flex;
     align-items: center;
@@ -124,7 +146,16 @@ const ListItem = styled.div`
   .endDate {
     display: flex;
     justify-content: center;
-    width: 50%; /* 각 열의 너비를 줄임 */
+    width: 30%; /* 각 열의 너비를 줄임 */
+  }
+
+  .number,
+  .id,
+  .name {
+    width: 18rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -132,9 +163,6 @@ const DeleteButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const StyledDeleteIcon = styled(DeleteIcon)`

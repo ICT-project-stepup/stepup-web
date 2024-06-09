@@ -191,13 +191,13 @@ const Row = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 15%;
+    width: auto;
   }
 `;
 
 const InputInstitution = styled.input`
   box-sizing: border-box;
-  width: 242px;
+  width: 220px;
   height: 43px;
   border: 1.5px solid #8aa353;
   border-radius: 15px;
@@ -216,7 +216,7 @@ const InputInstitution = styled.input`
 
 const InputWork = styled.input`
   box-sizing: border-box;
-  width: 242px;
+  width: 220px;
   height: 43px;
   border: 1.5px solid #8aa353;
   border-radius: 15px;
