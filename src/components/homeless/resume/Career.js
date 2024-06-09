@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
-import ListStyle from "../../ListStyle";
+import ListStyle from "./ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import CustomSelect from "../../CustomSelect";
