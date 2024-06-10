@@ -187,7 +187,7 @@ const CommentForm = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin: 2rem 0;
+  margin: 3rem 0;
 `;
 
 const CommentInput = styled.textarea`
@@ -197,7 +197,7 @@ const CommentInput = styled.textarea`
   font-size: 1.5rem;
   border: 0.18rem solid #AFBFA5;
   border-radius: 1.5rem;
-  padding: 1rem 10rem 0 1rem;
+  padding: 1.5rem 10rem 0 1.5rem;
 
   &::placeholder {
     color: #AFBFA5;
