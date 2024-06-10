@@ -5,6 +5,7 @@ import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import JobAdList from './JobAdList';
 import CustomPagination from '../../components/CustomPagination';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 
 const postData = [
@@ -162,20 +163,21 @@ export default function Main() {
                 </JobAdListWrapper>
             ) : (
                 <MapWrapper>
-                    <div style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        marginTop: "5rem",
-                        fontSize: "2rem",
-                        fontFamily: "Pretendard-Medium"
-                    }}>
-                        지도 API 추가 예정
-                    </div>
+                    <LoadScript 
+                        googleMapsApiKey="AIzaSyDRGjPRqJSdBjgjXC4HEunnxZ9fM_9zvgc"
+                    >
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={18}
+                        >
+                        </GoogleMap>
+                    </LoadScript>
                 </MapWrapper>
             )}
         </MainContainer>
     )
-}
+}  
 
 const MainContainer = styled.div`
     width: auto;
@@ -250,3 +252,17 @@ const MapWrapper = styled.div`
     height: 45%;
     borderRadius: 2rem;
 `;
+
+/* 구글맵스 스타일링 */
+const containerStyle = {
+    width: '100%',
+    height: '41rem',
+    marginTop: '1rem',
+    borderRadius: '2rem',
+    border: 'solid 0.1rem #D9D9D9'
+};
+  
+const center = {
+    lat: 35.516183073073336,
+    lng: 128.490290241545
+};
