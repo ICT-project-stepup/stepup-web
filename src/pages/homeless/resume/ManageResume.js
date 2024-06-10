@@ -6,12 +6,9 @@ import SelfIntroduction from "../../../components/homeless/resume/SelfIntroducti
 import PageTitle from "../../../components/PageTitle";
 import ApplyWith from "../../../components/homeless/resume/ApplyWith";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
-import { useNavigate } from "react-router-dom";
 
 /* 채은 */
 export default function ManageResume() {
-  const navigate = useNavigate();
-
   // ProfileInfo 더미데이터
   const initialProfileData = {
     name: "이공주",
@@ -26,7 +23,6 @@ export default function ManageResume() {
 
   const [profileData, setProfileData] = useState(initialProfileData);
   const [careerData, setCareerData] = useState([]);
-  const [selfIntroduction, setSelfIntroduction] = useState("");
   const [applyWithData, setApplyWithData] = useState([]);
   const [isEditing, setIsEditing] = useState(true); // 초기 모드를 편집 모드로 설정
 
