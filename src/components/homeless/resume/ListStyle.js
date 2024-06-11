@@ -66,7 +66,7 @@ const ListHeader = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  display: flex;
+  //display: flex;
   border-bottom: solid 0.1rem #6e6e6e;
 `;
 
