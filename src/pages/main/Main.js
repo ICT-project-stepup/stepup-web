@@ -87,6 +87,7 @@ const postData = [
 export default function Main() {
     const [isListMode, setListMode] = useState(true);
     const [activePage, setActivePage] = useState(1);
+    const [mapKey, setMapKey] = useState(0);
 
     /* 페이지네이션에 필요한 변수들 */
     const totalItemsCount = postData.length;
@@ -100,6 +101,7 @@ export default function Main() {
 
     const toggleMapMode = () => {
         setListMode(false);
+        setMapKey(prevKey => prevKey + 1);  //key를 변경하여 MyMap을 다시 렌더링
     };
 
     const handlePageChange = (pageNumber) => {
@@ -162,7 +164,7 @@ export default function Main() {
                     />
                 </JobAdListWrapper>
             ) : (
-                <MapWrapper>
+                <MapWrapper key={mapKey}>
                     <MyMap />
                 </MapWrapper>
             )}
