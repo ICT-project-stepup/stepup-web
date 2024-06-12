@@ -11,7 +11,7 @@ const Input = styled.input`
   border: 1.5px solid #d9d9d9;
   border-radius: 15px;
   font-family: "Pretendard-Medium";
-  font-size: 20px;
+  font-size: 1.3125rem;
   line-height: 24px;
   color: #6e6e6e;
 
