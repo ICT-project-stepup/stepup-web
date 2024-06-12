@@ -6,7 +6,6 @@ const customStyles = {
 
   control: (provided) => ({
     ...provided, // react-select가 기본 제공하는 스타일 포함
-    width: "100%", /* 너비를 100%로 설정하여 가변적으로 조정 */
     width: 83,
     margin: 3,
     height: 43,
@@ -16,6 +15,7 @@ const customStyles = {
     fontSize: "20px",
     lineHeight: "24px",
     color: "#6E6E6E",
+    cursor: "pointer",
   }),
 
   menu: (provided) => ({
@@ -63,8 +63,13 @@ const customStyles = {
   }),
 };
 
-const CustomSelect = (props) => {
-  return <Select {...props} styles={customStyles} />;
+const CustomSelect = ({ styles = {}, ...props }) => {
+  const combinedStyles = {
+    ...customStyles,
+    ...styles,
+  };
+
+  return <Select {...props} styles={combinedStyles} />;
 };
 
 export default CustomSelect;

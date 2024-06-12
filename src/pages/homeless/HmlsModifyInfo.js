@@ -1,9 +1,12 @@
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import { useNavigate } from "react-router-dom";
 import PlaceHolder from "../../components/PlaceHolder";
+import Calendar from "../../components/Calendar";
+import CustomSelect from "../../components/CustomSelect";
 
 /* 채은 */
 export default function HmlsModifyInfo() {
@@ -11,6 +14,38 @@ export default function HmlsModifyInfo() {
 
   const handlePicClick = () => {
     navigate("/");
+  };
+
+  
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const emailOptions = [ // 이메일 옵션
+    { value: "naver.com", label: "naver.com" },
+    { value: "hanmail.net", label: "hanmail.net" },
+    { value: "nate.com", label: "nate.com" },
+    { value: "kakao.com", label: "kakao.com" }
+  ];
+
+  const customSelectStyles = {
+    control: (provided) => ({
+      ...provided,
+      width: '11.875rem', // 너비 설정
+      borderRadius: "15px"
+    }),
+
+    menu: (provided) => ({
+      ...provided,
+      width: "11.875rem",
+    }),
+
+    menuList: (provided) => ({
+      ...provided,
+      maxHeight: 190,
+    }),
   };
 
   return (
@@ -45,9 +80,7 @@ export default function HmlsModifyInfo() {
           <tbody>
             <tr>
               <td>구분</td>
-              <td>
-                
-              </td>
+              <td></td>
             </tr>
             <tr>
               <td>이름</td>
@@ -59,27 +92,45 @@ export default function HmlsModifyInfo() {
             </tr>
             <tr>
               <td>별명</td>
-              <td><PlaceHolder /></td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>비밀번호 변경</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                <PlaceHolder
+                  text={
+                    "영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+                  }
+                />
+              </td>
             </tr>
             <tr>
               <td>비밀번호 확인</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>생년월일</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                <Calendar
+                  selectedDate={selectedDate}
+                  handleDateChange={handleDateChange}
+                  style={{width: "25.3125rem", borderColor: "#D9D9D9"}}
+                />
+              </td>
             </tr>
             <tr>
               <td>전화번호</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                  <PlaceHolder style={{width: "6.4375rem"}}/> - <PlaceHolder style={{width: "6.4375rem"}}/> - <PlaceHolder style={{width: "6.4375rem"}}/>
+              </td>
             </tr>
             <tr>
               <td>이메일</td>
-              <td>버튼추가할거예옹</td>
+              <td><PlaceHolder style={{width: "10.3125rem"}} /> @ <CustomSelect styles={customSelectStyles} options={emailOptions} /></td>
             </tr>
             <tr>
               <td>주소</td>
@@ -112,7 +163,6 @@ export default function HmlsModifyInfo() {
             cursor: "pointer",
             fontFamily: "Pretendard-SemiBold",
             fontSize: "1.75rem",
-            fontWeight: 500,
             lineHeight: "1.4925rem",
             position: "relative",
             border: "0.125rem solid #afbfa5",
@@ -122,6 +172,7 @@ export default function HmlsModifyInfo() {
     </Container>
   );
 }
+
 
 const Container = styled.div`
   width: auto;
@@ -140,8 +191,8 @@ const SubText = styled.div`
 `;
 
 const StyledProfile = styled(ProfileIcon)`
-  width: 143px;
-  height: 143px;
+  width: 8.9375rem;
+  height: 8.9375rem;
 `;
 
 const DefaultPic = styled.div`
