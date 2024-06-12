@@ -10,15 +10,17 @@ import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 // 한국어 로케일 등록
 registerLocale("ko", ko);
 
-const Calendar = ({ selectedDate, handleDateChange }) => {
+const Calendar = ({ selectedDate, handleDateChange}) => {
   return (
     <DatePickerWrapper>
       <DatePickerContainer>
         <DatePicker
           selected={selectedDate}
           onChange={handleDateChange}
+
           dateFormat="yyyy년 MM월 dd일"
           locale="ko" // 로케일 설정
+
           renderCustomHeader={({
             date,
             decreaseMonth,
@@ -34,9 +36,11 @@ const Calendar = ({ selectedDate, handleDateChange }) => {
               >
                 <LeftArrowIcon />
               </button>
+
               <span className="current-month">
                 {date.getFullYear()}년 {date.getMonth() + 1}월
               </span>
+
               <button
                 className="icon-button"
                 onClick={increaseMonth}
@@ -44,6 +48,7 @@ const Calendar = ({ selectedDate, handleDateChange }) => {
               >
                 <RightArrowIcon />
               </button>
+              
             </div>
           )}
         />
