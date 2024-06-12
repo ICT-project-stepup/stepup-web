@@ -5,7 +5,7 @@ import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import JobAdList from './JobAdList';
 import CustomPagination from '../../components/CustomPagination';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import MyMap from './MyMap';
 
 
 const postData = [
@@ -163,16 +163,7 @@ export default function Main() {
                 </JobAdListWrapper>
             ) : (
                 <MapWrapper>
-                    <LoadScript 
-                        googleMapsApiKey="AIzaSyDRGjPRqJSdBjgjXC4HEunnxZ9fM_9zvgc"
-                    >
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={center}
-                            zoom={18}
-                        >
-                        </GoogleMap>
-                    </LoadScript>
+                    <MyMap />
                 </MapWrapper>
             )}
         </MainContainer>
@@ -252,17 +243,3 @@ const MapWrapper = styled.div`
     height: 45%;
     borderRadius: 2rem;
 `;
-
-/* 구글맵스 스타일링 */
-const containerStyle = {
-    width: '100%',
-    height: '41rem',
-    marginTop: '1rem',
-    borderRadius: '2rem',
-    border: 'solid 0.1rem #D9D9D9'
-};
-  
-const center = {
-    lat: 35.516183073073336,
-    lng: 128.490290241545
-};
