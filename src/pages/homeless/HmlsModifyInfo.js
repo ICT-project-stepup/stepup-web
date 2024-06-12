@@ -6,14 +6,14 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import PlaceHolder from "../../components/PlaceHolder";
 import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
+import ModifyModal from "../../components/modals/ModifyModal.js";
 
 /* 채은 */
 export default function HmlsModifyInfo() {
-
   const handlePicClick = () => {
     document.getElementById("profilePicInput").click();
   };
-  
+
   const [profilePic, setProfilePic] = useState(null);
 
   const handleProfilePicChange = (event) => {
@@ -27,25 +27,36 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const emailOptions = [ // 이메일 옵션
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCompleteClick = () => {
+    // 완료 버튼 누르면 모달
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const emailOptions = [
+    // 이메일 옵션
     { value: "naver.com", label: "naver.com" },
     { value: "hanmail.net", label: "hanmail.net" },
     { value: "nate.com", label: "nate.com" },
-    { value: "kakao.com", label: "kakao.com" }
+    { value: "kakao.com", label: "kakao.com" },
   ];
 
   const customSelectStyles = {
     control: (provided) => ({
       ...provided,
-      width: '11.875rem', // 너비 설정
-      borderRadius: "15px"
+      width: "11.875rem", // 너비 설정
+      borderRadius: "15px",
     }),
 
     menu: (provided) => ({
@@ -61,7 +72,6 @@ export default function HmlsModifyInfo() {
 
   return (
     <Container>
-
       <PageTitle text="정보 수정" />
       <SubText>사진</SubText>
 
@@ -139,7 +149,7 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>생년월일</td>
               <td>
-              <Calendar
+                <Calendar
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
                 />
@@ -148,24 +158,38 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>전화번호</td>
               <td>
-                  <PlaceHolder style={{width: "6.4375rem"}}/> - <PlaceHolder style={{width: "6.4375rem"}}/> - <PlaceHolder style={{width: "6.4375rem"}}/>
+                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
+                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
+                <PlaceHolder style={{ width: "6.4375rem" }} />
               </td>
             </tr>
             <tr>
               <td>이메일</td>
-              <td><PlaceHolder style={{width: "10.3125rem"}} /> @ <CustomSelect styles={customSelectStyles} options={emailOptions} /></td>
+              <td>
+                <PlaceHolder style={{ width: "10.3125rem" }} /> @{" "}
+                <CustomSelect
+                  styles={customSelectStyles}
+                  options={emailOptions}
+                />
+              </td>
             </tr>
             <tr>
               <td>주소</td>
-              <td><PlaceHolder /></td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>소속센터</td>
-              <td><PlaceHolder /></td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
-              <td><PlaceHolder /></td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>성별</td>
@@ -178,7 +202,7 @@ export default function HmlsModifyInfo() {
       <BtnWrapper>
         <RoundWhiteBtn
           text="완료"
-          onClick={handlePicClick}
+          onClick={handleCompleteClick}
           style={{
             boxSizing: "border-box",
             width: "15.0625rem",
@@ -192,10 +216,10 @@ export default function HmlsModifyInfo() {
           }}
         />
       </BtnWrapper>
+      <ModifyModal isOpen={isModalOpen} onRequestClose={closeModal} />
     </Container>
   );
 }
-
 
 const Container = styled.div`
   width: auto;
