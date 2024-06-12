@@ -3,38 +3,60 @@ import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
-import { useNavigate } from "react-router-dom";
 import PlaceHolder from "../../components/PlaceHolder";
 import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
+import ModifyModal from "../../components/modals/ModifyModal.js";
 
 /* 채은 */
 export default function HmlsModifyInfo() {
-  const navigate = useNavigate();
-
   const handlePicClick = () => {
-    navigate("/");
+    document.getElementById("profilePicInput").click();
   };
 
-  
+  const [profilePic, setProfilePic] = useState(null);
+
+  const handleProfilePicChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const emailOptions = [ // 이메일 옵션
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCompleteClick = () => {
+    // 완료 버튼 누르면 모달
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const emailOptions = [
+    // 이메일 옵션
     { value: "naver.com", label: "naver.com" },
     { value: "hanmail.net", label: "hanmail.net" },
     { value: "nate.com", label: "nate.com" },
-    { value: "kakao.com", label: "kakao.com" }
+    { value: "kakao.com", label: "kakao.com" },
   ];
 
   const customSelectStyles = {
     control: (provided) => ({
       ...provided,
-      width: '11.875rem', // 너비 설정
-      borderRadius: "15px"
+      width: "11.875rem", // 너비 설정
+      borderRadius: "15px",
     }),
 
     menu: (provided) => ({
@@ -54,7 +76,19 @@ export default function HmlsModifyInfo() {
       <SubText>사진</SubText>
 
       <DefaultPic>
-        <StyledProfile />
+        {profilePic ? (
+          <ProfileImage src={profilePic} alt="Profile" />
+        ) : (
+          <StyledProfile />
+        )}
+        <input
+          id="profilePicInput"
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleProfilePicChange}
+        />
+
         <RoundWhiteBtn
           text="사진 등록"
           onClick={handlePicClick}
@@ -118,31 +152,44 @@ export default function HmlsModifyInfo() {
                 <Calendar
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
-                  style={{width: "25.3125rem", borderColor: "#D9D9D9"}}
                 />
               </td>
             </tr>
             <tr>
               <td>전화번호</td>
               <td>
-                  <PlaceHolder style={{width: "6.4375rem"}}/> - <PlaceHolder style={{width: "6.4375rem"}}/> - <PlaceHolder style={{width: "6.4375rem"}}/>
+                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
+                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
+                <PlaceHolder style={{ width: "6.4375rem" }} />
               </td>
             </tr>
             <tr>
               <td>이메일</td>
-              <td><PlaceHolder style={{width: "10.3125rem"}} /> @ <CustomSelect styles={customSelectStyles} options={emailOptions} /></td>
+              <td>
+                <PlaceHolder style={{ width: "10.3125rem" }} /> @{" "}
+                <CustomSelect
+                  styles={customSelectStyles}
+                  options={emailOptions}
+                />
+              </td>
             </tr>
             <tr>
               <td>주소</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>소속센터</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
-              <td>버튼추가할거예옹</td>
+              <td>
+                <PlaceHolder />
+              </td>
             </tr>
             <tr>
               <td>성별</td>
@@ -155,7 +202,7 @@ export default function HmlsModifyInfo() {
       <BtnWrapper>
         <RoundWhiteBtn
           text="완료"
-          onClick={handlePicClick}
+          onClick={handleCompleteClick}
           style={{
             boxSizing: "border-box",
             width: "15.0625rem",
@@ -169,10 +216,10 @@ export default function HmlsModifyInfo() {
           }}
         />
       </BtnWrapper>
+      <ModifyModal isOpen={isModalOpen} onRequestClose={closeModal} />
     </Container>
   );
 }
-
 
 const Container = styled.div`
   width: auto;
@@ -229,4 +276,11 @@ const BtnWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4rem;
+`;
+
+const ProfileImage = styled.img`
+  width: 8.9375rem;
+  height: 8.9375rem;
+  border-radius: 50%;
+  object-fit: cover;
 `;
