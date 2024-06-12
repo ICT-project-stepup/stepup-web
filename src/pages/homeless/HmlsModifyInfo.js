@@ -165,7 +165,12 @@ export default function HmlsModifyInfo() {
             </tr>
             <tr>
               <td>이메일</td>
-              <td>
+              <td
+                style={{
+                  display: "flex",
+                  alignItems: "row",
+                }}
+              >
                 <PlaceHolder style={{ width: "10.3125rem" }} /> @{" "}
                 <CustomSelect
                   styles={customSelectStyles}

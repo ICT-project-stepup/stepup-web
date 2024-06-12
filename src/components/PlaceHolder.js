@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export default function PlaceHolder({ text }) {
-  return <Input placeholder={text} />;
+export default function PlaceHolder({ text, style }) {
+  return <Input placeholder={text} style={style} />;
 }
 
 const Input = styled.input`
@@ -11,8 +11,6 @@ const Input = styled.input`
   border: 1.5px solid #d9d9d9;
   border-radius: 15px;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   color: #6e6e6e;
