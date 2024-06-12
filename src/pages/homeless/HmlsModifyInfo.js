@@ -3,17 +3,28 @@ import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
-import { useNavigate } from "react-router-dom";
 import PlaceHolder from "../../components/PlaceHolder";
 import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
 
 /* 채은 */
 export default function HmlsModifyInfo() {
-  const navigate = useNavigate();
 
   const handlePicClick = () => {
-    navigate("/");
+    document.getElementById("profilePicInput").click();
+  };
+  
+  const [profilePic, setProfilePic] = useState(null);
+
+  const handleProfilePicChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   
@@ -50,11 +61,24 @@ export default function HmlsModifyInfo() {
 
   return (
     <Container>
+
       <PageTitle text="정보 수정" />
       <SubText>사진</SubText>
 
       <DefaultPic>
-        <StyledProfile />
+        {profilePic ? (
+          <ProfileImage src={profilePic} alt="Profile" />
+        ) : (
+          <StyledProfile />
+        )}
+        <input
+          id="profilePicInput"
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleProfilePicChange}
+        />
+
         <RoundWhiteBtn
           text="사진 등록"
           onClick={handlePicClick}
@@ -115,10 +139,9 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>생년월일</td>
               <td>
-                <Calendar
+              <Calendar
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
-                  style={{width: "25.3125rem", borderColor: "#D9D9D9"}}
                 />
               </td>
             </tr>
@@ -134,15 +157,15 @@ export default function HmlsModifyInfo() {
             </tr>
             <tr>
               <td>주소</td>
-              <td>버튼추가할거예옹</td>
+              <td><PlaceHolder /></td>
             </tr>
             <tr>
               <td>소속센터</td>
-              <td>버튼추가할거예옹</td>
+              <td><PlaceHolder /></td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
-              <td>버튼추가할거예옹</td>
+              <td><PlaceHolder /></td>
             </tr>
             <tr>
               <td>성별</td>
@@ -229,4 +252,11 @@ const BtnWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4rem;
+`;
+
+const ProfileImage = styled.img`
+  width: 8.9375rem;
+  height: 8.9375rem;
+  border-radius: 50%;
+  object-fit: cover;
 `;
