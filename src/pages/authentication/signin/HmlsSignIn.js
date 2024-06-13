@@ -3,8 +3,11 @@ import styled from "styled-components";
 import PageTitle from "../../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
 import { ReactComponent as MustIcon } from "../../../icons/MustIcon.svg";
-
+import { ReactComponent as RadioOnIcon } from "../../../icons/RadioOnIcon.svg";
+import { ReactComponent as RadioOffIcon } from "../../../icons/RadioOffIcon.svg";
+import { ReactComponent as SearchIcon } from "../../../icons/SearchIcon.svg";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
+import RoundGreenBtn from "../../../components/buttons/RoundGreenBtn";
 import { useNavigate } from "react-router-dom";
 import PlaceHolder from "../../../components/PlaceHolder";
 import Calendar from "../../../components/Calendar";
@@ -49,6 +52,12 @@ export default function HmlsSignIn() {
     }),
   };
 
+  const [selectedGender, setSelectedGender] = useState(null);
+
+  const toggleGender = (gender) => {
+    setSelectedGender((prevGender) => (prevGender === gender ? null : gender));
+  };
+
   return (
     <Container>
       <PageTitle text="회원가입" />
@@ -82,7 +91,31 @@ export default function HmlsSignIn() {
           <tbody>
             <tr>
               <td>구분</td>
-              <td></td>
+              <td
+                style={{
+                  fontFamily: "Pretendard-Medium",
+                  color: "#A9A9A9",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  <RadioOffIcon />
+                  <span
+                    style={{
+                      padding: "0 1.125rem",
+                    }}
+                  >
+                    구인자
+                  </span>
+                  <RadioOnIcon />
+                  <span
+                    style={{
+                      padding: "0 1.125rem",
+                    }}
+                  >
+                    구직자
+                  </span>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>
@@ -96,7 +129,10 @@ export default function HmlsSignIn() {
               </td>
             </tr>
             <tr>
-              <td>아이디</td>
+              <td>
+                아이디
+                <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
                   text="영문 소문자/숫자, 4~16자"
@@ -105,7 +141,10 @@ export default function HmlsSignIn() {
               </td>
             </tr>
             <tr>
-              <td>별명</td>
+              <td>
+                별명
+                <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
                   style={{
@@ -116,7 +155,10 @@ export default function HmlsSignIn() {
               </td>
             </tr>
             <tr>
-              <td>비밀번호</td>
+              <td>
+                비밀번호
+                <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
                   text="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
@@ -125,7 +167,10 @@ export default function HmlsSignIn() {
               </td>
             </tr>
             <tr>
-              <td>비밀번호 확인</td>
+              <td>
+                비밀번호 확인
+                <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
                   style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
@@ -133,19 +178,35 @@ export default function HmlsSignIn() {
               </td>
             </tr>
             <tr>
-              <td>생년월일</td>
+              <td>
+                생년월일
+                <StyledMustIcon />
+              </td>
               <td>
                 <Calendar
-                  style={{ width: "25.3125rem" }}
+                  style={{
+                    border: "0.1rem solid #AFBFA5",
+                    color: "#8AA353",
+                    width: "25.3125rem",
+                  }}
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
                 />
               </td>
             </tr>
             <tr>
-              <td>전화번호</td>
               <td>
-                <PlaceHolder style={{ width: "6.4375rem" }} />
+                전화번호
+                <StyledMustIcon />
+              </td>
+              <td>
+                <PlaceHolder
+                  style={{
+                    border: "0.1rem solid #AFBFA5",
+                    color: "#8AA353",
+                    width: "6.4375rem",
+                  }}
+                />
                 <span
                   style={{
                     fontFamily: "Pretendard-Medium",
@@ -156,7 +217,13 @@ export default function HmlsSignIn() {
                 >
                   -
                 </span>
-                <PlaceHolder style={{ width: "6.4375rem" }} />
+                <PlaceHolder
+                  style={{
+                    border: "0.1rem solid #AFBFA5",
+                    color: "#8AA353",
+                    width: "6.4375rem",
+                  }}
+                />
                 <span
                   style={{
                     fontFamily: "Pretendard-Medium",
@@ -167,7 +234,13 @@ export default function HmlsSignIn() {
                 >
                   -
                 </span>
-                <PlaceHolder style={{ width: "6.4375rem" }} />
+                <PlaceHolder
+                  style={{
+                    border: "0.1rem solid #AFBFA5",
+                    color: "#8AA353",
+                    width: "6.4375rem",
+                  }}
+                />
               </td>
             </tr>
             <tr>
@@ -178,7 +251,13 @@ export default function HmlsSignIn() {
                   alignItems: "row",
                 }}
               >
-                <PlaceHolder style={{ width: "10.3125rem" }} />
+                <PlaceHolder
+                  style={{
+                    border: "0.1rem solid #AFBFA5",
+                    color: "#8AA353",
+                    width: "10.3125rem",
+                  }}
+                />
                 <span
                   style={{
                     fontFamily: "Pretendard-Regular",
@@ -201,6 +280,7 @@ export default function HmlsSignIn() {
                 <PlaceHolder
                   style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
                 />
+                <SearchIcon />
               </td>
             </tr>
             <tr>
@@ -227,35 +307,76 @@ export default function HmlsSignIn() {
                   alignItems: "row",
                 }}
               >
-                <RoundWhiteBtn
-                  text="남자"
-                  onClick={handlePicClick}
-                  style={{
-                    boxSizing: "border-box",
-                    borderRadius: "0.9375rem",
-                    width: "6.4375rem",
-                    height: "2.8125rem",
-                    cursor: "pointer",
-                    fontFamily: "Pretendard-Medium",
-                    fontSize: "1.3125rem",
-                    position: "relative",
-                    marginRight: "1.5rem",
-                  }}
-                />
-                <RoundWhiteBtn
-                  text="여자"
-                  onClick={handlePicClick}
-                  style={{
-                    boxSizing: "border-box",
-                    borderRadius: "0.9375rem",
-                    width: "6.4375rem",
-                    height: "2.8125rem",
-                    cursor: "pointer",
-                    fontFamily: "Pretendard-Medium",
-                    fontSize: "1.3125rem",
-                    position: "relative",
-                  }}
-                />
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  {selectedGender === "male" ? (
+                    <RoundGreenBtn
+                      text="남자"
+                      onClick={() => toggleGender("male")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  ) : (
+                    <RoundWhiteBtn
+                      text="남자"
+                      onClick={() => toggleGender("male")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  )}
+                </div>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  {selectedGender === "female" ? (
+                    <RoundGreenBtn
+                      text="여자"
+                      onClick={() => toggleGender("female")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  ) : (
+                    <RoundWhiteBtn
+                      text="여자"
+                      onClick={() => toggleGender("female")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  )}
+                </div>
               </td>
             </tr>
           </tbody>
@@ -263,7 +384,7 @@ export default function HmlsSignIn() {
       </PostContent>
       <BtnWrapper>
         <RoundWhiteBtn
-          text="여자"
+          text="완료"
           onClick={handlePicClick}
           style={{
             boxSizing: "border-box",
@@ -347,23 +468,4 @@ const BtnWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 4rem;
-`;
-
-const InputName = styled.input`
-  box-sizing: border-box;
-  width: 25.3125rem;
-  height: 2.8125rem;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
-  font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  color: #6e6e6e;
-
-  &::placeholder {
-    color: #8aa353;
-    font-size: 16px;
-  }
 `;
