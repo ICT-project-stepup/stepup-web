@@ -449,7 +449,6 @@ const RequirementsTable = styled.table`
   margin-left: 0.8125rem;
 
   td {
-    border: 1px solid #ddd;
     padding: 0.5rem;
     font-size: 1.5rem;
     text-align: left;
