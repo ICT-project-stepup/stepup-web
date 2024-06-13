@@ -70,21 +70,23 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
           isEditing={isEditing} // isEditing prop 추가
         />
         {isEditing && (
-          <AddPersonButton
-            onClick={() =>
-              setApplyWithData([
-                ...applyWithData,
-                {
-                  number: applyWithData.length + 1,
-                  id: "",
-                  name: "",
-                },
-              ])
-            }
-          >
-            <StyledAddIcon />
-            인원 추가
-          </AddPersonButton>
+          <ButtonWrapper>
+            <AddPersonButton
+              onClick={() =>
+                setApplyWithData([
+                  ...applyWithData,
+                  {
+                    number: applyWithData.length + 1,
+                    id: "",
+                    name: "",
+                  },
+                ])
+              }
+            >
+              <StyledAddIcon />
+              인원 추가
+            </AddPersonButton>
+          </ButtonWrapper>
         )}
       </ApplyWithBox>
     </Container>
@@ -98,6 +100,7 @@ const Header = styled.div`
 `;
 
 const ApplyWithBox = styled.div`
+  width: 60%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -147,42 +150,49 @@ const Row = styled.div`
 
 const InputId = styled.input`
   box-sizing: border-box;
-  width: 100%;
-  max-width: 220px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
+  width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
+  max-width: 13.75rem;
+  height: 2.688rem;
+  border: 0.1rem solid #8aa353;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #6e6e6e;
+  padding: 0 1rem;
 
   &::placeholder {
     color: #8aa353;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
 const InputName = styled.input`
   box-sizing: border-box;
-  width: 100%;
-  max-width: 220px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
+  width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
+  max-width: 13.75rem;
+  height: 2.688rem;
+  border: 0.1rem solid #8aa353;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #6e6e6e;
+  padding: 0 1rem;
 
   &::placeholder {
     color: #8aa353;
-    font-size: 16px;
+    font-size: 1rem;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 0.1rem #6E6E6E;
 `;
 
 const AddPersonButton = styled.button`
@@ -202,8 +212,6 @@ const AddPersonButton = styled.button`
   box-sizing: border-box;
   border: 1.5px dashed #8aa353;
   border-radius: 15px;
-  margin-top: 1rem;
-  padding-right: 20px;
 `;
 
 const StyledAddIcon = styled(AddIcon)`
