@@ -10,6 +10,7 @@ import ModifyModal from "../../components/modals/ModifyModal.js";
 import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
+import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
 
 export default function HmlsModifyInfo() {
   const infoData = {
@@ -165,15 +166,15 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>이름</td>
+              <td>이름 <StyledMustIcon /></td>
               <td>버튼추가할거예옹</td>
             </tr>
             <tr>
-              <td>아이디</td>
+              <td>아이디 <StyledMustIcon /></td>
               <td>버튼추가할거예옹</td>
             </tr>
             <tr>
-              <td>별명</td>
+              <td>별명 <StyledMustIcon /></td>
               <td>
                 <PlaceHolder
                   text="별명"
@@ -183,7 +184,7 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>비밀번호 변경</td>
+              <td>비밀번호 변경 <StyledMustIcon /></td>
               <td>
                 <PlaceHolder
                   text={
@@ -198,7 +199,7 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>비밀번호 확인</td>
+              <td>비밀번호 확인 <StyledMustIcon /></td>
               <td>
                 <PlaceHolder
                   text=""
@@ -209,7 +210,7 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>생년월일</td>
+              <td>생년월일 <StyledMustIcon /></td>
               <td>
                 <Calendar
                   selectedDate={selectedDate}
@@ -219,7 +220,7 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>전화번호</td>
+              <td>전화번호 <StyledMustIcon /></td>
               <td>
                 <PlaceHolder
                   text="010"
@@ -468,4 +469,9 @@ const ProfileImage = styled.img`
   height: 8.9375rem;
   border-radius: 50%;
   object-fit: cover;
+`;
+
+const StyledMustIcon = styled(MustIcon)`
+  margin-bottom: 0.5rem;
+  color: #8aa353;
 `;
