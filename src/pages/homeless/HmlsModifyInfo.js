@@ -10,7 +10,7 @@ import ModifyModal from "../../components/modals/ModifyModal.js";
 
 export default function HmlsModifyInfo() {
   const handlePicClick = () => {
-    if (isEditable) {
+    if (isEditing) {
       document.getElementById("profilePicInput").click();
     }
   };
@@ -67,13 +67,13 @@ export default function HmlsModifyInfo() {
     }),
   };
 
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
-    if (isEditable) {
+    if (isEditing) {
       handleCompleteClick();
     }
-    setIsEditable(!isEditable);
+    setIsEditing(!isEditing);
   };
 
   return (
@@ -98,11 +98,11 @@ export default function HmlsModifyInfo() {
           onClick={handlePicClick}
           style={{
             boxSizing: "border-box",
-            color: isEditable ? "#8AA353" : "#afafaf",
+            color: isEditing ? "#8AA353" : "#afafaf",
             width: "7.1875rem",
             height: "2.6875rem",
             borderRadius: "0.9375rem",
-            cursor: isEditable ? "pointer" : "default",
+            cursor: isEditing ? "pointer" : "default",
             fontFamily: "Pretendard-Medium",
             fontWeight: 500,
             lineHeight: "1.4925rem",
@@ -130,33 +130,27 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>별명</td>
               <td>
-                <PlaceHolder
-                  as="input"
-                  type="text"
-                  defaultValue="별명"
-                  readOnly={!isEditable}
-                />
+                <PlaceHolder text="별명" isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>비밀번호 변경</td>
               <td>
                 <PlaceHolder
-                  as="input"
+                  text={
+                    isEditing
+                      ? "영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+                      : ""
+                  }
                   type="password"
-                  placeholder="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
-                  readOnly={!isEditable}
+                  isEditing={isEditing}
                 />
               </td>
             </tr>
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <PlaceHolder
-                  as="input"
-                  type="password"
-                  readOnly={!isEditable}
-                />
+                <PlaceHolder text="" type="password" isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -165,7 +159,7 @@ export default function HmlsModifyInfo() {
                 <Calendar
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
-                  isEditable={isEditable}
+                  isEditable={isEditing}
                 />
               </td>
             </tr>
@@ -173,24 +167,24 @@ export default function HmlsModifyInfo() {
               <td>전화번호</td>
               <td>
                 <PlaceHolder
-                  as="input"
+                  text="010"
                   type="text"
                   style={{ width: "6.4375rem" }}
-                  readOnly={!isEditable}
+                  isEditing={isEditing}
                 />{" "}
                 -{" "}
                 <PlaceHolder
-                  as="input"
+                  text="0000"
                   type="text"
                   style={{ width: "6.4375rem" }}
-                  readOnly={!isEditable}
+                  isEditing={isEditing}
                 />{" "}
                 -{" "}
                 <PlaceHolder
-                  as="input"
+                  text="0000"
                   type="text"
                   style={{ width: "6.4375rem" }}
-                  readOnly={!isEditable}
+                  isEditing={isEditing}
                 />
               </td>
             </tr>
@@ -203,50 +197,35 @@ export default function HmlsModifyInfo() {
                 }}
               >
                 <PlaceHolder
-                  as="input"
+                  text="example"
                   type="text"
                   style={{ width: "10.3125rem" }}
-                  readOnly={!isEditable}
+                  isEditing={isEditing}
                 />{" "}
                 @{" "}
                 <CustomSelect
                   styles={customSelectStyles}
                   options={emailOptions}
-                  isDisabled={!isEditable}
+                  isDisabled={!isEditing}
                 />
               </td>
             </tr>
             <tr>
               <td>주소</td>
               <td>
-                <PlaceHolder
-                  as="input"
-                  type="text"
-                  defaultValue="주소"
-                  readOnly={!isEditable}
-                />
+                <PlaceHolder text="주소" isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>소속센터</td>
               <td>
-                <PlaceHolder
-                  as="input"
-                  type="text"
-                  defaultValue="소속센터"
-                  readOnly={!isEditable}
-                />
+                <PlaceHolder text="소속센터" isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
               <td>
-                <PlaceHolder
-                  as="input"
-                  type="text"
-                  defaultValue="희망 근로 지역"
-                  readOnly={!isEditable}
-                />
+                <PlaceHolder text="희망 근로 지역" isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -258,7 +237,7 @@ export default function HmlsModifyInfo() {
       </PostContent>
       <BtnWrapper>
         <RoundWhiteBtn
-          text={isEditable ? "완료" : "수정하기"}
+          text={isEditing ? "완료" : "수정하기"}
           onClick={handleEditClick}
           style={{
             boxSizing: "border-box",
