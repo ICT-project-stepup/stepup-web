@@ -75,7 +75,6 @@ const ItemWrapper = styled.div`
 const ListDeleteBtnWrapper = styled.div`
   width: calc(100% + 3rem);
   display: flex;
-  justify-content: space-between;
 `;
 
 const ListItem = styled.div`

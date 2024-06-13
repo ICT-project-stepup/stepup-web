@@ -8,10 +8,23 @@ import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
 import ModifyModal from "../../components/modals/ModifyModal.js";
 
-/* 채은 */
 export default function HmlsModifyInfo() {
+  const infoData = {
+    nickname: "홍길동",
+    password: "",
+    passwordConfirm: "",
+    birthDate: "1990-01-01",
+    phoneNumber: "010-1234-5678",
+    email: "example@naver.com",
+    address: "서울시 강남구",
+    center: "서울센터",
+    desiredArea: "서울",
+  };
+
   const handlePicClick = () => {
-    document.getElementById("profilePicInput").click();
+    if (isEditing) {
+      document.getElementById("profilePicInput").click();
+    }
   };
 
   const [profilePic, setProfilePic] = useState(null);
@@ -27,7 +40,7 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(infoData.birthDate);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -36,7 +49,6 @@ export default function HmlsModifyInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCompleteClick = () => {
-    // 완료 버튼 누르면 모달
     setIsModalOpen(true);
   };
 
@@ -45,7 +57,6 @@ export default function HmlsModifyInfo() {
   };
 
   const emailOptions = [
-    // 이메일 옵션
     { value: "naver.com", label: "naver.com" },
     { value: "hanmail.net", label: "hanmail.net" },
     { value: "nate.com", label: "nate.com" },
@@ -55,26 +66,32 @@ export default function HmlsModifyInfo() {
   const customSelectStyles = {
     control: (provided) => ({
       ...provided,
-      width: "11.875rem", // 너비 설정
+      width: "11.875rem",
       borderRadius: "15px",
     }),
-
     menu: (provided) => ({
       ...provided,
       width: "11.875rem",
     }),
-
     menuList: (provided) => ({
       ...provided,
       maxHeight: 190,
     }),
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+    if (isEditing) {
+      handleCompleteClick();
+    }
+  };
+
   return (
     <Container>
       <PageTitle text="정보 수정" />
       <SubText>사진</SubText>
-
       <DefaultPic>
         {profilePic ? (
           <ProfileImage src={profilePic} alt="Profile" />
@@ -88,17 +105,16 @@ export default function HmlsModifyInfo() {
           style={{ display: "none" }}
           onChange={handleProfilePicChange}
         />
-
         <RoundWhiteBtn
           text="사진 등록"
           onClick={handlePicClick}
           style={{
             boxSizing: "border-box",
-            color: "#8AA353",
+            color: isEditing ? "#8AA353" : "#afafaf",
             width: "7.1875rem",
             height: "2.6875rem",
             borderRadius: "0.9375rem",
-            cursor: "pointer",
+            cursor: isEditing ? "pointer" : "default",
             fontFamily: "Pretendard-Medium",
             fontWeight: 500,
             lineHeight: "1.4925rem",
@@ -108,13 +124,12 @@ export default function HmlsModifyInfo() {
           }}
         />
       </DefaultPic>
-
       <PostContent>
         <RequirementsTable>
           <tbody>
             <tr>
               <td>구분</td>
-              <td></td>
+              <td>버튼추가할거예옹</td>
             </tr>
             <tr>
               <td>이름</td>
@@ -127,23 +142,24 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>별명</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder text="별명" defaultValue={infoData.nickname} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>비밀번호 변경</td>
               <td>
                 <PlaceHolder
-                  text={
-                    "영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
-                  }
+                  text="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+                  type="password"
+                  defaultValue={infoData.password}
+                  isEditing={isEditing}
                 />
               </td>
             </tr>
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder text="" type="password" defaultValue={infoData.passwordConfirm} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -152,15 +168,36 @@ export default function HmlsModifyInfo() {
                 <Calendar
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
+                  isEditable={isEditing}
                 />
               </td>
             </tr>
             <tr>
               <td>전화번호</td>
               <td>
-                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
-                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
-                <PlaceHolder style={{ width: "6.4375rem" }} />
+                <PlaceHolder
+                  text="010"
+                  type="text"
+                  style={{ width: "6.4375rem" }}
+                  defaultValue={infoData.phoneNumber.split("-")[0]}
+                  isEditing={isEditing}
+                />{" "}
+                -{" "}
+                <PlaceHolder
+                  text="0000"
+                  type="text"
+                  style={{ width: "6.4375rem" }}
+                  defaultValue={infoData.phoneNumber.split("-")[1]}
+                  isEditing={isEditing}
+                />{" "}
+                -{" "}
+                <PlaceHolder
+                  text="0000"
+                  type="text"
+                  style={{ width: "6.4375rem" }}
+                  defaultValue={infoData.phoneNumber.split("-")[2]}
+                  isEditing={isEditing}
+                />
               </td>
             </tr>
             <tr>
@@ -168,32 +205,43 @@ export default function HmlsModifyInfo() {
               <td
                 style={{
                   display: "flex",
-                  alignItems: "row",
+                  alignItems: "center",
                 }}
               >
-                <PlaceHolder style={{ width: "10.3125rem" }} /> @{" "}
+                <PlaceHolder
+                  text="example"
+                  type="text"
+                  style={{ width: "10.3125rem" }}
+                  defaultValue={infoData.email.split("@")[0]}
+                  isEditing={isEditing}
+                />{" "}
+                @{" "}
                 <CustomSelect
                   styles={customSelectStyles}
                   options={emailOptions}
+                  isDisabled={!isEditing}
+                  defaultValue={emailOptions.find(
+                    (option) => option.value === infoData.email.split("@")[1]
+                  )}
                 />
               </td>
             </tr>
             <tr>
               <td>주소</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder text="주소" defaultValue={infoData.address} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>소속센터</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder text="소속센터" defaultValue={infoData.center} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder text="희망 근로 지역" defaultValue={infoData.desiredArea} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -203,11 +251,10 @@ export default function HmlsModifyInfo() {
           </tbody>
         </RequirementsTable>
       </PostContent>
-
       <BtnWrapper>
         <RoundWhiteBtn
-          text="완료"
-          onClick={handleCompleteClick}
+          text={isEditing ? "완료" : "수정하기"}
+          onClick={handleEditClick}
           style={{
             boxSizing: "border-box",
             width: "15.0625rem",
@@ -249,7 +296,7 @@ const StyledProfile = styled(ProfileIcon)`
 
 const DefaultPic = styled.div`
   display: flex;
-  align-items: row;
+  align-items: center;
   margin-top: 1.6875rem;
 `;
 

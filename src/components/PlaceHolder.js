@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export default function PlaceHolder({ text, style }) {
-  return <Input placeholder={text} style={style} />;
+export default function PlaceHolder({ text, style, isEditing, type = "text" }) {
+  return <Input placeholder={text} style={style} readOnly={!isEditing} type={type} />;
 }
 
 const Input = styled.input`
