@@ -8,10 +8,11 @@ import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
 import ModifyModal from "../../components/modals/ModifyModal.js";
 
-/* 채은 */
 export default function HmlsModifyInfo() {
   const handlePicClick = () => {
-    document.getElementById("profilePicInput").click();
+    if (isEditable) {
+      document.getElementById("profilePicInput").click();
+    }
   };
 
   const [profilePic, setProfilePic] = useState(null);
@@ -36,7 +37,6 @@ export default function HmlsModifyInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCompleteClick = () => {
-    // 완료 버튼 누르면 모달
     setIsModalOpen(true);
   };
 
@@ -45,7 +45,6 @@ export default function HmlsModifyInfo() {
   };
 
   const emailOptions = [
-    // 이메일 옵션
     { value: "naver.com", label: "naver.com" },
     { value: "hanmail.net", label: "hanmail.net" },
     { value: "nate.com", label: "nate.com" },
@@ -55,26 +54,32 @@ export default function HmlsModifyInfo() {
   const customSelectStyles = {
     control: (provided) => ({
       ...provided,
-      width: "11.875rem", // 너비 설정
+      width: "11.875rem",
       borderRadius: "15px",
     }),
-
     menu: (provided) => ({
       ...provided,
       width: "11.875rem",
     }),
-
     menuList: (provided) => ({
       ...provided,
       maxHeight: 190,
     }),
   };
 
+  const [isEditable, setIsEditable] = useState(false);
+
+  const handleEditClick = () => {
+    if (isEditable) {
+      handleCompleteClick();
+    }
+    setIsEditable(!isEditable);
+  };
+
   return (
     <Container>
       <PageTitle text="정보 수정" />
       <SubText>사진</SubText>
-
       <DefaultPic>
         {profilePic ? (
           <ProfileImage src={profilePic} alt="Profile" />
@@ -88,17 +93,16 @@ export default function HmlsModifyInfo() {
           style={{ display: "none" }}
           onChange={handleProfilePicChange}
         />
-
         <RoundWhiteBtn
           text="사진 등록"
           onClick={handlePicClick}
           style={{
             boxSizing: "border-box",
-            color: "#8AA353",
+            color: isEditable ? "#8AA353" : "#afafaf",
             width: "7.1875rem",
             height: "2.6875rem",
             borderRadius: "0.9375rem",
-            cursor: "pointer",
+            cursor: isEditable ? "pointer" : "default",
             fontFamily: "Pretendard-Medium",
             fontWeight: 500,
             lineHeight: "1.4925rem",
@@ -108,13 +112,12 @@ export default function HmlsModifyInfo() {
           }}
         />
       </DefaultPic>
-
       <PostContent>
         <RequirementsTable>
           <tbody>
             <tr>
               <td>구분</td>
-              <td></td>
+              <td>버튼추가할거예옹</td>
             </tr>
             <tr>
               <td>이름</td>
@@ -127,23 +130,33 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>별명</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  defaultValue="별명"
+                  readOnly={!isEditable}
+                />
               </td>
             </tr>
             <tr>
               <td>비밀번호 변경</td>
               <td>
                 <PlaceHolder
-                  text={
-                    "영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
-                  }
+                  as="input"
+                  type="password"
+                  placeholder="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+                  readOnly={!isEditable}
                 />
               </td>
             </tr>
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder
+                  as="input"
+                  type="password"
+                  readOnly={!isEditable}
+                />
               </td>
             </tr>
             <tr>
@@ -152,15 +165,33 @@ export default function HmlsModifyInfo() {
                 <Calendar
                   selectedDate={selectedDate}
                   handleDateChange={handleDateChange}
+                  isEditable={isEditable}
                 />
               </td>
             </tr>
             <tr>
               <td>전화번호</td>
               <td>
-                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
-                <PlaceHolder style={{ width: "6.4375rem" }} /> -{" "}
-                <PlaceHolder style={{ width: "6.4375rem" }} />
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  style={{ width: "6.4375rem" }}
+                  readOnly={!isEditable}
+                />{" "}
+                -{" "}
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  style={{ width: "6.4375rem" }}
+                  readOnly={!isEditable}
+                />{" "}
+                -{" "}
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  style={{ width: "6.4375rem" }}
+                  readOnly={!isEditable}
+                />
               </td>
             </tr>
             <tr>
@@ -168,32 +199,54 @@ export default function HmlsModifyInfo() {
               <td
                 style={{
                   display: "flex",
-                  alignItems: "row",
+                  alignItems: "center",
                 }}
               >
-                <PlaceHolder style={{ width: "10.3125rem" }} /> @{" "}
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  style={{ width: "10.3125rem" }}
+                  readOnly={!isEditable}
+                />{" "}
+                @{" "}
                 <CustomSelect
                   styles={customSelectStyles}
                   options={emailOptions}
+                  isDisabled={!isEditable}
                 />
               </td>
             </tr>
             <tr>
               <td>주소</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  defaultValue="주소"
+                  readOnly={!isEditable}
+                />
               </td>
             </tr>
             <tr>
               <td>소속센터</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  defaultValue="소속센터"
+                  readOnly={!isEditable}
+                />
               </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
               <td>
-                <PlaceHolder />
+                <PlaceHolder
+                  as="input"
+                  type="text"
+                  defaultValue="희망 근로 지역"
+                  readOnly={!isEditable}
+                />
               </td>
             </tr>
             <tr>
@@ -203,11 +256,10 @@ export default function HmlsModifyInfo() {
           </tbody>
         </RequirementsTable>
       </PostContent>
-
       <BtnWrapper>
         <RoundWhiteBtn
-          text="완료"
-          onClick={handleCompleteClick}
+          text={isEditable ? "완료" : "수정하기"}
+          onClick={handleEditClick}
           style={{
             boxSizing: "border-box",
             width: "15.0625rem",
@@ -249,7 +301,7 @@ const StyledProfile = styled(ProfileIcon)`
 
 const DefaultPic = styled.div`
   display: flex;
-  align-items: row;
+  align-items: center;
   margin-top: 1.6875rem;
 `;
 
