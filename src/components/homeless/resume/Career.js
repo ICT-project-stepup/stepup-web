@@ -133,24 +133,26 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
           isEditing={isEditing} // isEditing prop 추가
         />
         {isEditing && (
-          <AddCareerButton
-            onClick={() =>
-              setCareerData([
-                ...careerData,
-                {
-                  institution: "",
-                  work: "",
-                  periodValue: "",
-                  periodUnit: "",
-                  startDate: null,
-                  endDate: null,
-                },
-              ])
-            }
-          >
-            <StyledAddIcon />
-            경력 추가
-          </AddCareerButton>
+          <ButtonWrapper>
+            <AddCareerButton
+              onClick={() =>
+                setCareerData([
+                  ...careerData,
+                  {
+                    institution: "",
+                    work: "",
+                    periodValue: "",
+                    periodUnit: "",
+                    startDate: null,
+                    endDate: null,
+                  },
+                ])
+              }
+            >
+              <StyledAddIcon />
+              경력 추가
+            </AddCareerButton>
+          </ButtonWrapper>
         )}
       </CareerBox>
     </Container>
@@ -199,40 +201,38 @@ const Row = styled.div`
 const InputInstitution = styled.input`
   box-sizing: border-box;
   width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
-  max-width: 220px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
+  max-width: 13.75rem;
+  height: 2.688rem;
+  border: 0.1rem solid #8aa353;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #6e6e6e;
+  padding: 0 1rem;
 
   &::placeholder {
     color: #8aa353;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
 const InputWork = styled.input`
   box-sizing: border-box;
   width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
-  max-width: 220px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
+  max-width: 13.75rem;
+  height: 2.688rem;
+  border: 0.1rem solid #8aa353;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #6e6e6e;
+  padding: 0 1rem;
 
   &::placeholder {
     color: #8aa353;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
@@ -241,14 +241,21 @@ const PeriodWrapper = styled.div`
   align-items: center;
 `;
 
+const ButtonWrapper = styled.div`
+  width: 100%;
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 0.1rem #6E6E6E;
+`;
+
 const AddCareerButton = styled.button`
-  width: 189px;
-  height: 43px;
+  width: 11.813rem;
+  height: 2.688rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -256,14 +263,12 @@ const AddCareerButton = styled.button`
   background-color: #ffffff;
   cursor: pointer;
   box-sizing: border-box;
-  border: 1.5px dashed #8aa353;
-  border-radius: 15px;
-  margin-top: 1rem;
-  padding-right: 20px;
+  border: 0.1rem dashed #8aa353;
+  border-radius: 1rem;
 `;
 
 const StyledAddIcon = styled(AddIcon)`
-  margin: 10px;
+  margin: 0.625rem;
 `;
 
 const Text = styled.p`
@@ -271,13 +276,13 @@ const Text = styled.p`
   margin-bottom: 1rem;
   padding: 0.5rem;
   background: #f5f5f5;
-  border-radius: 15px;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #6e6e6e;
   text-align: center;
   width: 100%;
-  max-width: 220px;
+  max-width: 13.75rem;
 
   color: ${({ isEditing }) =>
     isEditing ? "#6e6e6e" : "#2B2B2B"}; // 읽기모드와 편집모드에 따라 다름

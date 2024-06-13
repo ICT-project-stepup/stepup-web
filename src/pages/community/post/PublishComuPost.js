@@ -1,7 +1,5 @@
 import { styled } from "styled-components";
-import { Link } from 'react-router-dom';
 import PageTitle from "../../../components/PageTitle";
-import { ReactComponent as LinkIcon} from "../../../icons/LinkIcon.svg";
 import { ReactComponent as BigSearchIcon } from "../../../icons/BigSearchIcon.svg";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 

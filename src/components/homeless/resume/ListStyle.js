@@ -14,14 +14,16 @@ const ListStyle = ({ headers, data, renderRow, onDelete, isEditing }) => {
       </ListHeader>
       {data.map((item, index) => (
         <ItemWrapper key={index}>
-          <ListItem>{renderRow(item)}</ListItem>
-          {isEditing && (
-            <DeleteButtonWrapper>
-              <DeleteButton onClick={() => onDelete(index)}>
-                <StyledDeleteIcon />
-              </DeleteButton>
-            </DeleteButtonWrapper>
-          )}
+          <ListDeleteBtnWrapper>
+            <ListItem>{renderRow(item)}</ListItem>
+            {isEditing && (
+              <DeleteButtonWrapper>
+                <DeleteButton onClick={() => onDelete(index)}>
+                  <StyledDeleteIcon />
+                </DeleteButton>
+              </DeleteButtonWrapper>
+            )}
+          </ListDeleteBtnWrapper>
         </ItemWrapper>
       ))}
     </ListWrapper>
@@ -66,8 +68,14 @@ const ListHeader = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  //display: flex;
+  width: 100%;
   border-bottom: solid 0.1rem #6e6e6e;
+`;
+
+const ListDeleteBtnWrapper = styled.div`
+  width: calc(100% + 3rem);
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ListItem = styled.div`
@@ -98,6 +106,7 @@ const ListItem = styled.div`
 `;
 
 const DeleteButtonWrapper = styled.div`
+  width: 3rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
