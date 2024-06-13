@@ -7,6 +7,9 @@ import PlaceHolder from "../../components/PlaceHolder";
 import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
 import ModifyModal from "../../components/modals/ModifyModal.js";
+import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
+import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
+import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 
 export default function HmlsModifyInfo() {
   const infoData = {
@@ -88,6 +91,12 @@ export default function HmlsModifyInfo() {
     }
   };
 
+  const [selectedGender, setSelectedGender] = useState(null); // 성별
+
+  const toggleGender = (gender) => {
+    setSelectedGender((prevGender) => (prevGender === gender ? null : gender));
+  };
+
   return (
     <Container>
       <PageTitle text="정보 수정" />
@@ -129,7 +138,31 @@ export default function HmlsModifyInfo() {
           <tbody>
             <tr>
               <td>구분</td>
-              <td>버튼추가할거예옹</td>
+              <td
+                style={{
+                  fontFamily: "Pretendard-Medium",
+                  color: "#A9A9A9",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  <RadioOffIcon />
+                  <span
+                    style={{
+                      padding: "0 1.125rem",
+                    }}
+                  >
+                    구인자
+                  </span>
+                  <RadioOnIcon />
+                  <span
+                    style={{
+                      padding: "0 1.125rem",
+                    }}
+                  >
+                    구직자
+                  </span>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>이름</td>
@@ -142,14 +175,22 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>별명</td>
               <td>
-                <PlaceHolder text="별명" defaultValue={infoData.nickname} isEditing={isEditing} />
+                <PlaceHolder
+                  text="별명"
+                  defaultValue={infoData.nickname}
+                  isEditing={isEditing}
+                />
               </td>
             </tr>
             <tr>
               <td>비밀번호 변경</td>
               <td>
                 <PlaceHolder
-                  text="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+                  text={
+                    isEditing
+                      ? "영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+                      : ""
+                  }
                   type="password"
                   defaultValue={infoData.password}
                   isEditing={isEditing}
@@ -159,7 +200,12 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <PlaceHolder text="" type="password" defaultValue={infoData.passwordConfirm} isEditing={isEditing} />
+                <PlaceHolder
+                  text=""
+                  type="password"
+                  defaultValue={infoData.passwordConfirm}
+                  isEditing={isEditing}
+                />
               </td>
             </tr>
             <tr>
@@ -229,24 +275,112 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>주소</td>
               <td>
-                <PlaceHolder text="주소" defaultValue={infoData.address} isEditing={isEditing} />
+                <PlaceHolder
+                  text="주소"
+                  defaultValue={infoData.address}
+                  isEditing={isEditing}
+                />
               </td>
             </tr>
             <tr>
               <td>소속센터</td>
               <td>
-                <PlaceHolder text="소속센터" defaultValue={infoData.center} isEditing={isEditing} />
+                <PlaceHolder
+                  text="소속센터"
+                  defaultValue={infoData.center}
+                  isEditing={isEditing}
+                />
               </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
               <td>
-                <PlaceHolder text="희망 근로 지역" defaultValue={infoData.desiredArea} isEditing={isEditing} />
+                <PlaceHolder
+                  text="희망 근로 지역"
+                  defaultValue={infoData.desiredArea}
+                  isEditing={isEditing}
+                />
               </td>
             </tr>
             <tr>
               <td>성별</td>
-              <td>버튼추가할거예옹</td>
+              <td
+                style={{
+                  display: "flex",
+                  alignItems: "row",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  {selectedGender === "male" ? (
+                    <RoundGreenBtn
+                      text="남자"
+                      onClick={() => toggleGender("male")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  ) : (
+                    <RoundWhiteBtn
+                      text="남자"
+                      onClick={() => toggleGender("male")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  )}
+                </div>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  {selectedGender === "female" ? (
+                    <RoundGreenBtn
+                      text="여자"
+                      onClick={() => toggleGender("female")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  ) : (
+                    <RoundWhiteBtn
+                      text="여자"
+                      onClick={() => toggleGender("female")}
+                      style={{
+                        boxSizing: "border-box",
+                        borderRadius: "0.9375rem",
+                        width: "6.4375rem",
+                        height: "2.8125rem",
+                        cursor: "pointer",
+                        fontFamily: "Pretendard-Medium",
+                        fontSize: "1.3125rem",
+                        position: "relative",
+                        marginRight: "1.5rem",
+                      }}
+                    />
+                  )}
+                </div>
+              </td>
             </tr>
           </tbody>
         </RequirementsTable>
