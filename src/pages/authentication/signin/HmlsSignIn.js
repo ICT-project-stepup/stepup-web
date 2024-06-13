@@ -18,7 +18,20 @@ export default function HmlsSignIn() {
   const navigate = useNavigate();
 
   const handlePicClick = () => {
-    navigate("/manageresume");
+    document.getElementById("profilePicInput").click();
+  };
+
+  const [profilePic, setProfilePic] = useState(null);
+
+  const handleProfilePicChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -63,7 +76,18 @@ export default function HmlsSignIn() {
       <PageTitle text="회원가입" />
       <SubText>사진</SubText>
       <DefaultPic>
-        <StyledProfile />
+        {profilePic ? (
+          <ProfileImage src={profilePic} alt="Profile" />
+        ) : (
+          <StyledProfile />
+        )}
+        <input
+          id="profilePicInput"
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleProfilePicChange}
+        />
         <RoundWhiteBtn
           text="사진 등록"
           onClick={handlePicClick}
@@ -432,6 +456,13 @@ const DefaultPic = styled.div`
 const StyledProfile = styled(ProfileIcon)`
 width: 143px
 height: 143px`;
+
+const ProfileImage = styled.img`
+  width: 8.9375rem;
+  height: 8.9375rem;
+  border-radius: 50%;
+  object-fit: cover;
+`;
 
 const StyledMustIcon = styled(MustIcon)`
   margin-bottom: 0.5rem;
