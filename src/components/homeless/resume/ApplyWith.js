@@ -98,6 +98,7 @@ const Header = styled.div`
 `;
 
 const ApplyWithBox = styled.div`
+  width: 60%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -147,41 +148,39 @@ const Row = styled.div`
 
 const InputId = styled.input`
   box-sizing: border-box;
-  width: 100%;
-  max-width: 220px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
+  width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
+  max-width: 13.75rem;
+  height: 2.688rem;
+  border: 0.1rem solid #8aa353;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #6e6e6e;
+  padding: 0 1rem;
 
   &::placeholder {
     color: #8aa353;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
 const InputName = styled.input`
   box-sizing: border-box;
-  width: 100%;
-  max-width: 220px;
-  height: 43px;
-  border: 1.5px solid #8aa353;
-  border-radius: 15px;
+  width: 100%; /* 너비를 100%로 설정하여 가변적으로 조정 */
+  max-width: 13.75rem;
+  height: 2.688rem;
+  border: 0.1rem solid #8aa353;
+  border-radius: 1rem;
   font-family: "Pretendard-Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #6e6e6e;
+  padding: 0 1rem;
 
   &::placeholder {
     color: #8aa353;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
