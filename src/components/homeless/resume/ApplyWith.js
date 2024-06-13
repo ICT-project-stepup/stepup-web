@@ -70,21 +70,23 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
           isEditing={isEditing} // isEditing prop 추가
         />
         {isEditing && (
-          <AddPersonButton
-            onClick={() =>
-              setApplyWithData([
-                ...applyWithData,
-                {
-                  number: applyWithData.length + 1,
-                  id: "",
-                  name: "",
-                },
-              ])
-            }
-          >
-            <StyledAddIcon />
-            인원 추가
-          </AddPersonButton>
+          <ButtonWrapper>
+            <AddPersonButton
+              onClick={() =>
+                setApplyWithData([
+                  ...applyWithData,
+                  {
+                    number: applyWithData.length + 1,
+                    id: "",
+                    name: "",
+                  },
+                ])
+              }
+            >
+              <StyledAddIcon />
+              인원 추가
+            </AddPersonButton>
+          </ButtonWrapper>
         )}
       </ApplyWithBox>
     </Container>
@@ -184,6 +186,15 @@ const InputName = styled.input`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  width: 100%;
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 0.1rem #6E6E6E;
+`;
+
 const AddPersonButton = styled.button`
   width: 189px;
   height: 43px;
@@ -201,8 +212,6 @@ const AddPersonButton = styled.button`
   box-sizing: border-box;
   border: 1.5px dashed #8aa353;
   border-radius: 15px;
-  margin-top: 1rem;
-  padding-right: 20px;
 `;
 
 const StyledAddIcon = styled(AddIcon)`

@@ -51,13 +51,17 @@ const StyledTextarea = styled.textarea`
   width: auto;
   height: 180px;
   border-radius: 20px;
-  padding: 1rem;
+  padding: 1.5rem 2rem;
   font-size: 22px;
   background: ${(props) => (props.isFocused ? "#E4ECD1" : "#D9D9D9")};
   border: 1px solid #dcdcdc;
   font-family: "Pretendard-Medium";
   color: #6e6e6e;
   resize: none; // 크기 고정
+  &:focus {
+    outline: none;
+    border: none;
+  }
 `;
 
 const ReadOnlyTextarea = styled.div`

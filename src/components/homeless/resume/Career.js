@@ -133,24 +133,26 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
           isEditing={isEditing} // isEditing prop 추가
         />
         {isEditing && (
-          <AddCareerButton
-            onClick={() =>
-              setCareerData([
-                ...careerData,
-                {
-                  institution: "",
-                  work: "",
-                  periodValue: "",
-                  periodUnit: "",
-                  startDate: null,
-                  endDate: null,
-                },
-              ])
-            }
-          >
-            <StyledAddIcon />
-            경력 추가
-          </AddCareerButton>
+          <ButtonWrapper>
+            <AddCareerButton
+              onClick={() =>
+                setCareerData([
+                  ...careerData,
+                  {
+                    institution: "",
+                    work: "",
+                    periodValue: "",
+                    periodUnit: "",
+                    startDate: null,
+                    endDate: null,
+                  },
+                ])
+              }
+            >
+              <StyledAddIcon />
+              경력 추가
+            </AddCareerButton>
+          </ButtonWrapper>
         )}
       </CareerBox>
     </Container>
@@ -239,6 +241,15 @@ const PeriodWrapper = styled.div`
   align-items: center;
 `;
 
+const ButtonWrapper = styled.div`
+  width: 100%;
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 0.1rem #6E6E6E;
+`;
+
 const AddCareerButton = styled.button`
   width: 11.813rem;
   height: 2.688rem;
@@ -254,8 +265,6 @@ const AddCareerButton = styled.button`
   box-sizing: border-box;
   border: 0.1rem dashed #8aa353;
   border-radius: 1rem;
-  margin-top: 1rem;
-  padding-right: 1.25rem;
 `;
 
 const StyledAddIcon = styled(AddIcon)`

@@ -80,8 +80,11 @@ export default function ManageResume() {
 }
 
 const btnStyle = {
-  width: "241px",
-  height: "67px",
+    width: "15rem", 
+    height: "4.1rem",
+    fontFamily: "Pretendard-SemiBold",
+    fontSize: "1.75rem",
+    border: "0.15rem solid #8AA353"
 };
 
 const Container = styled.div`
