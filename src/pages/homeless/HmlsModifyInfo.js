@@ -9,6 +9,18 @@ import CustomSelect from "../../components/CustomSelect";
 import ModifyModal from "../../components/modals/ModifyModal.js";
 
 export default function HmlsModifyInfo() {
+  const infoData = {
+    nickname: "홍길동",
+    password: "",
+    passwordConfirm: "",
+    birthDate: "1990-01-01",
+    phoneNumber: "010-1234-5678",
+    email: "example@naver.com",
+    address: "서울시 강남구",
+    center: "서울센터",
+    desiredArea: "서울",
+  };
+
   const handlePicClick = () => {
     if (isEditing) {
       document.getElementById("profilePicInput").click();
@@ -28,7 +40,7 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(infoData.birthDate);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -70,10 +82,10 @@ export default function HmlsModifyInfo() {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
+    setIsEditing(!isEditing);
     if (isEditing) {
       handleCompleteClick();
     }
-    setIsEditing(!isEditing);
   };
 
   return (
@@ -130,19 +142,16 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>별명</td>
               <td>
-                <PlaceHolder text="별명" isEditing={isEditing} />
+                <PlaceHolder text="별명" defaultValue={infoData.nickname} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>비밀번호 변경</td>
               <td>
                 <PlaceHolder
-                  text={
-                    isEditing
-                      ? "영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
-                      : ""
-                  }
+                  text="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
                   type="password"
+                  defaultValue={infoData.password}
                   isEditing={isEditing}
                 />
               </td>
@@ -150,7 +159,7 @@ export default function HmlsModifyInfo() {
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <PlaceHolder text="" type="password" isEditing={isEditing} />
+                <PlaceHolder text="" type="password" defaultValue={infoData.passwordConfirm} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -170,6 +179,7 @@ export default function HmlsModifyInfo() {
                   text="010"
                   type="text"
                   style={{ width: "6.4375rem" }}
+                  defaultValue={infoData.phoneNumber.split("-")[0]}
                   isEditing={isEditing}
                 />{" "}
                 -{" "}
@@ -177,6 +187,7 @@ export default function HmlsModifyInfo() {
                   text="0000"
                   type="text"
                   style={{ width: "6.4375rem" }}
+                  defaultValue={infoData.phoneNumber.split("-")[1]}
                   isEditing={isEditing}
                 />{" "}
                 -{" "}
@@ -184,6 +195,7 @@ export default function HmlsModifyInfo() {
                   text="0000"
                   type="text"
                   style={{ width: "6.4375rem" }}
+                  defaultValue={infoData.phoneNumber.split("-")[2]}
                   isEditing={isEditing}
                 />
               </td>
@@ -200,6 +212,7 @@ export default function HmlsModifyInfo() {
                   text="example"
                   type="text"
                   style={{ width: "10.3125rem" }}
+                  defaultValue={infoData.email.split("@")[0]}
                   isEditing={isEditing}
                 />{" "}
                 @{" "}
@@ -207,25 +220,28 @@ export default function HmlsModifyInfo() {
                   styles={customSelectStyles}
                   options={emailOptions}
                   isDisabled={!isEditing}
+                  defaultValue={emailOptions.find(
+                    (option) => option.value === infoData.email.split("@")[1]
+                  )}
                 />
               </td>
             </tr>
             <tr>
               <td>주소</td>
               <td>
-                <PlaceHolder text="주소" isEditing={isEditing} />
+                <PlaceHolder text="주소" defaultValue={infoData.address} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>소속센터</td>
               <td>
-                <PlaceHolder text="소속센터" isEditing={isEditing} />
+                <PlaceHolder text="소속센터" defaultValue={infoData.center} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
               <td>
-                <PlaceHolder text="희망 근로 지역" isEditing={isEditing} />
+                <PlaceHolder text="희망 근로 지역" defaultValue={infoData.desiredArea} isEditing={isEditing} />
               </td>
             </tr>
             <tr>
