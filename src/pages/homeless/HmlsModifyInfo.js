@@ -10,18 +10,23 @@ import ModifyModal from "../../components/modals/ModifyModal.js";
 import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
+import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
 
 export default function HmlsModifyInfo() {
   const infoData = {
-    nickname: "홍길동",
+    userType: "구직자",
+    name: "홍익대",
+    userId: "lookat",
+    nickname: "홍익인간",
     password: "",
     passwordConfirm: "",
-    birthDate: "1990-01-01",
-    phoneNumber: "010-1234-5678",
+    birthDate: "1964-07-11",
+    phoneNumber: "010-1964-0711",
     email: "example@naver.com",
-    address: "서울시 강남구",
-    center: "서울센터",
-    desiredArea: "서울",
+    address: "서울 용산구 한강대로92길 6 갈월동빌딩",
+    center: "다시서기종합지원센터",
+    desiredArea: "충청도",
+    gender: "남자",
   };
 
   const handlePicClick = () => {
@@ -31,8 +36,8 @@ export default function HmlsModifyInfo() {
   };
 
   const [profilePic, setProfilePic] = useState(null);
-
   const handleProfilePicChange = (event) => {
+    // 프로필 사진 등록
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -44,22 +49,22 @@ export default function HmlsModifyInfo() {
   };
 
   const [selectedDate, setSelectedDate] = useState(infoData.birthDate);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleCompleteClick = () => {
+    // 완료 버튼 클릭 후 모달 열기
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
+    // 모달 닫기
     setIsModalOpen(false);
   };
 
   const emailOptions = [
+    // 이메일 옵션
     { value: "naver.com", label: "naver.com" },
     { value: "hanmail.net", label: "hanmail.net" },
     { value: "nate.com", label: "nate.com" },
@@ -67,10 +72,12 @@ export default function HmlsModifyInfo() {
   ];
 
   const customSelectStyles = {
+    // 이메일 선택
     control: (provided) => ({
       ...provided,
       width: "11.875rem",
       borderRadius: "15px",
+      backgroundColor: "#FFFFFF",
     }),
     menu: (provided) => ({
       ...provided,
@@ -85,17 +92,14 @@ export default function HmlsModifyInfo() {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
+    // 수정하기 버튼 누른 뒤 완료하기 버튼으로 바뀌게
     setIsEditing(!isEditing);
     if (isEditing) {
       handleCompleteClick();
     }
   };
 
-  const [selectedGender, setSelectedGender] = useState(null); // 성별
-
-  const toggleGender = (gender) => {
-    setSelectedGender((prevGender) => (prevGender === gender ? null : gender));
-  };
+  const phoneParts = infoData.phoneNumber.split("-"); // 전화번호 세 파트로 분리
 
   return (
     <Container>
@@ -114,38 +118,51 @@ export default function HmlsModifyInfo() {
           style={{ display: "none" }}
           onChange={handleProfilePicChange}
         />
-        <RoundWhiteBtn
-          text="사진 등록"
-          onClick={handlePicClick}
-          style={{
-            boxSizing: "border-box",
-            color: isEditing ? "#8AA353" : "#afafaf",
-            width: "7.1875rem",
-            height: "2.6875rem",
-            borderRadius: "0.9375rem",
-            cursor: isEditing ? "pointer" : "default",
-            fontFamily: "Pretendard-Medium",
-            fontWeight: 500,
-            lineHeight: "1.4925rem",
-            position: "relative",
-            marginTop: "5.5rem",
-            marginLeft: "1.5rem",
-          }}
-        />
+        {isEditing && (
+          <RoundWhiteBtn
+            text="사진 등록"
+            onClick={handlePicClick}
+            style={{
+              boxSizing: "border-box",
+              color: "#8AA353",
+              width: "7.1875rem",
+              height: "2.6875rem",
+              borderRadius: "0.9375rem",
+              cursor: "pointer",
+              fontFamily: "Pretendard-Medium",
+              fontWeight: 500,
+              lineHeight: "1.4925rem",
+              position: "relative",
+              marginTop: "5.5rem",
+              marginLeft: "1.5rem",
+            }}
+          />
+        )}
       </DefaultPic>
+
       <PostContent>
         <RequirementsTable>
           <tbody>
             <tr>
-              <td>구분</td>
+              <StyledTd isEditing={isEditing}>구분</StyledTd>
               <td
                 style={{
                   fontFamily: "Pretendard-Medium",
                   color: "#A9A9A9",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                  <RadioOffIcon />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    color: isEditing ? "#D9D9D9" : "#A9A9A9",
+                  }}
+                >
+                  {infoData.userType === "구인자" ? (
+                    <RadioOnIcon />
+                  ) : (
+                    <RadioOffIcon />
+                  )}
                   <span
                     style={{
                       padding: "0 1.125rem",
@@ -153,7 +170,11 @@ export default function HmlsModifyInfo() {
                   >
                     구인자
                   </span>
-                  <RadioOnIcon />
+                  {infoData.userType === "구직자" ? (
+                    <RadioOnIcon />
+                  ) : (
+                    <RadioOffIcon />
+                  )}
                   <span
                     style={{
                       padding: "0 1.125rem",
@@ -165,25 +186,52 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>이름</td>
-              <td>버튼추가할거예옹</td>
-            </tr>
-            <tr>
-              <td>아이디</td>
-              <td>버튼추가할거예옹</td>
-            </tr>
-            <tr>
-              <td>별명</td>
+              <StyledTd isEditing={isEditing}>
+                이름 <StyledMustIcon isEditing={isEditing} />
+              </StyledTd>
               <td>
                 <PlaceHolder
-                  text="별명"
-                  defaultValue={infoData.nickname}
-                  isEditing={isEditing}
+                  text={infoData.name}
+                  isEditing={false}
+                  style={{
+                    fontSize: "21px",
+                    color: isEditing ? "#D9D9D9" : "#6e6e6e",
+                  }}
                 />
               </td>
             </tr>
             <tr>
-              <td>비밀번호 변경</td>
+              <StyledTd isEditing={isEditing}>
+                아이디 <StyledMustIcon isEditing={isEditing} />
+              </StyledTd>
+              <td>
+                <PlaceHolder
+                  text={infoData.userId}
+                  isEditing={false}
+                  style={{
+                    fontSize: "21px",
+                    color: isEditing ? "#D9D9D9" : "#6e6e6e",
+                  }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                별명 <StyledMustIcon />
+              </td>
+              <td>
+                <PlaceHolder
+                  text={infoData.nickname}
+                  defaultValue={infoData.nickname}
+                  isEditing={isEditing}
+                  style={{ fontSize: "21px" }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                비밀번호 변경 <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
                   text={
@@ -198,7 +246,9 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>비밀번호 확인</td>
+              <td>
+                비밀번호 확인 <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
                   text=""
@@ -209,7 +259,9 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>생년월일</td>
+              <td>
+                생년월일 <StyledMustIcon />
+              </td>
               <td>
                 <Calendar
                   selectedDate={selectedDate}
@@ -219,29 +271,31 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>전화번호</td>
+              <td>
+                전화번호 <StyledMustIcon />
+              </td>
               <td>
                 <PlaceHolder
-                  text="010"
+                  text={phoneParts[0]}
                   type="text"
-                  style={{ width: "6.4375rem" }}
-                  defaultValue={infoData.phoneNumber.split("-")[0]}
+                  style={{ width: "6.4375rem", fontSize: "21px" }}
+                  defaultValue={phoneParts[0]}
                   isEditing={isEditing}
                 />{" "}
                 -{" "}
                 <PlaceHolder
-                  text="0000"
+                  text={phoneParts[1]}
                   type="text"
-                  style={{ width: "6.4375rem" }}
-                  defaultValue={infoData.phoneNumber.split("-")[1]}
+                  style={{ width: "6.4375rem", fontSize: "21px" }}
+                  defaultValue={phoneParts[1]}
                   isEditing={isEditing}
                 />{" "}
                 -{" "}
                 <PlaceHolder
-                  text="0000"
+                  text={phoneParts[2]}
                   type="text"
-                  style={{ width: "6.4375rem" }}
-                  defaultValue={infoData.phoneNumber.split("-")[2]}
+                  style={{ width: "6.4375rem", fontSize: "21px" }}
+                  defaultValue={phoneParts[2]}
                   isEditing={isEditing}
                 />
               </td>
@@ -257,7 +311,7 @@ export default function HmlsModifyInfo() {
                 <PlaceHolder
                   text="example"
                   type="text"
-                  style={{ width: "10.3125rem" }}
+                  style={{ width: "10.3125rem", fontSize: "21px" }}
                   defaultValue={infoData.email.split("@")[0]}
                   isEditing={isEditing}
                 />{" "}
@@ -276,9 +330,10 @@ export default function HmlsModifyInfo() {
               <td>주소</td>
               <td>
                 <PlaceHolder
-                  text="주소"
+                  text={infoData.address}
                   defaultValue={infoData.address}
                   isEditing={isEditing}
+                  style={{ fontSize: "21px" }}
                 />
               </td>
             </tr>
@@ -286,9 +341,10 @@ export default function HmlsModifyInfo() {
               <td>소속센터</td>
               <td>
                 <PlaceHolder
-                  text="소속센터"
+                  text={infoData.center}
                   defaultValue={infoData.center}
                   isEditing={isEditing}
+                  style={{ fontSize: "21px" }}
                 />
               </td>
             </tr>
@@ -296,14 +352,15 @@ export default function HmlsModifyInfo() {
               <td>희망 근로 지역</td>
               <td>
                 <PlaceHolder
-                  text="희망 근로 지역"
+                  text={infoData.desiredArea}
                   defaultValue={infoData.desiredArea}
                   isEditing={isEditing}
+                  style={{ fontSize: "21px" }}
                 />
               </td>
             </tr>
             <tr>
-              <td>성별</td>
+              <StyledTd isEditing={isEditing}>성별</StyledTd>
               <td
                 style={{
                   display: "flex",
@@ -311,74 +368,50 @@ export default function HmlsModifyInfo() {
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                  {selectedGender === "male" ? (
-                    <RoundGreenBtn
-                      text="남자"
-                      onClick={() => toggleGender("male")}
-                      style={{
-                        boxSizing: "border-box",
-                        borderRadius: "0.9375rem",
-                        width: "6.4375rem",
-                        height: "2.8125rem",
-                        cursor: "pointer",
-                        fontFamily: "Pretendard-Medium",
-                        fontSize: "1.3125rem",
-                        position: "relative",
-                        marginRight: "1.5rem",
-                      }}
-                    />
-                  ) : (
-                    <RoundWhiteBtn
-                      text="남자"
-                      onClick={() => toggleGender("male")}
-                      style={{
-                        boxSizing: "border-box",
-                        borderRadius: "0.9375rem",
-                        width: "6.4375rem",
-                        height: "2.8125rem",
-                        cursor: "pointer",
-                        fontFamily: "Pretendard-Medium",
-                        fontSize: "1.3125rem",
-                        position: "relative",
-                        marginRight: "1.5rem",
-                      }}
-                    />
-                  )}
+                  <RoundGreenBtn
+                    text="남자"
+                    style={{
+                      boxSizing: "border-box",
+                      borderRadius: "0.9375rem",
+                      width: "6.4375rem",
+                      height: "2.8125rem",
+                      cursor: "default",
+                      fontFamily: "Pretendard-Medium",
+                      fontSize: "1.3125rem",
+                      position: "relative",
+                      marginRight: "1.5rem",
+                      backgroundColor:
+                        infoData.gender === "남자" ? "#D9D9D9" : "#FFFFFF",
+                      color: infoData.gender === "남자" ? "#FFFFFF" : "#D9D9D9",
+                      border:
+                        infoData.gender === "남자"
+                          ? "none"
+                          : "1.5px solid #D9D9D9",
+                    }}
+                  />
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  {selectedGender === "female" ? (
-                    <RoundGreenBtn
-                      text="여자"
-                      onClick={() => toggleGender("female")}
-                      style={{
-                        boxSizing: "border-box",
-                        borderRadius: "0.9375rem",
-                        width: "6.4375rem",
-                        height: "2.8125rem",
-                        cursor: "pointer",
-                        fontFamily: "Pretendard-Medium",
-                        fontSize: "1.3125rem",
-                        position: "relative",
-                        marginRight: "1.5rem",
-                      }}
-                    />
-                  ) : (
-                    <RoundWhiteBtn
-                      text="여자"
-                      onClick={() => toggleGender("female")}
-                      style={{
-                        boxSizing: "border-box",
-                        borderRadius: "0.9375rem",
-                        width: "6.4375rem",
-                        height: "2.8125rem",
-                        cursor: "pointer",
-                        fontFamily: "Pretendard-Medium",
-                        fontSize: "1.3125rem",
-                        position: "relative",
-                        marginRight: "1.5rem",
-                      }}
-                    />
-                  )}
+                  <RoundGreenBtn
+                    text="여자"
+                    style={{
+                      boxSizing: "border-box",
+                      borderRadius: "0.9375rem",
+                      width: "6.4375rem",
+                      height: "2.8125rem",
+                      cursor: "default",
+                      fontFamily: "Pretendard-Medium",
+                      fontSize: "1.3125rem",
+                      position: "relative",
+                      marginRight: "1.5rem",
+                      backgroundColor:
+                        infoData.gender === "여자" ? "#D9D9D9" : "#FFFFFF",
+                      color: infoData.gender === "여자" ? "#FFFFFF" : "#D9D9D9",
+                      border:
+                        infoData.gender === "여자"
+                          ? "none"
+                          : "1.5px solid #D9D9D9",
+                    }}
+                  />
                 </div>
               </td>
             </tr>
@@ -412,6 +445,8 @@ const Container = styled.div`
   display: block;
   align-items: flex-start;
   padding: 2rem 6rem 0 6rem;
+  color: #6e6e6e;
+  font-family: "Pretendard-Medium";
 `;
 
 const SubText = styled.div`
@@ -449,7 +484,6 @@ const RequirementsTable = styled.table`
   margin-left: 0.8125rem;
 
   td {
-    border: 1px solid #ddd;
     padding: 0.5rem;
     font-size: 1.5rem;
     text-align: left;
@@ -469,4 +503,13 @@ const ProfileImage = styled.img`
   height: 8.9375rem;
   border-radius: 50%;
   object-fit: cover;
+`;
+
+const StyledMustIcon = styled(MustIcon)`
+  margin-bottom: 0.5rem;
+  color: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#8aa353")};
+`;
+
+const StyledTd = styled.td`
+  color: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#6e6e6e")};
 `;
