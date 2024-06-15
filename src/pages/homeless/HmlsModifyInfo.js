@@ -101,6 +101,27 @@ export default function HmlsModifyInfo() {
 
   const phoneParts = infoData.phoneNumber.split("-"); // 전화번호 세 파트로 분리
 
+  const [password, setPassword] = useState(infoData.password);
+  const [passwordConfirm, setPasswordConfirm] = useState(
+    infoData.passwordConfirm
+  );
+  const [passwordError, setPasswordError] = useState("");
+
+  const handlePasswordChange = (e) => {
+    // 비밀번호 변경
+    setPassword(e.target.value);
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    // 비밀번호 확인
+    setPasswordConfirm(e.target.value);
+    if (e.target.value !== password) {
+      setPasswordError("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+    } else {
+      setPasswordError("");
+    }
+  };
+
   return (
     <Container>
       <PageTitle text="정보 수정" />
@@ -193,6 +214,7 @@ export default function HmlsModifyInfo() {
                 <PlaceHolder
                   text={infoData.name}
                   isEditing={false}
+                  readOnly={true}
                   style={{
                     fontSize: "21px",
                     color: isEditing ? "#D9D9D9" : "#6e6e6e",
@@ -208,6 +230,7 @@ export default function HmlsModifyInfo() {
                 <PlaceHolder
                   text={infoData.userId}
                   isEditing={false}
+                  readOnly={true}
                   style={{
                     fontSize: "21px",
                     color: isEditing ? "#D9D9D9" : "#6e6e6e",
@@ -242,6 +265,7 @@ export default function HmlsModifyInfo() {
                   type="password"
                   defaultValue={infoData.password}
                   isEditing={isEditing}
+                  onChange={handlePasswordChange}
                 />
               </td>
             </tr>
@@ -255,7 +279,9 @@ export default function HmlsModifyInfo() {
                   type="password"
                   defaultValue={infoData.passwordConfirm}
                   isEditing={isEditing}
+                  onChange={handlePasswordConfirmChange}
                 />
+                {passwordError && <ErrorText>{passwordError}</ErrorText>}
               </td>
             </tr>
             <tr>
@@ -512,4 +538,11 @@ const StyledMustIcon = styled(MustIcon)`
 
 const StyledTd = styled.td`
   color: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#6e6e6e")};
+`;
+
+const ErrorText = styled.span`
+  color: #d66f6f;
+  margin-left: 1rem;
+  font-size: 20px;
+  font-family: "Pretendard-Regular";
 `;
