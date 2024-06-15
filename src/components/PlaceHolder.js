@@ -16,7 +16,7 @@ const Input = styled.input`
   color: #6e6e6e;
 
   &::placeholder {
-    color: #6e6e6e;
-    font-size: 16px;
+    color: ${({ style }) => style?.color || '#6e6e6e'};
+    font-size: ${({ style }) => style?.fontSize || '16px'};
   }
 `;
