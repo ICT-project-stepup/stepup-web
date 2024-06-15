@@ -22,7 +22,7 @@ export default function HmlsModifyInfo() {
     passwordConfirm: "",
     birthDate: "1964-07-11",
     phoneNumber: "010-1964-0711",
-    email: "example@gmail.com",
+    email: "example@naver.com",
     address: "서울 용산구 한강대로92길 6 갈월동빌딩",
     center: "다시서기종합지원센터",
     desiredArea: "충청도",
@@ -36,7 +36,6 @@ export default function HmlsModifyInfo() {
   };
 
   const [profilePic, setProfilePic] = useState(null);
-
   const handleProfilePicChange = (event) => {
     // 프로필 사진 등록
     const file = event.target.files[0];
@@ -50,18 +49,15 @@ export default function HmlsModifyInfo() {
   };
 
   const [selectedDate, setSelectedDate] = useState(infoData.birthDate);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleCompleteClick = () => {
     // 완료 버튼 클릭 후 모달 열기
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     // 모달 닫기
     setIsModalOpen(false);
@@ -81,6 +77,7 @@ export default function HmlsModifyInfo() {
       ...provided,
       width: "11.875rem",
       borderRadius: "15px",
+      backgroundColor: "#FFFFFF",
     }),
     menu: (provided) => ({
       ...provided,
@@ -103,7 +100,6 @@ export default function HmlsModifyInfo() {
   };
 
   const phoneParts = infoData.phoneNumber.split("-"); // 전화번호 세 파트로 분리
-  const emailDomain = infoData.email.split("@")[1]; // 이메일 두 파트로 분리
 
   return (
     <Container>
@@ -122,38 +118,46 @@ export default function HmlsModifyInfo() {
           style={{ display: "none" }}
           onChange={handleProfilePicChange}
         />
-        <RoundWhiteBtn
-          text="사진 등록"
-          onClick={handlePicClick}
-          style={{
-            boxSizing: "border-box",
-            color: isEditing ? "#8AA353" : "#afafaf",
-            width: "7.1875rem",
-            height: "2.6875rem",
-            borderRadius: "0.9375rem",
-            cursor: isEditing ? "pointer" : "default",
-            fontFamily: "Pretendard-Medium",
-            fontWeight: 500,
-            lineHeight: "1.4925rem",
-            position: "relative",
-            marginTop: "5.5rem",
-            marginLeft: "1.5rem",
-          }}
-        />
+        {isEditing && (
+          <RoundWhiteBtn
+            text="사진 등록"
+            onClick={handlePicClick}
+            style={{
+              boxSizing: "border-box",
+              color: "#8AA353",
+              width: "7.1875rem",
+              height: "2.6875rem",
+              borderRadius: "0.9375rem",
+              cursor: "pointer",
+              fontFamily: "Pretendard-Medium",
+              fontWeight: 500,
+              lineHeight: "1.4925rem",
+              position: "relative",
+              marginTop: "5.5rem",
+              marginLeft: "1.5rem",
+            }}
+          />
+        )}
       </DefaultPic>
 
       <PostContent>
         <RequirementsTable>
           <tbody>
             <tr>
-              <td>구분</td>
+              <StyledTd isEditing={isEditing}>구분</StyledTd>
               <td
                 style={{
                   fontFamily: "Pretendard-Medium",
-                  color: "#D9D9D9",
+                  color: "#A9A9A9",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    color: isEditing ? "#D9D9D9" : "#A9A9A9",
+                  }}
+                >
                   {infoData.userType === "구인자" ? (
                     <RadioOnIcon />
                   ) : (
@@ -182,26 +186,32 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>
-                이름 <StyledMustIcon />
-              </td>
+              <StyledTd isEditing={isEditing}>
+                이름 <StyledMustIcon isEditing={isEditing} />
+              </StyledTd>
               <td>
                 <PlaceHolder
                   text={infoData.name}
                   isEditing={false}
-                  style={{ fontSize: "21px" }}
+                  style={{
+                    fontSize: "21px",
+                    color: isEditing ? "#D9D9D9" : "#6e6e6e",
+                  }}
                 />
               </td>
             </tr>
             <tr>
-              <td>
-                아이디 <StyledMustIcon />
-              </td>
+              <StyledTd isEditing={isEditing}>
+                아이디 <StyledMustIcon isEditing={isEditing} />
+              </StyledTd>
               <td>
                 <PlaceHolder
                   text={infoData.userId}
                   isEditing={false}
-                  style={{ fontSize: "21px" }}
+                  style={{
+                    fontSize: "21px",
+                    color: isEditing ? "#D9D9D9" : "#6e6e6e",
+                  }}
                 />
               </td>
             </tr>
@@ -211,7 +221,7 @@ export default function HmlsModifyInfo() {
               </td>
               <td>
                 <PlaceHolder
-                  text="별명"
+                  text={infoData.nickname}
                   defaultValue={infoData.nickname}
                   isEditing={isEditing}
                   style={{ fontSize: "21px" }}
@@ -299,13 +309,10 @@ export default function HmlsModifyInfo() {
                 }}
               >
                 <PlaceHolder
-                  text={infoData.email.split("@")[0]}
+                  text="example"
                   type="text"
-                  style={{
-                    width: "10.3125rem",
-                    fontSize: "21px",
-                    color: "#6e6e6e",
-                  }}
+                  style={{ width: "10.3125rem", fontSize: "21px" }}
+                  defaultValue={infoData.email.split("@")[0]}
                   isEditing={isEditing}
                 />{" "}
                 @{" "}
@@ -314,7 +321,7 @@ export default function HmlsModifyInfo() {
                   options={emailOptions}
                   isDisabled={!isEditing}
                   defaultValue={emailOptions.find(
-                    (option) => option.value === emailDomain
+                    (option) => option.value === infoData.email.split("@")[1]
                   )}
                 />
               </td>
@@ -353,7 +360,7 @@ export default function HmlsModifyInfo() {
               </td>
             </tr>
             <tr>
-              <td>성별</td>
+              <StyledTd isEditing={isEditing}>성별</StyledTd>
               <td
                 style={{
                   display: "flex",
@@ -438,6 +445,8 @@ const Container = styled.div`
   display: block;
   align-items: flex-start;
   padding: 2rem 6rem 0 6rem;
+  color: #6e6e6e;
+  font-family: "Pretendard-Medium";
 `;
 
 const SubText = styled.div`
@@ -498,5 +507,9 @@ const ProfileImage = styled.img`
 
 const StyledMustIcon = styled(MustIcon)`
   margin-bottom: 0.5rem;
-  color: #8aa353;
+  color: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#8aa353")};
+`;
+
+const StyledTd = styled.td`
+  color: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#6e6e6e")};
 `;
