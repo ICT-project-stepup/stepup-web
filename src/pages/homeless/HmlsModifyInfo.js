@@ -11,7 +11,6 @@ import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
-import {ReactComponent as CalendarIcon} from "../../icons/CalendarIcon.svg";
 
 export default function HmlsModifyInfo() {
   const infoData = {
@@ -49,9 +48,11 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [selectedDate, setSelectedDate] = useState(infoData.birthDate);
+  const [isDateChanged, setIsDateChanged] = useState(false); // 달력
+  const [selectedDate, setSelectedDate] = useState(new Date(infoData.birthDate));
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setIsDateChanged(date !== new Date(infoData.birthDate)); // 날짜 변경 여부 확인
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -290,10 +291,18 @@ export default function HmlsModifyInfo() {
                 생년월일 <StyledMustIcon />
               </td>
               <td>
-  <CustomCalendarWrapper>
-    <Calendar selectedDate={selectedDate} handleDateChange={handleDateChange} isEditable={isEditing} />
-  </CustomCalendarWrapper>
-</td>
+                <CustomCalendarWrapper
+                  isEditing={isEditing}
+                  isDateChanged={isDateChanged}
+                >
+                  <Calendar
+                    selectedDate={selectedDate}
+                    handleDateChange={handleDateChange}
+                    isEditing={isEditing}
+                    showIcon={false}
+                  />
+                </CustomCalendarWrapper>
+              </td>
             </tr>
             <tr>
               <td>
@@ -548,9 +557,7 @@ const ErrorText = styled.span`
   margin-top: 0.7rem;
 `;
 
-
 const CustomCalendarWrapper = styled.div`
-
   width: 100%;
   max-width: 25.3125rem;
 
@@ -560,18 +567,12 @@ const CustomCalendarWrapper = styled.div`
 
   .react-datepicker__input-container input {
     height: 2.8125rem;
-    border: 1.5px solid #d9d9d9;
+    border: 1.5px solid ${({ isEditing, isDateChanged }) => (isEditing && isDateChanged ? "#8AA353" : "#D9D9D9")};
     border-radius: 15px;
     max-width: 25.3125rem;
     text-align: left;
+    pointer-events: ${({ isEditing }) => (isEditing ? "auto" : "none")};
+    color: ${({ isEditing, isDateChanged }) => (isEditing && isDateChanged ? "#8AA353" :"#6E6E6E")};
   }
 
-    .calendar-icon-wrapper {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
 `;
-
