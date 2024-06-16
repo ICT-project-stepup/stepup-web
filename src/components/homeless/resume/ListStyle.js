@@ -78,7 +78,7 @@ const ListDeleteBtnWrapper = styled.div`
 `;
 
 const ListItem = styled.div`
-  flex: 1;
+  width: calc(100% - 3rem);
   height: 4.2rem;
   display: flex;
   align-items: center;
