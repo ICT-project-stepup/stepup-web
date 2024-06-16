@@ -48,13 +48,13 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [isDateChanged, setIsDateChanged] = useState(false); // 달력
-  const [selectedDate, setSelectedDate] = useState(
+  const [isDateChanged, setIsDateChanged] = useState(false); // 달력의 날짜 변경 여부
+  const [selectedDate, setSelectedDate] = useState( // 선택된 날짜 상태를 저장
     new Date(infoData.birthDate)
   );
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setIsDateChanged(date !== new Date(infoData.birthDate)); // 날짜 변경 여부 확인
+    setSelectedDate(date); // 새로운 날짜를 선택 시 selectedDate 업데이트
+    setIsDateChanged(date !== new Date(infoData.birthDate)); // 새로운 날짜가 초기 생년월일과 다른 경우 isDateChanged를 true로 설정
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -104,7 +104,7 @@ export default function HmlsModifyInfo() {
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      display: "none",  // dropdown indicator (아래 화살표) 숨기기
+      display: "none", // dropdown indicator (아래 화살표) 숨기기
     }),
   };
   const [isEditing, setIsEditing] = useState(false);
@@ -373,17 +373,17 @@ export default function HmlsModifyInfo() {
                   isEditing={isEditing}
                 />{" "}
                 @{" "}
-                  <CustomSelect
-                    styles={customSelectStyles}
-                    options={emailOptions}
-                    isDisabled={!isEditing}
-                    defaultValue={emailOptions.find(
-                      (option) => option.value === infoData.email.split("@")[1]
-                    )}
-                    onChange={handleEmailDomainChange}
-                    isEditing={isEditing}
-                    isEmailDomainChanged={isEmailDomainChanged}
-                  />
+                <CustomSelect
+                  styles={customSelectStyles}
+                  options={emailOptions}
+                  isDisabled={!isEditing}
+                  defaultValue={emailOptions.find(
+                    (option) => option.value === infoData.email.split("@")[1]
+                  )}
+                  onChange={handleEmailDomainChange}
+                  isEditing={isEditing}
+                  isEmailDomainChanged={isEmailDomainChanged}
+                />
               </td>
             </tr>
             <tr>
@@ -567,7 +567,9 @@ const ProfileImage = styled.img`
 
 const StyledMustIcon = styled(MustIcon)`
   margin-bottom: 0.5rem;
-  color: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#8aa353")};
+  path {
+    fill: ${({ isEditing }) => (isEditing ? "#D9D9D9" : "#8aa353")};
+  }
 `;
 
 const StyledTd = styled.td`
