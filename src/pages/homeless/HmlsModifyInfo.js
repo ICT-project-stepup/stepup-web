@@ -545,4 +545,6 @@ const ErrorText = styled.span`
   margin-left: 1rem;
   font-size: 20px;
   font-family: "Pretendard-Regular";
+  position: absolute;
+  margin-top: 0.7rem;
 `;
