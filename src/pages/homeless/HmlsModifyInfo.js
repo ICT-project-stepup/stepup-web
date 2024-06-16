@@ -49,7 +49,9 @@ export default function HmlsModifyInfo() {
   };
 
   const [isDateChanged, setIsDateChanged] = useState(false); // 달력
-  const [selectedDate, setSelectedDate] = useState(new Date(infoData.birthDate));
+  const [selectedDate, setSelectedDate] = useState(
+    new Date(infoData.birthDate)
+  );
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setIsDateChanged(date !== new Date(infoData.birthDate)); // 날짜 변경 여부 확인
@@ -74,12 +76,23 @@ export default function HmlsModifyInfo() {
   ];
 
   const customSelectStyles = {
-    // 이메일 선택
-    control: (provided) => ({
+    control: (provided, state) => ({
       ...provided,
       width: "11.875rem",
+      height: "2.8125rem",
       borderRadius: "15px",
       backgroundColor: "#FFFFFF",
+      border:
+        state.selectProps.isEditing && state.selectProps.isEmailDomainChanged
+          ? "1.5px solid #AFBFA5"
+          : "1.5px solid #D9D9D9",
+    }),
+    singleValue: (provided, state) => ({
+      ...provided,
+      color:
+        state.selectProps.isEditing && state.selectProps.isEmailDomainChanged
+          ? "#8AA353"
+          : "#6e6e6e",
     }),
     menu: (provided) => ({
       ...provided,
@@ -89,8 +102,11 @@ export default function HmlsModifyInfo() {
       ...provided,
       maxHeight: 190,
     }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      display: "none",  // dropdown indicator (아래 화살표) 숨기기
+    }),
   };
-
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
@@ -122,6 +138,13 @@ export default function HmlsModifyInfo() {
     } else {
       setPasswordError("");
     }
+  };
+
+  const [isEmailDomainChanged, setIsEmailDomainChanged] = useState(false); // 이메일 도메인 변경 여부
+  const handleEmailDomainChange = (selectedOption) => {
+    setIsEmailDomainChanged(
+      selectedOption.value !== infoData.email.split("@")[1]
+    );
   };
 
   return (
@@ -350,14 +373,17 @@ export default function HmlsModifyInfo() {
                   isEditing={isEditing}
                 />{" "}
                 @{" "}
-                <CustomSelect
-                  styles={customSelectStyles}
-                  options={emailOptions}
-                  isDisabled={!isEditing}
-                  defaultValue={emailOptions.find(
-                    (option) => option.value === infoData.email.split("@")[1]
-                  )}
-                />
+                  <CustomSelect
+                    styles={customSelectStyles}
+                    options={emailOptions}
+                    isDisabled={!isEditing}
+                    defaultValue={emailOptions.find(
+                      (option) => option.value === infoData.email.split("@")[1]
+                    )}
+                    onChange={handleEmailDomainChange}
+                    isEditing={isEditing}
+                    isEmailDomainChanged={isEmailDomainChanged}
+                  />
               </td>
             </tr>
             <tr>
@@ -519,7 +545,7 @@ const RequirementsTable = styled.table`
 
   td {
     padding: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.3125rem;
     text-align: left;
   }
 `;
@@ -567,12 +593,14 @@ const CustomCalendarWrapper = styled.div`
 
   .react-datepicker__input-container input {
     height: 2.8125rem;
-    border: 1.5px solid ${({ isEditing, isDateChanged }) => (isEditing && isDateChanged ? "#8AA353" : "#D9D9D9")};
+    border: 1.5px solid
+      ${({ isEditing, isDateChanged }) =>
+        isEditing && isDateChanged ? "#8AA353" : "#D9D9D9"};
     border-radius: 15px;
     max-width: 25.3125rem;
     text-align: left;
     pointer-events: ${({ isEditing }) => (isEditing ? "auto" : "none")};
-    color: ${({ isEditing, isDateChanged }) => (isEditing && isDateChanged ? "#8AA353" :"#6E6E6E")};
+    color: ${({ isEditing, isDateChanged }) =>
+      isEditing && isDateChanged ? "#8AA353" : "#6E6E6E"};
   }
-
 `;
