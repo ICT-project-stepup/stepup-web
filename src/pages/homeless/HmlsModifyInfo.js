@@ -11,6 +11,7 @@ import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
+import {ReactComponent as CalendarIcon} from "../../icons/CalendarIcon.svg";
 
 export default function HmlsModifyInfo() {
   const infoData = {
@@ -289,12 +290,10 @@ export default function HmlsModifyInfo() {
                 생년월일 <StyledMustIcon />
               </td>
               <td>
-                <Calendar
-                  selectedDate={selectedDate}
-                  handleDateChange={handleDateChange}
-                  isEditable={isEditing}
-                />
-              </td>
+  <CustomCalendarWrapper>
+    <Calendar selectedDate={selectedDate} handleDateChange={handleDateChange} isEditable={isEditing} />
+  </CustomCalendarWrapper>
+</td>
             </tr>
             <tr>
               <td>
@@ -548,3 +547,31 @@ const ErrorText = styled.span`
   position: absolute;
   margin-top: 0.7rem;
 `;
+
+
+const CustomCalendarWrapper = styled.div`
+
+  width: 100%;
+  max-width: 25.3125rem;
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .react-datepicker__input-container input {
+    height: 2.8125rem;
+    border: 1.5px solid #d9d9d9;
+    border-radius: 15px;
+    max-width: 25.3125rem;
+    text-align: left;
+  }
+
+    .calendar-icon-wrapper {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+`;
+
