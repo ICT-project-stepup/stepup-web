@@ -5,13 +5,13 @@ import { ReactComponent as ProfileIcon } from "../../../icons/ProfileIcon.svg";
 import { ReactComponent as MustIcon } from "../../../icons/MustIcon.svg";
 import { ReactComponent as RadioOnIcon } from "../../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../../icons/RadioOffIcon.svg";
-import { ReactComponent as SearchIcon } from "../../../icons/SearchIcon.svg";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import RoundGreenBtn from "../../../components/buttons/RoundGreenBtn";
 import { useNavigate } from "react-router-dom";
-import PlaceHolder from "../../../components/PlaceHolder";
+import PlaceHolder from "../../../components/PlaceHolder2";
 import Calendar from "../../../components/Calendar";
 import CustomSelect from "../../../components/CustomSelect";
+import AddressInput from "../../../components/input/address";
 
 /* 예은 */
 export default function HmlsSignIn() {
@@ -33,6 +33,8 @@ export default function HmlsSignIn() {
       reader.readAsDataURL(file);
     }
   };
+
+  const [isEditing, setIsEditing] = useState(true);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const handleDateChange = (date) => {
@@ -69,6 +71,10 @@ export default function HmlsSignIn() {
 
   const toggleGender = (gender) => {
     setSelectedGender((prevGender) => (prevGender === gender ? null : gender));
+  };
+
+  const handleSignInComplete = () => {
+    navigate("/signinwelcome");
   };
 
   return (
@@ -147,9 +153,7 @@ export default function HmlsSignIn() {
                 <StyledMustIcon />
               </td>
               <td>
-                <PlaceHolder
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
-                />
+                <PlaceHolder isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -160,7 +164,7 @@ export default function HmlsSignIn() {
               <td>
                 <PlaceHolder
                   text="영문 소문자/숫자, 4~16자"
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
+                  isEditing={isEditing}
                 />
               </td>
             </tr>
@@ -170,12 +174,7 @@ export default function HmlsSignIn() {
                 <StyledMustIcon />
               </td>
               <td>
-                <PlaceHolder
-                  style={{
-                    border: "0.1rem solid #AFBFA5",
-                    color: "#8AA353",
-                  }}
-                />
+                <PlaceHolder isEditing={isEditing} />
               </td>
             </tr>
             <tr>
@@ -185,8 +184,9 @@ export default function HmlsSignIn() {
               </td>
               <td>
                 <PlaceHolder
-                  text="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
+                  text="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자"
+                  isEditing={isEditing}
+                  type="password"
                 />
               </td>
             </tr>
@@ -196,9 +196,7 @@ export default function HmlsSignIn() {
                 <StyledMustIcon />
               </td>
               <td>
-                <PlaceHolder
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
-                />
+                <PlaceHolder isEditing={isEditing} type="password" />
               </td>
             </tr>
             <tr>
@@ -226,10 +224,9 @@ export default function HmlsSignIn() {
               <td>
                 <PlaceHolder
                   style={{
-                    border: "0.1rem solid #AFBFA5",
-                    color: "#8AA353",
                     width: "6.4375rem",
                   }}
+                  isEditing={isEditing}
                 />
                 <span
                   style={{
@@ -243,10 +240,9 @@ export default function HmlsSignIn() {
                 </span>
                 <PlaceHolder
                   style={{
-                    border: "0.1rem solid #AFBFA5",
-                    color: "#8AA353",
                     width: "6.4375rem",
                   }}
+                  isEditing={isEditing}
                 />
                 <span
                   style={{
@@ -260,10 +256,9 @@ export default function HmlsSignIn() {
                 </span>
                 <PlaceHolder
                   style={{
-                    border: "0.1rem solid #AFBFA5",
-                    color: "#8AA353",
                     width: "6.4375rem",
                   }}
+                  isEditing={isEditing}
                 />
               </td>
             </tr>
@@ -277,10 +272,9 @@ export default function HmlsSignIn() {
               >
                 <PlaceHolder
                   style={{
-                    border: "0.1rem solid #AFBFA5",
-                    color: "#8AA353",
                     width: "10.3125rem",
                   }}
+                  isEditing={isEditing}
                 />
                 <span
                   style={{
@@ -288,6 +282,7 @@ export default function HmlsSignIn() {
                     fontSize: "1.375rem",
                     color: "#6E6E6E",
                     padding: "0 0.9375rem",
+                    margin: "0.5rem 0",
                   }}
                 >
                   @
@@ -300,27 +295,25 @@ export default function HmlsSignIn() {
             </tr>
             <tr>
               <td>주소</td>
-              <td>
-                <PlaceHolder
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
-                />
-                <SearchIcon />
+              <td
+                style={{
+                  display: "flex",
+                  alignItems: "row",
+                }}
+              >
+                <AddressInput />
               </td>
             </tr>
             <tr>
               <td>소속 센터</td>
               <td>
-                <PlaceHolder
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
-                />
+                <PlaceHolder isEditing={isEditing} />
               </td>
             </tr>
             <tr>
               <td>희망 근로 지역</td>
               <td>
-                <PlaceHolder
-                  style={{ border: "0.1rem solid #AFBFA5", color: "#8AA353" }}
-                />
+                <PlaceHolder isEditing={isEditing} />
               </td>
             </tr>
             <tr>
