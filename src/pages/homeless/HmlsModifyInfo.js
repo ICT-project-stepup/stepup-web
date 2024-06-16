@@ -335,7 +335,7 @@ export default function HmlsModifyInfo() {
                 }}
               >
                 <PlaceHolder
-                  text="example"
+                  text={infoData.email.split("@")[0]}
                   type="text"
                   style={{ width: "10.3125rem", fontSize: "21px" }}
                   defaultValue={infoData.email.split("@")[0]}
