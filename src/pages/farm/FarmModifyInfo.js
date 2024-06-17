@@ -6,11 +6,11 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import PlaceHolder from "../../components/PlaceHolder";
 import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
-import ModifyModal from "../../components/modals/ModifyModal.js";
 import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
+import CompleteModify from "../popup/CompleteModify.js";
 
 export default function FarmModifyInfo() {
   const infoData = {
@@ -471,7 +471,7 @@ export default function FarmModifyInfo() {
           }}
         />
       </BtnWrapper>
-      <ModifyModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <CompleteModify isOpen={isModalOpen} onRequestClose={closeModal} />
     </Container>
   );
 }
