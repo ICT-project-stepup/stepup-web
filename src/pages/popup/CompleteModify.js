@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoBackIcon } from "../../icons/GoBackIcon.svg";
 import { ReactComponent as XIcon } from "../../icons/XIcon.svg";
 
+/* 채은 */
 const CompleteModify = ({ isOpen, onRequestClose }) => {
   const navigate = useNavigate();
 
