@@ -339,7 +339,7 @@ export default function HmlsModifyInfo() {
                   defaultValue={phoneParts[0]}
                   isEditing={isEditing}
                 />{" "}
-                -{" "}
+                <span style={{ margin: "1.03rem" }}>-</span>
                 <PlaceHolder
                   text={phoneParts[1]}
                   type="text"
@@ -347,7 +347,7 @@ export default function HmlsModifyInfo() {
                   defaultValue={phoneParts[1]}
                   isEditing={isEditing}
                 />{" "}
-                -{" "}
+                <span style={{ margin: "1.03rem" }}>-</span>
                 <PlaceHolder
                   text={phoneParts[2]}
                   type="text"
@@ -372,7 +372,7 @@ export default function HmlsModifyInfo() {
                   defaultValue={infoData.email.split("@")[0]}
                   isEditing={isEditing}
                 />{" "}
-                @{" "}
+                <span style={{ margin: "1.03rem" }}>@</span>
                 <CustomSelect
                   styles={customSelectStyles}
                   options={emailOptions}
