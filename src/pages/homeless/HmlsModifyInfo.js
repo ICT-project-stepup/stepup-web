@@ -6,11 +6,11 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import PlaceHolder from "../../components/PlaceHolder";
 import Calendar from "../../components/Calendar";
 import CustomSelect from "../../components/CustomSelect";
-import ModifyModal from "../../components/modals/ModifyModal.js";
 import { ReactComponent as RadioOnIcon } from "../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../icons/RadioOffIcon.svg";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
+import CompleteModify from "../popup/CompleteModify.js";
 
 export default function HmlsModifyInfo() {
   const infoData = {
@@ -339,7 +339,7 @@ export default function HmlsModifyInfo() {
                   defaultValue={phoneParts[0]}
                   isEditing={isEditing}
                 />{" "}
-                -{" "}
+                <span style={{ margin: "1.03rem" }}>-</span>
                 <PlaceHolder
                   text={phoneParts[1]}
                   type="text"
@@ -347,7 +347,7 @@ export default function HmlsModifyInfo() {
                   defaultValue={phoneParts[1]}
                   isEditing={isEditing}
                 />{" "}
-                -{" "}
+                <span style={{ margin: "1.03rem" }}>-</span>
                 <PlaceHolder
                   text={phoneParts[2]}
                   type="text"
@@ -372,7 +372,7 @@ export default function HmlsModifyInfo() {
                   defaultValue={infoData.email.split("@")[0]}
                   isEditing={isEditing}
                 />{" "}
-                @{" "}
+                <span style={{ margin: "1.03rem" }}>@</span>
                 <CustomSelect
                   styles={customSelectStyles}
                   options={emailOptions}
@@ -495,7 +495,7 @@ export default function HmlsModifyInfo() {
           }}
         />
       </BtnWrapper>
-      <ModifyModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <CompleteModify isOpen={isModalOpen} onRequestClose={closeModal} />
     </Container>
   );
 }

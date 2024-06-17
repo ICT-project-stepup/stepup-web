@@ -27,6 +27,7 @@ import CompleteModify from "./pages/popup/CompleteModify";
 import NoLogIn from "./pages/popup/NoLogIn";
 import NoResume from "./pages/popup/NoResume";
 import SignInWelcome from "./pages/popup/SignInWelcome";
+import NoAccess from "./pages/popup/NoAccess";
 
 
 export default function App() {
@@ -63,6 +64,7 @@ export default function App() {
         <Route path="/nologin" element={<NoLogIn />} />
         <Route path="/noresume" element={<NoResume />} />
         <Route path="/signinwelcome" element={<SignInWelcome />} />
+        <Route path="/noaccess" element={<NoAccess />} />
       </Routes>
       <Footer />
     </AppContainer>

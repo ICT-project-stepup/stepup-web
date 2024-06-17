@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as CongratsIcon } from "../../icons/CongratsIcon.svg";
+import { ReactComponent as NoHandIcon } from "../../icons/NoHandIcon.svg";
 import { ReactComponent as XIcon } from "../../icons/XIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 
@@ -14,7 +14,7 @@ const NoLogIn = () => {
   };
 
   const handleLoginClick = () => {
-    navigate("/login");
+    navigate(-1);
   };
 
   return (
@@ -25,14 +25,14 @@ const NoLogIn = () => {
         </CloseButton>
         <Line />
         <CompleteWrapper>
-          <StyledCongratsIcon />
+          <StyledNoHandIcon />
 
           <Message>
-            <span>스텝업의 회원이 되신걸 축하해요!</span>
-            <span>스텝업과 함께 세상으로 비상해봐요.</span>
+            <span>앗! 해당 기능은</span>
+            <span>이용하실 수 없습니다.</span>
           </Message>
           <RoundWhiteBtn
-            text={"로그인하러 가기"}
+            text={"돌아가기"}
             onClick={handleLoginClick}
             style={{
               boxSizing: "border-box",
@@ -84,7 +84,7 @@ const StyledXIcon = styled(XIcon)`
   margin-top: 0.7rem;
 `;
 
-const StyledCongratsIcon = styled(CongratsIcon)`
+const StyledNoHandIcon = styled(NoHandIcon)`
   margin-right: 6rem;
 `;
 
