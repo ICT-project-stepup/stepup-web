@@ -5,11 +5,12 @@ import { ReactComponent as NoHandIcon } from "../../icons/NoHandIcon.svg";
 import { ReactComponent as XIcon } from "../../icons/XIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 
+/* 채은 */
 const NoLogIn = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate("/homelessmypage");
+    navigate(-1);
   };
 
   const handleLoginClick = () => {
@@ -17,40 +18,48 @@ const NoLogIn = () => {
   };
 
   return (
-    <Container>
-      <CloseButton onClick={handleClose}>
-        <StyledXIcon />
-      </CloseButton>
-      <Line />
-      <CompleteWrapper>
-        <StyledNoHandIcon />
-        
+    <Wrapper>
+      <Container>
+        <CloseButton onClick={handleClose}>
+          <StyledXIcon />
+        </CloseButton>
+        <Line />
+        <CompleteWrapper>
+          <StyledNoHandIcon />
 
-        <Message>
-          <span>앗! 해당 기능은</span>
-          <span>로그인 후 이용하실 수 있어요.</span>
-        </Message>
-        <RoundWhiteBtn
-          text={"로그인하러 가기"}
-          onClick={handleLoginClick}
-          style={{
-            boxSizing: "border-box",
-            width: "13.3125rem",
-            height: "3.1875rem",
-            cursor: "pointer",
-            fontFamily: "Pretendard-Medium",
-            fontSize: "1.5rem",
-            lineHeight: "1.79rem",
-            position: "absolute",
-            border: "0.125rem solid #afbfa5",
-            borderRadius: "0.9375rem",
-            marginTop: "15rem",
-          }}
-        />
-      </CompleteWrapper>
-    </Container>
+          <Message>
+            <span>앗! 해당 기능은</span>
+            <span>로그인 후 이용하실 수 있어요.</span>
+          </Message>
+          <RoundWhiteBtn
+            text={"로그인하러 가기"}
+            onClick={handleLoginClick}
+            style={{
+              boxSizing: "border-box",
+              width: "13.3125rem",
+              height: "3.1875rem",
+              cursor: "pointer",
+              fontFamily: "Pretendard-Medium",
+              fontSize: "1.5rem",
+              lineHeight: "1.79rem",
+              position: "absolute",
+              border: "0.125rem solid #afbfa5",
+              borderRadius: "0.9375rem",
+              marginTop: "15rem",
+            }}
+          />
+        </CompleteWrapper>
+      </Container>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(217, 217, 217, 0.2);
+`;
 
 const Container = styled.div`
   position: absolute;
