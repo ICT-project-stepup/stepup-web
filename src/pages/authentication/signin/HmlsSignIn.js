@@ -6,14 +6,13 @@ import { ReactComponent as MustIcon } from "../../../icons/MustIcon.svg";
 import { ReactComponent as RadioOnIcon } from "../../../icons/RadioOnIcon.svg";
 import { ReactComponent as RadioOffIcon } from "../../../icons/RadioOffIcon.svg";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
-import RoundGreenBtn from "../../../components/buttons/RoundGreenBtn";
 import { useNavigate } from "react-router-dom";
 import PlaceHolder from "../../../components/PlaceHolder2";
 import Calendar from "../../../components/Calendar";
 import CustomSelect from "../../../components/CustomSelect";
 import AddressInput from "../../../components/input/address";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -45,6 +44,7 @@ export default function HmlsSignIn() {
         .string()
         .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다")
         .required("비밀번호 확인을 입력해주세요"),
+      birthdate: yup.string().required("생년월일을 선택해주세요"),
       phoneNumber1: yup
         .string()
         .required("전화번호를 입력해주세요")
@@ -57,7 +57,13 @@ export default function HmlsSignIn() {
         .string()
         .required("전화번호를 입력해주세요")
         .matches(/^[0-9]{4}$/, "전화번호 형식이 올바르지 않습니다"),
+      email: yup.string().nullable(),
+      address: yup.string().nullable(),
+      center: yup.string().nullable(),
+      desiredArea: yup.string().nullable(),
+      gender: yup.string().nullable(),
     })
+
     .test("phoneNumber", "전화번호 형식이 올바르지 않습니다", (value) => {
       const { phoneNumber1, phoneNumber2, phoneNumber3 } = value;
       return (
@@ -71,6 +77,8 @@ export default function HmlsSignIn() {
     register,
     handleSubmit,
     watch,
+    control,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -79,6 +87,7 @@ export default function HmlsSignIn() {
 
   const onSubmit = (data) => {
     console.log(data);
+    navigate("/signinwelcome");
   };
 
   const navigate = useNavigate();
@@ -100,11 +109,11 @@ export default function HmlsSignIn() {
     }
   };
 
-  const [isEditing, setIsEditing] = useState(true);
-
   const [selectedDate, setSelectedDate] = useState(null);
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    const formattedDate = date ? date.toISOString().slice(0, 10) : null; // date 형식을 yyyy-mm-dd로 변경
+    setValue("birthdate", formattedDate);
   };
 
   const emailOptions = [
@@ -136,17 +145,15 @@ export default function HmlsSignIn() {
   const [selectedGender, setSelectedGender] = useState(null);
 
   const toggleGender = (gender) => {
-    setSelectedGender((prevGender) => (prevGender === gender ? null : gender));
-  };
-
-  const handleSignInComplete = () => {
-    navigate("/signinwelcome");
+    const newGender = selectedGender === gender ? null : gender;
+    setSelectedGender(newGender);
+    setValue("gender", newGender);
   };
 
   return (
     <Container>
+      <PageTitle text="회원가입" />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <PageTitle text="회원가입" />
         <SubText>사진</SubText>
         <DefaultPic>
           {profilePic ? (
@@ -170,10 +177,8 @@ export default function HmlsSignIn() {
               height: "2.6875rem",
               borderRadius: "0.9375rem",
               color: "#8AA353",
-
               cursor: "pointer",
               fontFamily: "Pretendard-Medium",
-
               fontWeight: "500",
               lineHeight: "1.4925rem",
               position: "relative",
@@ -309,7 +314,24 @@ export default function HmlsSignIn() {
                   <StyledMustIcon />
                 </td>
                 <td>
-                  <Calendar
+                  <Controller
+                    name="selectedDate"
+                    control={control}
+                    defaultValue={null}
+                    render={({ field }) => (
+                      <CustomCalendarWrapper>
+                        <Calendar
+                          selectedDate={selectedDate}
+                          handleDateChange={handleDateChange}
+                        />
+                      </CustomCalendarWrapper>
+                    )}
+                  />
+                  {errors.selectedDate && (
+                    <ErrorMessage>{errors.selectedDate.message}</ErrorMessage>
+                  )}
+
+                  {/* <Calendar
                     style={{
                       border: "0.1rem solid #AFBFA5",
                       color: "#8AA353",
@@ -317,7 +339,7 @@ export default function HmlsSignIn() {
                     }}
                     selectedDate={selectedDate}
                     handleDateChange={handleDateChange}
-                  />
+                  /> */}
                 </td>
               </tr>
               <tr>
@@ -332,7 +354,7 @@ export default function HmlsSignIn() {
                   }}
                 >
                   <PlaceHolder
-                    type="phoneNumber1"
+                    type="tel"
                     name="phoneNumber1"
                     {...register("phoneNumber1")}
                     maxLength={3}
@@ -351,7 +373,7 @@ export default function HmlsSignIn() {
                     -
                   </span>
                   <PlaceHolder
-                    type="phoneNumber2"
+                    type="tel"
                     name="phoneNumber2"
                     {...register("phoneNumber2")}
                     maxLength={4}
@@ -370,7 +392,7 @@ export default function HmlsSignIn() {
                     -
                   </span>
                   <PlaceHolder
-                    type="phoneNumber3"
+                    type="tel"
                     name="phoneNumber3"
                     {...register("phoneNumber3")}
                     maxLength={4}
@@ -392,7 +414,12 @@ export default function HmlsSignIn() {
               <tr>
                 <td>이메일</td>
                 <td style={{ display: "flex", alignItems: "row" }}>
-                  <PlaceHolder style={{ width: "10.3125rem" }} />
+                  <PlaceHolder
+                    type="text"
+                    name="email"
+                    {...register("email")}
+                    style={{ width: "10.3125rem" }}
+                  />
                   <span
                     style={{
                       fontFamily: "Pretendard-Regular",
@@ -411,7 +438,9 @@ export default function HmlsSignIn() {
                 </td>
               </tr>
               <tr>
-                <td>주소</td>
+                <td style={{ verticalAlign: "top", padding: "0.8rem" }}>
+                  주소
+                </td>
                 <td
                   style={{
                     display: "flex",
@@ -423,14 +452,25 @@ export default function HmlsSignIn() {
               </tr>
               <tr>
                 <td>소속 센터</td>
-                <td>
-                  <PlaceHolder />
+                <td style={{ display: "flex", alignItems: "center" }}>
+                  <PlaceHolder
+                    type="center"
+                    name="center"
+                    {...register("center")}
+                  />
+                  {errors.center && (
+                    <ErrorMessage>{errors.center.message}</ErrorMessage>
+                  )}
                 </td>
               </tr>
               <tr>
                 <td>희망 근로 지역</td>
                 <td>
-                  <PlaceHolder />
+                  <PlaceHolder
+                    type="desiredArea"
+                    name="desiredArea"
+                    {...register("desiredArea")}
+                  />
                 </td>
               </tr>
               <tr>
@@ -438,81 +478,25 @@ export default function HmlsSignIn() {
                 <td
                   style={{
                     display: "flex",
-                    alignItems: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
                   }}
                 >
-                  <div
-                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  <GenderButton
+                    type="button"
+                    onClick={() => toggleGender("male")}
+                    selected={selectedGender === "male"}
                   >
-                    {selectedGender === "male" ? (
-                      <RoundGreenBtn
-                        text="남자"
-                        onClick={() => toggleGender("male")}
-                        style={{
-                          boxSizing: "border-box",
-                          borderRadius: "0.9375rem",
-                          width: "6.4375rem",
-                          height: "2.8125rem",
-                          cursor: "pointer",
-                          fontFamily: "Pretendard-Medium",
-                          fontSize: "1.3125rem",
-                          position: "relative",
-                          marginRight: "1.5rem",
-                        }}
-                      />
-                    ) : (
-                      <RoundWhiteBtn
-                        text="남자"
-                        onClick={() => toggleGender("male")}
-                        style={{
-                          boxSizing: "border-box",
-                          borderRadius: "0.9375rem",
-                          width: "6.4375rem",
-                          height: "2.8125rem",
-                          cursor: "pointer",
-                          fontFamily: "Pretendard-Medium",
-                          fontSize: "1.3125rem",
-                          position: "relative",
-                          marginRight: "1.5rem",
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    {selectedGender === "female" ? (
-                      <RoundGreenBtn
-                        text="여자"
-                        onClick={() => toggleGender("female")}
-                        style={{
-                          boxSizing: "border-box",
-                          borderRadius: "0.9375rem",
-                          width: "6.4375rem",
-                          height: "2.8125rem",
-                          cursor: "pointer",
-                          fontFamily: "Pretendard-Medium",
-                          fontSize: "1.3125rem",
-                          position: "relative",
-                          marginRight: "1.5rem",
-                        }}
-                      />
-                    ) : (
-                      <RoundWhiteBtn
-                        text="여자"
-                        onClick={() => toggleGender("female")}
-                        style={{
-                          boxSizing: "border-box",
-                          borderRadius: "0.9375rem",
-                          width: "6.4375rem",
-                          height: "2.8125rem",
-                          cursor: "pointer",
-                          fontFamily: "Pretendard-Medium",
-                          fontSize: "1.3125rem",
-                          position: "relative",
-                          marginRight: "1.5rem",
-                        }}
-                      />
-                    )}
-                  </div>
+                    남성
+                  </GenderButton>
+
+                  <GenderButton
+                    type="button"
+                    onClick={() => toggleGender("female")}
+                    selected={selectedGender === "female"}
+                  >
+                    여성
+                  </GenderButton>
                 </td>
               </tr>
             </tbody>
@@ -595,6 +579,7 @@ const RequirementsTable = styled.table`
   margin-left: 0.8125rem;
   font-family: "Pretendard-Medium";
   color: #6e6e6e;
+  table-layout: fixed; // 테이블 너비 고정
 
   td {
     border: 1px solid #ddd;
@@ -602,19 +587,62 @@ const RequirementsTable = styled.table`
     font-size: 1.5rem;
     text-align: left;
   }
-`;
 
-const BtnWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: center;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem;
+  td:first-child {
+    width: 12.3125rem; // 테이블 왼쪽 칸 너비 설정
+    white-space: nowrap;
+  }
 `;
 
 const ErrorMessage = styled.div`
   color: #d66f6f;
   font-size: 1.25rem;
   margin-left: 1rem;
+`;
+
+const GenderButton = styled.button`
+  background-color: ${(props) => (props.selected ? "#8AA353" : "#ffffff")};
+  color: ${(props) => (props.selected ? "#ffffff" : "#6E6E6E")};
+  border: ${(props) => (props.selected ? "none" : "1.5px solid  #AFBFA5")};
+  box-sizing: border-box;
+  border-radius: 0.9375rem;
+  width: 6.4375rem;
+  height: 2.8125rem;
+  cursor: pointer;
+  font-family: "Pretendard-Medium";
+  font-size: 1.3125rem;
+  margin-right: 1.5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+`;
+
+const BtnWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+`;
+const CustomCalendarWrapper = styled.div`
+  width: 100%;
+  max-width: 25.3125rem;
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .react-datepicker__input-container input {
+    height: 2.8125rem;
+    border: 0.1rem solid #afbfa5;
+    border-radius: 0.9375rem;
+    max-width: 25.3125rem;
+    text-align: left;
+    color: #8aa353;
+    font-size: 1.3125rem;
+    outline: none; // focus 시 외곽선 안보이게
+    padding: 0 1rem;
+  }
 `;
