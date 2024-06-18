@@ -1,10 +1,21 @@
+import React from "react";
 import { styled } from "styled-components";
 
-export default function PlaceHolder({ text, style, isEditing, type = "text" }) {
-  return (
-    <Input placeholder={text} style={style} readOnly={!isEditing} type={type} />
-  );
-}
+const PlaceHolder = React.forwardRef(
+  ({ placeholder, style, type = "text", name, maxLength, ...rest }, ref) => (
+    <Input
+      placeholder={placeholder}
+      style={style}
+      type={type}
+      name={name}
+      maxLength={maxLength}
+      ref={ref}
+      {...rest}
+    />
+  )
+);
+
+export default PlaceHolder;
 
 const Input = styled.input`
   box-sizing: border-box;
@@ -21,5 +32,9 @@ const Input = styled.input`
   &::placeholder {
     color: #afbfa5;
     font-size: 1rem;
+  }
+  &:focus {
+    border-color: #8aa353;
+    outline: none;
   }
 `;
