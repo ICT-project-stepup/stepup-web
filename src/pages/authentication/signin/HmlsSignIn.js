@@ -518,11 +518,11 @@ export default function HmlsSignIn() {
             </tbody>
           </RequirementsTable>
         </PostContent>
-        <RoundWhiteBtn type="submit">회원가입</RoundWhiteBtn>
+
         <BtnWrapper>
           <RoundWhiteBtn
             text="완료"
-            onClick={handlePicClick}
+            type="submit"
             style={{
               boxSizing: "border-box",
               width: "15.0625rem",
