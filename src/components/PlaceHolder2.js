@@ -22,10 +22,10 @@ const Input = styled.input`
   width: 25.3125rem;
   height: 2.8125rem;
   border: 0.1rem solid #afbfa5;
-  border-radius: 15px;
+  border-radius: 0.9375rem;
   font-family: "Pretendard-Medium";
   font-size: 1.3125rem;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #8aa353;
   padding: 0 1rem;
 
@@ -34,7 +34,7 @@ const Input = styled.input`
     font-size: 1rem;
   }
   &:focus {
-    border-color: #8aa353;
+    border-color: none;
     outline: none;
   }
 `;
