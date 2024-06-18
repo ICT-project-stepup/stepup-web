@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as WarningIcon } from "../../icons/WarningIcon.svg";
+import { ReactComponent as NoHandIcon } from "../../icons/NoHandIcon.svg";
 import { ReactComponent as XIcon } from "../../icons/XIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 
 /* 채은 */
-const NoResume = () => {
+const NoLogIn = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -14,7 +14,7 @@ const NoResume = () => {
   };
 
   const handleLoginClick = () => {
-    navigate("/manageresume");
+    navigate(-1);
   };
 
   return (
@@ -25,15 +25,14 @@ const NoResume = () => {
         </CloseButton>
         <Line />
         <CompleteWrapper>
-          <StyledWarningIcon />
+          <StyledNoHandIcon />
 
           <Message>
-            <span>앗! 아직 이력서 작성이 되어있지 않아요.</span>
-            <span>서둘러 작성해서 지원해보아요.</span>
+            <span>앗! 해당 기능은</span>
+            <span>이용하실 수 없습니다.</span>
           </Message>
-
           <RoundWhiteBtn
-            text={"작성하러 가기"}
+            text={"돌아가기"}
             onClick={handleLoginClick}
             style={{
               boxSizing: "border-box",
@@ -82,7 +81,7 @@ const StyledXIcon = styled(XIcon)`
   margin-top: 0.7rem;
 `;
 
-const StyledWarningIcon = styled(WarningIcon)`
+const StyledNoHandIcon = styled(NoHandIcon)`
   margin-right: 6rem;
 `;
 
@@ -120,4 +119,4 @@ const Message = styled.div`
   }
 `;
 
-export default NoResume;
+export default NoLogIn;

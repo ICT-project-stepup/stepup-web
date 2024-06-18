@@ -31,7 +31,7 @@ const customStyles = {
   option: (provided, state) => ({
     // 각 옵션의 스타일
     ...provided,
-    color: state.isSelected ? "#000000" : "#6E6E6E", // 현재 옵션이 선택되었는지에 따라 색상 변경
+    color: state.isSelected ? "#8AA353" : "#6E6E6E", // 현재 옵션이 선택되었는지에 따라 색상 변경
     backgroundColor: state.isSelected ? "#AFBFA540" : "#F5F5F5", // 옵션이 선택되었는지에 따라 배경 색상 변경
   }),
 
