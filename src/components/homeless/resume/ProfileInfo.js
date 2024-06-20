@@ -13,6 +13,7 @@ const ProfileInfo = ({ profileData, isEditing }) => {
     { label: "전화번호", value: profileData.phone },
     { label: "이메일", value: profileData.email },
     { label: "주소", value: profileData.address },
+    { label: "성별", value: profileData.gender },
   ];
 
   return (
@@ -124,7 +125,7 @@ const InformBox = styled.div`
   box-sizing: border-box;
   display: flex;
   width: 50.25rem;
-  height: 25.3125rem;
+  height: 27.625rem;
   border: 0.1875rem solid rgba(175, 191, 165, 0.4);
   border-radius: 2.5rem;
   box-shadow: 0 0.25rem 0.25rem rgba(175, 191, 165, 0.4);
