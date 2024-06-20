@@ -1,13 +1,58 @@
-import React from "react";
+import { React, useState } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
+import CustomPagination from "../../components/CustomPagination";
 import { useNavigate } from "react-router-dom";
+import MyPost from "../../components/farm/MyPost";
 
 const userDummy = {
   name: "박농가",
 };
+
+const postData = [
+  {
+    postTitle: "마늘 뽑으실 분 구합니다",
+    postDate: "2024.05.17",
+    postState: "모집 중",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+  {
+    postTitle: "벽화 그리기 모집",
+    postDate: "2024.03.23",
+    postState: "마감",
+  },
+];
 
 /* 예은 */
 export default function FarmMyPage() {
@@ -17,9 +62,26 @@ export default function FarmMyPage() {
     navigate("/farmmodifyinfo");
   };
 
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 7;
+
+  const allData = [...postData];
+  const totalItemsCount = allData.length;
+  const indexOfLastPost = activePage * itemsPerPage;
+  const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+  const currentPosts = allData.slice(indexOfFirstPost, indexOfLastPost);
+
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
+
+  const currentStatusPosts = currentPosts.filter((post) =>
+    postData.includes(post)
+  );
+
   return (
     <Container>
-      <PageTitle text="내 정보" />
+      <PageTitle text="내 정보" style={{ position: "relative" }} />
       <ProfileBox>
         <StyledProfile />
         <Text>{userDummy.name} 님</Text>
@@ -43,6 +105,22 @@ export default function FarmMyPage() {
       </ProfileBox>
 
       <PageTitle text="내가 쓴 글" style={{ position: "relative" }} />
+      <ListWrapper>
+        <ListTitle>
+          <span className="title">제목</span>
+          <span className="date">등록일</span>
+          <span className="state">현황</span>
+          <span className="applicant" />
+        </ListTitle>
+        {currentStatusPosts.map((postInfo, index) => (
+          <MyPost key={index} postInfo={postInfo} />
+        ))}
+        <CustomPagination
+          activePage={activePage}
+          totalItemsCount={totalItemsCount}
+          handlePageChange={handlePageChange}
+        />
+      </ListWrapper>
     </Container>
   );
 }
@@ -60,7 +138,7 @@ const Container = styled.div`
 
 const ProfileBox = styled.div`
   /* 프로필 네모 박스 */
-  margin-top: 5.9375rem;
+  margin-top: 2rem;
   margin-bottom: 3.375rem;
   width: 41.25rem;
   height: 13.125rem;
@@ -92,4 +170,41 @@ const Text = styled.span`
   align-items: center;
   color: #8aa353;
   margin-right: 1.25rem;
+`;
+
+const ListWrapper = styled.div`
+  width: 85%;
+  max-width: 58rem;
+  display: block;
+  border-top: solid 0.2rem black;
+  margin-top: 2rem;
+`;
+
+const ListTitle = styled.div`
+  border-bottom: solid 0.1rem black;
+  margin-top: 1rem;
+  padding-bottom: 1rem; /* 아래쪽에 1rem 간격 추가 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Pretendard-Regular";
+  font-size: 1.5rem;
+
+  .date,
+  .state {
+    width: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .applicant,
+  .title {
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
