@@ -58,6 +58,7 @@ const Input = styled.input`
   color: ${({ isEditing, isChanged }) =>
     isEditing && isChanged ? "#8AA353" : "#6e6e6e"};
   transition: border-color 0.3s;
+  padding: 0 1rem;
 
   &:focus {
     border-color: ${({ isEditing }) => (isEditing ? "#AFBFA5" : "#d9d9d9")};
