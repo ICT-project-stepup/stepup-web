@@ -17,7 +17,6 @@ export default function FarmModifyInfo() {
     userType: "구인자",
     name: "박농가",
     userId: "shim12",
-    nickname: "홍익인간",
     password: "",
     passwordConfirm: "",
     birthDate: "1951-11-11",
@@ -47,7 +46,8 @@ export default function FarmModifyInfo() {
   };
 
   const [isDateChanged, setIsDateChanged] = useState(false); // 달력의 날짜 변경 여부
-  const [selectedDate, setSelectedDate] = useState( // 선택된 날짜 상태를 저장
+  const [selectedDate, setSelectedDate] = useState(
+    // 선택된 날짜 상태를 저장
     new Date(infoData.birthDate)
   );
   const handleDateChange = (date) => {
@@ -258,19 +258,6 @@ export default function FarmModifyInfo() {
                     fontSize: "21px",
                     color: isEditing ? "#D9D9D9" : "#6e6e6e",
                   }}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                별명 <StyledMustIcon />
-              </td>
-              <td>
-                <PlaceHolder
-                  text={infoData.nickname}
-                  defaultValue={infoData.nickname}
-                  isEditing={isEditing}
-                  style={{ fontSize: "21px" }}
                 />
               </td>
             </tr>

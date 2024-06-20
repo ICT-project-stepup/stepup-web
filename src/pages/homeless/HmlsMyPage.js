@@ -1,6 +1,7 @@
 // HmlsMyPage.js
 
 import { styled } from "styled-components";
+import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 import { ReactComponent as ResumeIcon } from "../../icons/ResumeIcon.svg";
 import { ReactComponent as ApplyIcon } from "../../icons/ApplyIcon.svg";
@@ -14,6 +15,10 @@ const userDummy = {
 /* 채은 */
 export default function HmlsMyPage() {
   const navigate = useNavigate();
+
+  const handleModifyClick = () => {
+    navigate("/homelessmodifyinfo");
+  };
 
   const handleResumeClick = () => {
     navigate("/manageresume");
@@ -33,7 +38,23 @@ export default function HmlsMyPage() {
         <Content>
           <StyledProfile />
           <Text>{userDummy.name}</Text>
-          <ChangeInformBtn>정보 수정</ChangeInformBtn>
+          <RoundWhiteBtn
+            text="정보 수정"
+            onClick={handleModifyClick}
+            style={{
+              width: "7.1875rem",
+              height: "2.6875rem",
+              fontFamily: "Pretendard-SemiBold",
+              fontSize: "1.25rem",
+              borderRadius: "0.9375rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              marginRight: "7.75rem",
+              position: "relative",
+            }}
+          />
         </Content>
 
         <ButtonBox>
