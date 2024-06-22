@@ -73,9 +73,6 @@ const Container = styled.div`
   display: block;
   align-items: flex-start;
   padding: 2rem 6rem 2rem 6rem;
-  font-family: Pretendard-Medium;
-  font-size: 1.5rem;
-  color: #2e2e2e;
 `;
 
 const CountWrapper = styled.div`

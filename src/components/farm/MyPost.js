@@ -46,7 +46,7 @@ const PostListWrapper = styled(Link)`
   justify-content: space-between;
   text-decoration: none;
   font-family: "Pretendard-Regular";
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   color: #2b2b2b;
 
   .date {
