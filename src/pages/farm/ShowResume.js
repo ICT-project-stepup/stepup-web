@@ -1,10 +1,17 @@
 import React from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
+import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
+import { ReactComponent as YesIcon } from "../../icons/YesIcon.svg";
+import { ReactComponent as NoIcon } from "../../icons/NoIcon.svg";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 
 /* 예은 */
 export default function ShowResume() {
+  const handleNoClick = () => {};
+
+  const handleYesClick = () => {};
+
   const profileData = {
     name: "이공주",
     age: "61세",
@@ -149,6 +156,44 @@ export default function ShowResume() {
           ))}
         </ListWrapper>
       </ApplyWithBox>
+
+      <CheckBtn>
+        <RoundWhiteBtn
+          text="탈락시키기"
+          icon={<NoIcon />}
+          onClick={handleNoClick}
+          style={{
+            width: "15.0625rem",
+            height: "7.3125rem",
+            fontFamily: "Pretendard-SemiBold",
+            fontSize: "1.75rem",
+            border: "0.125rem solid #8AA353",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginRight: "7.75rem",
+            position: "relative",
+          }}
+        />
+        <RoundWhiteBtn
+          text="합격시키기"
+          icon={<YesIcon />}
+          onClick={handleYesClick}
+          style={{
+            width: "15.0625rem",
+            height: "7.3125rem",
+            fontFamily: "Pretendard-SemiBold",
+            fontSize: "1.75rem",
+            border: "0.125rem solid #8AA353",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        />
+      </CheckBtn>
     </Container>
   );
 }
@@ -342,4 +387,14 @@ const ApplyWithBox = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+`;
+
+const CheckBtn = styled.div`
+  width: 100%;
+  height: 13rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4.6875rem 0;
 `;
