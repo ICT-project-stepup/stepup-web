@@ -104,6 +104,9 @@ export default function FarmMyPage() {
       </ProfileBox>
 
       <PageTitle text="내가 쓴 글" style={{ position: "relative" }} />
+      <CountWrapper>
+        <span>총 {totalItemsCount}건</span>
+      </CountWrapper>
       <ListWrapper>
         <ListTitle>
           <span className="title">제목</span>
@@ -171,16 +174,27 @@ const Text = styled.span`
   margin-right: 1.25rem;
 `;
 
+const CountWrapper = styled.div`
+  width: 100%;
+  height: 1.625rem;
+  font-family: "Pretendard-Regular";
+  font-size: 1.375rem;
+  color: #6e6e6e;
+  display: flex;
+  align-items: center;
+  margin-top: 2.125rem;
+`;
+
 const ListWrapper = styled.div`
   width: 85%;
   max-width: 58rem;
   display: block;
-  border-top: solid 0.2rem black;
+  border-top: solid 0.125rem #2b2b2b;
   margin-top: 2rem;
 `;
 
 const ListTitle = styled.div`
-  border-bottom: solid 0.1rem black;
+  border-bottom: solid 0.0625rem #2b2b2b;
   margin-top: 1rem;
   padding-bottom: 1rem; /* 아래쪽에 1rem 간격 추가 */
   width: 100%;
