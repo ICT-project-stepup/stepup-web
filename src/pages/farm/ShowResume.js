@@ -147,7 +147,16 @@ export default function ShowResume() {
             <ItemWrapper key={index}>
               <ListItem>
                 <Row>
-                  <div className="number">{applyWith.number}</div>
+                  <div
+                    className="number"
+                    style={{
+                      fontFamily: "Pretendard-Medium",
+                      fontSize: "1.5rem",
+                      color: "#8AA353",
+                    }}
+                  >
+                    {applyWith.number}
+                  </div>
                   <div className="id">{applyWith.id}</div>
                   <div className="name">{applyWith.name}</div>
                 </Row>
@@ -204,9 +213,6 @@ const Container = styled.div`
   display: block;
   align-items: flex-start;
   padding: 2rem 6rem 2rem 6rem;
-  font-family: Pretendard-Medium;
-  font-size: 1.5rem;
-  color: #2e2e2e;
 `;
 
 const SubText = styled.div`

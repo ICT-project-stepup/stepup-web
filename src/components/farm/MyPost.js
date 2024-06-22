@@ -40,13 +40,13 @@ export default function MyPost({ postInfo }) {
 const PostListWrapper = styled(Link)`
   width: 100%;
   height: 4.2rem;
-  border-bottom: solid 0.1rem #6e6e6e;
+  border-bottom: solid 0.0625rem #6e6e6e;
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
   font-family: "Pretendard-Regular";
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   color: #2b2b2b;
 
   .date {
