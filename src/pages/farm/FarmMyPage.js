@@ -63,13 +63,12 @@ export default function FarmMyPage() {
   };
 
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 7;
 
-  const allData = [...postData];
-  const totalItemsCount = allData.length;
-  const indexOfLastPost = activePage * itemsPerPage;
-  const indexOfFirstPost = indexOfLastPost - itemsPerPage;
-  const currentPosts = allData.slice(indexOfFirstPost, indexOfLastPost);
+  /* 페이지네이션에 필요한 변수들 */
+  const totalItemsCount = postData.length;
+  const indexOfLastPost = activePage * 7;
+  const indexOfFirstPost = indexOfLastPost - 7;
+  const currentPosts = postData.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
