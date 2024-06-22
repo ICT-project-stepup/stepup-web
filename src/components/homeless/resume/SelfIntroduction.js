@@ -21,7 +21,9 @@ const SelfIntroduction = ({ isEditing, introduction, setIntroduction }) => {
           isFocused={isFocused}
         />
       ) : (
-        <ReadOnlyTextarea>{introduction || "자기소개가 없습니다."}</ReadOnlyTextarea>
+        <ReadOnlyTextarea>
+          {introduction || "자기소개가 없습니다."}
+        </ReadOnlyTextarea>
       )}
     </Container>
   );
@@ -67,11 +69,11 @@ const StyledTextarea = styled.textarea`
 const ReadOnlyTextarea = styled.div`
   box-sizing: border-box;
   width: auto;
-  height: 180px;
+  height: auto;
   border-radius: 20px;
   padding: 1rem;
   font-size: 22px;
-  background: #E4ECD1;
+  background: #e4ecd1;
   border: 1px solid #dcdcdc;
   font-family: "Pretendard-Medium";
   color: #6e6e6e;

@@ -111,6 +111,8 @@ export default function ShowResume() {
           )}
         </ListWrapper>
       </CareerBox>
+
+      <SubText>자기소개</SubText>
     </Container>
   );
 }
@@ -203,8 +205,8 @@ const ListWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
-  border-top: solid 0.2rem black;
-  margin-top: 1rem;
+  border-top: solid 0.125rem #2b2b2b;
+  margin-top: 1.6875rem;
   box-sizing: border-box;
 `;
 
@@ -215,7 +217,7 @@ const ListHeader = styled.div`
   align-items: center;
   font-family: "Pretendard-Regular";
   font-size: 1.5rem;
-  border-bottom: solid 0.1rem black;
+  border-bottom: solid 0.0625rem #2b2b2b;
   box-sizing: border-box;
   justify-content: space-between;
 
@@ -235,7 +237,7 @@ const ListHeader = styled.div`
 
 const ItemWrapper = styled.div`
   width: 100%;
-  border-bottom: solid 0.1rem #6e6e6e;
+  border-bottom: solid 0.0625rem #6e6e6e;
 `;
 
 const ListItem = styled.div`
@@ -243,9 +245,9 @@ const ListItem = styled.div`
   height: 4.2rem;
   display: flex;
   align-items: center;
-  font-family: "Pretendard-Regular";
-  font-size: 1.5rem;
-  color: black;
+  font-family: "Pretendard-Medium";
+  font-size: 1.25rem;
+  color: #2b2b2b;
   box-sizing: border-box;
 
   .institution,
