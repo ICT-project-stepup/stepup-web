@@ -63,6 +63,17 @@ export default function ShowResume() {
     },
   ];
 
+  const applyWithData = [{ number: "1", id: "qkr1212", name: "박중화" }];
+  const applyWithLabel = [
+    { label: "번호", key: "number", className: "number" },
+    { label: "아이디", key: "id", className: "id" },
+    { label: "이름", key: "name", className: "name" },
+  ];
+
+  const selfIntroData = {
+    introduction: "응 안녕, 룩앳미 룩앳미",
+  };
+
   return (
     <Container>
       <PageTitle text="이력서 보기" style={{ position: "relative" }} />
@@ -113,6 +124,31 @@ export default function ShowResume() {
       </CareerBox>
 
       <SubText>자기소개</SubText>
+      <SelfIntroBox>{selfIntroData.introduction}</SelfIntroBox>
+
+      <SubText>같이 지원하기</SubText>
+      <ApplyWithBox>
+        <ListWrapper>
+          <ListHeader>
+            {applyWithLabel.map((header, index) => (
+              <span key={index} className={header.className}>
+                {header.label}
+              </span>
+            ))}
+          </ListHeader>
+          {applyWithData.map((applyWith, index) => (
+            <ItemWrapper key={index}>
+              <ListItem>
+                <Row>
+                  <div className="number">{applyWith.number}</div>
+                  <div className="id">{applyWith.id}</div>
+                  <div className="name">{applyWith.name}</div>
+                </Row>
+              </ListItem>
+            </ItemWrapper>
+          ))}
+        </ListWrapper>
+      </ApplyWithBox>
     </Container>
   );
 }
@@ -160,7 +196,7 @@ const InformBox = styled.div`
   box-shadow: 0 0.25rem 0.25rem rgba(175, 191, 165, 0.4);
   margin-bottom: 2rem;
   flex-direction: column;
-  margin-top: 1.5625rem;
+  margin-top: 1.6875rem;
 `;
 
 const Info = styled.div`
@@ -225,7 +261,10 @@ const ListHeader = styled.div`
   .startDate,
   .endDate,
   .period,
-  .work {
+  .work,
+  .number,
+  .id,
+  .name {
     flex: 1; /* Flex 속성 사용 */
     display: flex;
     align-items: center;
@@ -254,7 +293,10 @@ const ListItem = styled.div`
   .startDate,
   .endDate,
   .period,
-  .work {
+  .work,
+  .number,
+  .id,
+  .name {
     flex: 1; /* Flex 속성 사용 */
     display: flex;
     align-items: center;
@@ -276,4 +318,28 @@ const Row = styled.div`
     justify-content: center;
     width: auto;
   }
+`;
+
+const SelfIntroBox = styled.div`
+  width: auto;
+  min-height: 10rem; // 최소 높이 지정
+  height: auto; // 유동적인 높이 지정
+  margin-top: 1.6875rem;
+  background: #e4ecd1;
+  box-sizing: border-box;
+  border-radius: 1.25rem;
+  padding: 1.625rem 2.625rem;
+  font-family: "Pretendard-Medium";
+  font-size: 1.375rem;
+  color: #6e6e6e;
+  display: flex;
+  white-space: pre-wrap; // 줄 바꿈을 유지
+`;
+
+const ApplyWithBox = styled.div`
+  width: 60%;
+  max-width: 54.375rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
