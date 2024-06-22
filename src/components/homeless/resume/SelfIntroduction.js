@@ -51,12 +51,12 @@ const Title = styled.h2`
 const StyledTextarea = styled.textarea`
   box-sizing: border-box;
   width: auto;
-  height: 180px;
-  border-radius: 20px;
+  height: 10rem;
+  border-radius: 1.25rem;
   padding: 1.5rem 2rem;
-  font-size: 22px;
+  font-size: 1.375rem;
   background: ${(props) => (props.isFocused ? "#E4ECD1" : "#D9D9D9")};
-  border: 1px solid #dcdcdc;
+  border: none;
   font-family: "Pretendard-Medium";
   color: #6e6e6e;
   resize: none; // 크기 고정
@@ -70,11 +70,11 @@ const ReadOnlyTextarea = styled.div`
   box-sizing: border-box;
   width: auto;
   height: auto;
-  border-radius: 20px;
-  padding: 1rem;
-  font-size: 22px;
+  min-height: 10rem;
+  border-radius: 1.25rem;
+  padding: 1.625rem 2.625rem;
+  font-size: 1.375rem;
   background: #e4ecd1;
-  border: 1px solid #dcdcdc;
   font-family: "Pretendard-Medium";
   color: #6e6e6e;
   resize: none; // 크기 고정
