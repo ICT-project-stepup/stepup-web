@@ -83,7 +83,7 @@ export default function FarmMyPage() {
       <PageTitle text="내 정보" style={{ position: "relative" }} />
       <ProfileBox>
         <StyledProfile />
-        <Text>{userDummy.name} 님</Text>
+        <NameText>{userDummy.name} 님</NameText>
         <RoundWhiteBtn
           text="정보 수정"
           onClick={handleModifyClick}
@@ -152,23 +152,17 @@ const ProfileBox = styled.div`
 
 const StyledProfile = styled(ProfileIcon)`
   // 프로필 이미지
-  margin-right: 1.25rem;
+  margin-right: 1.5rem;
 `;
 
-const Text = styled.span`
-  left: 46.81%;
-  right: 43.96%;
-  top: 39.84%;
-  bottom: 55.96%;
+const NameText = styled.span`
   font-family: "Pretendard-SemiBold";
-  font-style: normal;
-  font-weight: 600;
   font-size: 2.25rem;
   line-height: 2.6875rem;
   display: flex;
   align-items: center;
   color: #8aa353;
-  margin-right: 1.25rem;
+  margin-right: 1.5rem;
 `;
 
 const CountWrapper = styled.div`
@@ -187,7 +181,7 @@ const ListWrapper = styled.div`
   max-width: 58rem;
   display: block;
   border-top: solid 0.125rem #2b2b2b;
-  margin-top: 2rem;
+  margin-top: 1.6875rem;
 `;
 
 const ListTitle = styled.div`
