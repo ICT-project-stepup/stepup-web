@@ -259,7 +259,7 @@ const PostContent = styled.div`
   border-bottom: 0.15rem solid #afbfa5;
   border-left: none;
   border-right: none;
-  // filter: drop-shadow(0.0625rem 0.25rem 0.25rem rgba(175, 191, 165, 0.4));
+  box-shadow: 0 0.09375rem rgba(175, 191, 165, 0.4);
   padding: 1.5rem 0;
   display: flex;
   flex-direction: column;
