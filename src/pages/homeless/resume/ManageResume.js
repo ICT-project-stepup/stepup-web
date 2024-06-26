@@ -16,6 +16,7 @@ export default function ManageResume() {
     phone: "010-1964-0711",
     email: "lookat@naver.com",
     address: "서울 용산구 한강대로92길 6 갈월동빌딩",
+    gender: "여자"
   };
 
   // SelfIntroduction 더미데이터
