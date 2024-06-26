@@ -7,28 +7,6 @@ import JobAdList from './JobAdList';
 import CustomPagination from '../../components/CustomPagination';
 import MyMap from './MyMap';
 
-
-const postData = [
-    {
-        area: "경남 창녕군",
-        postTitle: "마늘 뽑으실 분 구합니다",
-        salaryType: "일급",
-        salary: "100,000",
-        workTime: "09:00 ~ 16:00",
-        postDate: "2024.05.17",
-        postState: "모집 중", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-];
-
 /* 채민 */
 export default function Main() {
     const [isListMode, setListMode] = useState(true);
