@@ -1,15 +1,23 @@
 import { styled } from "styled-components";
 import { ReactComponent as Logo} from '../../assets/Logo.svg';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Footer() {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+      navigate("/aboutstep");
+    };
+
     return(
         <FooterContainer>
             <NavWrapper>
                 <CategoryWrapper>
                     <NavTitle>스텝업</NavTitle>
                     <NavContent>
-                        <Item>스텝업 소개</Item>
+                        <Item onClick={handleClick}>스텝업 소개</Item>
                     </NavContent>
                 </CategoryWrapper>
                 <CategoryWrapper>
@@ -87,6 +95,7 @@ const NavContent = styled.div`
 
 const Item = styled.span`
     margin-bottom: 0.3rem;
+    cursor: pointer;
 `;
 
 const BottomWrapper = styled.div`
