@@ -5,6 +5,7 @@ import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import MarkerMap from "../../../components/MarkerMap";
 
 import { useNavigate } from "react-router-dom";
 
@@ -29,27 +30,23 @@ const postData = [
     address: "경남 창녕군 창녕읍 섬마길3 창녕농협창고",
     name: "장복희",
     phoneNum: "010-1234-1234",
-    latitude: 35.516183073073336,
-    longitude: 128.490290241545,
+    latitude: 35.514335220719,
+    longitude: 128.49032089639,
   },
 ];
 
 export default function JobAdDetail() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleApplyClick = () => {
-    navigate("/manageresume");
-  };
+  // const handleApplyClick = () => {
+  //   navigate("/manageresume");
+  // };
 
-  const handleInterestClick = () => {
-    navigate("/interestpost");
-  };
+  // const handleInterestClick = () => {
+  //   navigate("/interestpost");
+  // };
 
   const post = postData[0];
-  const center = {
-    lat: post.latitude,
-    lng: post.longitude,
-  };
 
   return (
     <Container>
@@ -120,13 +117,7 @@ export default function JobAdDetail() {
               <tr>
                 <td>지도</td>
                 <td>
-                  <LoadScript googleMapsApiKey="AIzaSyDRGjPRqJSdBjgjXC4HEunnxZ9fM_9zvgc">
-                    <GoogleMap
-                      mapContainerStyle={containerStyle}
-                      center={center}
-                      zoom={18}
-                    ></GoogleMap>
-                  </LoadScript>
+                  <MarkerMap post={post} />
                 </td>
               </tr>
             </tbody>
@@ -152,7 +143,7 @@ export default function JobAdDetail() {
           <RoundWhiteBtn
             text="지원하기"
             icon={<ClipBoardIcon />}
-            onClick={handleApplyClick}
+            // onClick={handleApplyClick}
             style={{
               width: "15.0625rem",
               height: "7.3125rem",
@@ -170,7 +161,7 @@ export default function JobAdDetail() {
           <RoundWhiteBtn
             text="저장하기"
             icon={<StarIcon />}
-            onClick={handleInterestClick}
+            // onClick={handleInterestClick}
             style={{
               width: "15.0625rem",
               height: "7.3125rem",
@@ -218,20 +209,6 @@ const DetailText = styled.p`
   justify-content: center;
   text-align: left;
   // flex-wrap: wrap;
-`;
-
-const Placeholder = styled.div`
-  width: 100%;
-  height: 10rem;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #999;
-  border-radius: 1.875rem;
-  margin-top: 2.375rem;
-  margin-bottom: 2.375rem;
 `;
 
 const PostingWrapper = styled.div`
