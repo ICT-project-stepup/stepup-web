@@ -87,7 +87,7 @@ export default function MyMap() {
                                         <RoundWhiteBtn 
                                             text="자세히 보기"
                                             onClick={() => {
-                                                navigate("/jobaddetail");
+                                                navigate(`/jobaddetail/${selectedMarker.boardNumber}`);
                                             }}
                                             style={{
                                                 width: "7.5rem",
