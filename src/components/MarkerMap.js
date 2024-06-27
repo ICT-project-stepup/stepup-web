@@ -10,8 +10,8 @@ export default function MarkerMap({ post }) {
   };
 
   const center = {
-    lat: post.latitude,
-    lng: post.longitude,
+    lat: post.lat,
+    lng: post.lng,
   };
 
   return (

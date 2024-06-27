@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
@@ -7,93 +7,52 @@ import JobAdList from './JobAdList';
 import CustomPagination from '../../components/CustomPagination';
 import MyMap from './MyMap';
 
-
-const postData = [
-    {
-        area: "경남 창녕군",
-        postTitle: "마늘 뽑으실 분 구합니다",
-        salaryType: "일급",
-        salary: "100,000",
-        workTime: "09:00 ~ 16:00",
-        postDate: "2024.05.17",
-        postState: "모집 중", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-    {
-        area: "전남 진도군",
-        postTitle: "대파 뽑으실 분 구해요",
-        salaryType: "시급",
-        salary: "9,600",
-        workTime: "08:00 ~ 14:00",
-        postDate: "2024.05.11",
-        postState: "마감", 
-    },
-];
-
 /* 채민 */
 export default function Main() {
     const [isListMode, setListMode] = useState(true);
     const [activePage, setActivePage] = useState(1);
     const [mapKey, setMapKey] = useState(0);
+    const [totalJobAds, setTotalJobAds] = useState(0);
+    const [jobAds, setJobAds] = useState([]);
+
+    useEffect(() => {
+        fetchTotalJobAds(); // 페이지 로딩 시 총 구인글 개수를 가져오는 함수 호출
+        fetchJobAds(); // 페이지 로딩 시 구인글 목록을 가져오는 함수 호출
+    }, []);
+
+    /* 총 구인글 개수 */
+    const fetchTotalJobAds = async () => {
+        try {
+            const response = await fetch('/jobad/count'); // 백엔드 엔드포인트 URL
+            if (!response.ok) {
+                throw new Error('Failed to fetch total job ads');
+            }
+            const data = await response.json();
+            setTotalJobAds(data); // 총 구인글 개수 state 업데이트
+        } catch (error) {
+            console.error('Error fetching total job ads:', error);
+        }
+    };
+
+    /* 구인글 목록 불러오기*/
+    const fetchJobAds = async () => {
+        try {
+            const response = await fetch('/jobad'); // 백엔드 엔드포인트 URL
+            if (!response.ok) {
+                throw new Error('Failed to fetch job ads');
+            }
+            const data = await response.json();
+            setJobAds(data); // 구인글 목록 state 업데이트
+        } catch (error) {
+            console.error('Error fetching job ads:', error);
+        }
+    };
 
     /* 페이지네이션에 필요한 변수들 */
-    const totalItemsCount = postData.length;
+    const totalItemsCount = jobAds.length;
     const indexOfLastPost = activePage * 7;
     const indexOfFirstPost = indexOfLastPost - 7;
-    const currentPosts = postData.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = jobAds.slice(indexOfFirstPost, indexOfLastPost);
 
     const toggleListMode = () => {
         setListMode(true);
@@ -112,7 +71,7 @@ export default function Main() {
         <MainContainer>
             <PageTitle text="구인글 보기" />
             <CountModeWrapper>
-                <span>총 31건</span>
+                <span>총 {totalJobAds}건</span>
                 <ModeBtnWrapper>
                     <div style={{display: "flex", justifyContent: "flex-start"}}>
                         {isListMode ? (
@@ -156,7 +115,7 @@ export default function Main() {
                         <span className="date">등록일</span>
                         <span className="state">현황</span>
                     </ListTitle>
-                    {currentPosts.map((postInfo, index) => ( <JobAdList key={index} postInfo={postInfo} /> ))}
+                    {currentPosts.map((jobAds, index) => ( <JobAdList key={index} postInfo={jobAds} /> ))}
                     <CustomPagination
                         activePage={activePage}
                         totalItemsCount={totalItemsCount}

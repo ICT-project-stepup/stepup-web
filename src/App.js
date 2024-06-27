@@ -49,7 +49,7 @@ export default function App() {
         <Route path="/showresume" element={<ShowResume />} />
         <Route path="/farmmodifyinfo" element={<FarmModifyInfo />} />
         <Route path="/publishjobad" element={<PublishJobAd />} />
-        <Route path="/jobaddetail" element={<JobAdDetail />} />
+        <Route path="/jobaddetail/:id" element={<JobAdDetail />} />
 
         <Route path="/homelessmypage" element={<HmlsMyPage />} />
         <Route path="/applicationhistory" element={<ApplicationHistory />} />
