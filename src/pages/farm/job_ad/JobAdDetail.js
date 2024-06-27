@@ -4,6 +4,7 @@ import PageTitle from "../../../components/PageTitle";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
+import MarkerMap from "../../../components/MarkerMap";
 
 import { useNavigate } from "react-router-dom";
 
@@ -24,23 +25,25 @@ const postData = [
     workGender: "성별 무관",
     workType: "고추 수확",
     postDetail:
-      "초보자도 쉽게 가능한 일입니다. 작년까지도 초보자분들 많이 지원하시고, 일 배워갔습니다. 많은 관심 부탁드립니다.",
+      "초보자도 쉽게 가능한 일입니다. \n작년까지도 초보자분들 많이 지원하시고, 일 배워갔습니다. \n많은 관심 부탁드립니다.",
     address: "경남 창녕군 창녕읍 섬마길3 창녕농협창고",
     name: "장복희",
     phoneNum: "010-1234-1234",
+    latitude: 35.514335220719,
+    longitude: 128.49032089639,
   },
 ];
 
 export default function JobAdDetail() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleApplyClick = () => {
-    navigate("/manageresume");
-  };
+  // const handleApplyClick = () => {
+  //   navigate("/manageresume");
+  // };
 
-  const handleInterestClick = () => {
-    navigate("/interestpost");
-  };
+  // const handleInterestClick = () => {
+  //   navigate("/interestpost");
+  // };
 
   const post = postData[0];
 
@@ -100,7 +103,7 @@ export default function JobAdDetail() {
         <SectionTitle>상세 정보</SectionTitle>
         <PostContent>
           <DetailText>{post.postDetail}</DetailText>
-          <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder>
+          {/* <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder> */}
         </PostContent>
         <SectionTitle>근무지 정보</SectionTitle>
         <PostContent>
@@ -113,7 +116,7 @@ export default function JobAdDetail() {
               <tr>
                 <td>지도</td>
                 <td>
-                  <Placeholder>지도 API 추가 예정</Placeholder>
+                  <MarkerMap post={post} />
                 </td>
               </tr>
             </tbody>
@@ -139,37 +142,19 @@ export default function JobAdDetail() {
           <RoundWhiteBtn
             text="지원하기"
             icon={<ClipBoardIcon />}
-            onClick={handleApplyClick}
+            // onClick={handleApplyClick}
+            style={BtnStyle}
+          />
+          <div
             style={{
-              width: "15.0625rem",
-              height: "7.3125rem",
-              fontFamily: "Pretendard-SemiBold",
-              fontSize: "1.75rem",
-              border: "0.125rem solid #8AA353",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
               marginRight: "7.75rem",
-              position: "relative",
             }}
           />
           <RoundWhiteBtn
             text="저장하기"
             icon={<StarIcon />}
-            onClick={handleInterestClick}
-            style={{
-              width: "15.0625rem",
-              height: "7.3125rem",
-              fontFamily: "Pretendard-SemiBold",
-              fontSize: "1.75rem",
-              border: "0.125rem solid #8AA353",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
+            // onClick={handleInterestClick}
+            style={BtnStyle}
           />
         </PostingBtn>
       </PostingWrapper>
@@ -193,33 +178,18 @@ const RequirementsTable = styled.table`
   border-collapse: collapse;
 
   td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
+    padding: 0.8rem;
     font-size: 1.5rem;
   }
 `;
 
 const DetailText = styled.p`
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   text-align: left;
-  // flex-wrap: wrap;
-`;
-
-const Placeholder = styled.div`
-  width: 100%;
-  height: 10rem;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #999;
-  border-radius: 1.875rem;
-  margin-top: 2.375rem;
-  margin-bottom: 2.375rem;
+  flex-wrap: wrap;
 `;
 
 const PostingWrapper = styled.div`
@@ -254,7 +224,6 @@ const SectionTitle = styled.div`
 const PostContent = styled.div`
   width: 100%;
   height: auto;
-
   border-top: 0.15rem solid #afbfa5;
   border-bottom: 0.15rem solid #afbfa5;
   border-left: none;
@@ -266,20 +235,6 @@ const PostContent = styled.div`
   align-items: flex-start;
 `;
 
-const InfoItem = styled.div`
-  width: 50%;
-  margin-bottom: 0.5rem;
-  filter: none;
-  font-family: Pretendard-Medium;
-  font-size: 1.5rem;
-  color: #6e6e6e;
-
-  text-align: left;
-  // margin-top: 3rem;
-  // display: flex;
-  // justify-content: center;
-  // text-align: center;
-`;
 const PostingBtn = styled.div`
   width: 100%;
   height: 13rem;
@@ -289,3 +244,16 @@ const PostingBtn = styled.div`
   align-items: center;
   padding: 4.6875rem 0;
 `;
+
+const BtnStyle = {
+  width: "15.0625rem",
+  height: "7.3125rem",
+  border: "0.125rem solid #8AA353",
+  fontFamily: "Pretendard-SemiBold",
+  fontSize: "1.75rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative",
+};
