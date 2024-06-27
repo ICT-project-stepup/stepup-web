@@ -4,6 +4,7 @@ import PageTitle from "../../../components/PageTitle";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 import { useNavigate } from "react-router-dom";
 
@@ -24,10 +25,12 @@ const postData = [
     workGender: "성별 무관",
     workType: "고추 수확",
     postDetail:
-      "초보자도 쉽게 가능한 일입니다. 작년까지도 초보자분들 많이 지원하시고, 일 배워갔습니다. 많은 관심 부탁드립니다.",
+      "초보자도 쉽게 가능한 일입니다. \n작년까지도 초보자분들 많이 지원하시고, 일 배워갔습니다. \n많은 관심 부탁드립니다.",
     address: "경남 창녕군 창녕읍 섬마길3 창녕농협창고",
     name: "장복희",
     phoneNum: "010-1234-1234",
+    latitude: 35.516183073073336,
+    longitude: 128.490290241545,
   },
 ];
 
@@ -43,6 +46,10 @@ export default function JobAdDetail() {
   };
 
   const post = postData[0];
+  const center = {
+    lat: post.latitude,
+    lng: post.longitude,
+  };
 
   return (
     <Container>
@@ -100,7 +107,7 @@ export default function JobAdDetail() {
         <SectionTitle>상세 정보</SectionTitle>
         <PostContent>
           <DetailText>{post.postDetail}</DetailText>
-          <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder>
+          {/* <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder> */}
         </PostContent>
         <SectionTitle>근무지 정보</SectionTitle>
         <PostContent>
@@ -113,7 +120,13 @@ export default function JobAdDetail() {
               <tr>
                 <td>지도</td>
                 <td>
-                  <Placeholder>지도 API 추가 예정</Placeholder>
+                  <LoadScript googleMapsApiKey="AIzaSyDRGjPRqJSdBjgjXC4HEunnxZ9fM_9zvgc">
+                    <GoogleMap
+                      mapContainerStyle={containerStyle}
+                      center={center}
+                      zoom={18}
+                    ></GoogleMap>
+                  </LoadScript>
                 </td>
               </tr>
             </tbody>
@@ -193,8 +206,7 @@ const RequirementsTable = styled.table`
   border-collapse: collapse;
 
   td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
+    padding: 0.8rem;
     font-size: 1.5rem;
   }
 `;
@@ -254,7 +266,6 @@ const SectionTitle = styled.div`
 const PostContent = styled.div`
   width: 100%;
   height: auto;
-
   border-top: 0.15rem solid #afbfa5;
   border-bottom: 0.15rem solid #afbfa5;
   border-left: none;
@@ -266,20 +277,6 @@ const PostContent = styled.div`
   align-items: flex-start;
 `;
 
-const InfoItem = styled.div`
-  width: 50%;
-  margin-bottom: 0.5rem;
-  filter: none;
-  font-family: Pretendard-Medium;
-  font-size: 1.5rem;
-  color: #6e6e6e;
-
-  text-align: left;
-  // margin-top: 3rem;
-  // display: flex;
-  // justify-content: center;
-  // text-align: center;
-`;
 const PostingBtn = styled.div`
   width: 100%;
   height: 13rem;
@@ -289,3 +286,12 @@ const PostingBtn = styled.div`
   align-items: center;
   padding: 4.6875rem 0;
 `;
+
+/* 구글맵스 스타일링 */
+const containerStyle = {
+  width: "100%",
+  height: "22.5rem",
+  marginTop: "1rem",
+  borderRadius: "1.875rem",
+  border: "solid 0.09375rem rgba(175, 191, 165, 0.3)",
+};
