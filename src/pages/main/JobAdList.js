@@ -20,7 +20,7 @@ export default function JobAdList({ postInfo }) {
     };
 
     return(
-        <PostListWrapper postState={postInfo.postState} to="/JobAdDetail">
+        <PostListWrapper postState={postInfo.postState} to={`/jobaddetail/${postInfo.boardNumber}`}>
             <span className="area">{postInfo.area}</span>
             <span className="title">{postInfo.postTitle}</span>
             <div className="salary">
