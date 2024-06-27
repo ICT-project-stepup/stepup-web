@@ -451,10 +451,26 @@ export default function HmlsSignIn() {
               <td
                 style={{
                   display: "flex",
-                  alignItems: "row",
+                  flexDirection: "column",
                 }}
               >
-                <AddressInput />
+                <Controller
+                  name="address"
+                  control={control}
+                  render={({ field }) => (
+                    <AddressInput
+                      onAddressChange={(address) =>
+                        setValue("address", address)
+                      }
+                    />
+                  )}
+                />
+                <PlaceHolder
+                  placeholder="상세 주소 입력"
+                  type="text"
+                  name="detailedAddress"
+                  {...register("detailedAddress")}
+                />
               </td>
             </tr>
             <tr>
@@ -465,9 +481,6 @@ export default function HmlsSignIn() {
                   name="center"
                   {...register("center")}
                 />
-                {errors.center && (
-                  <ErrorMessage>{errors.center.message}</ErrorMessage>
-                )}
               </td>
             </tr>
             <tr>
@@ -589,8 +602,7 @@ const RequirementsTable = styled.table`
   table-layout: fixed; // 테이블 너비 고정
 
   td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
+    padding: 0.8rem;
     font-size: 1.5rem;
     text-align: left;
   }
