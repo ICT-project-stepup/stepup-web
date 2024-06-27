@@ -43,7 +43,7 @@ const customStyles = {
 
   dropdownIndicator: (provided) => ({
     ...provided,
-    padding: 0,
+    padding: "0.5rem",
     color: "#8AA353", // 커스텀 화살표 색상
     "> svg": {
       width: 24,
