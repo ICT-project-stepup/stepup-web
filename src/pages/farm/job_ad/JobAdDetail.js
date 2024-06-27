@@ -144,36 +144,18 @@ export default function JobAdDetail() {
             text="지원하기"
             icon={<ClipBoardIcon />}
             // onClick={handleApplyClick}
+            style={BtnStyle}
+          />
+          <div
             style={{
-              width: "15.0625rem",
-              height: "7.3125rem",
-              fontFamily: "Pretendard-SemiBold",
-              fontSize: "1.75rem",
-              border: "0.125rem solid #8AA353",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
               marginRight: "7.75rem",
-              position: "relative",
             }}
           />
           <RoundWhiteBtn
             text="저장하기"
             icon={<StarIcon />}
             // onClick={handleInterestClick}
-            style={{
-              width: "15.0625rem",
-              height: "7.3125rem",
-              fontFamily: "Pretendard-SemiBold",
-              fontSize: "1.75rem",
-              border: "0.125rem solid #8AA353",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
+            style={BtnStyle}
           />
         </PostingBtn>
       </PostingWrapper>
@@ -204,11 +186,11 @@ const RequirementsTable = styled.table`
 
 const DetailText = styled.p`
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   text-align: left;
-  // flex-wrap: wrap;
+  flex-wrap: wrap;
 `;
 
 const PostingWrapper = styled.div`
@@ -264,11 +246,15 @@ const PostingBtn = styled.div`
   padding: 4.6875rem 0;
 `;
 
-/* 구글맵스 스타일링 */
-const containerStyle = {
-  width: "100%",
-  height: "22.5rem",
-  marginTop: "1rem",
-  borderRadius: "1.875rem",
-  border: "solid 0.09375rem rgba(175, 191, 165, 0.3)",
+const BtnStyle = {
+  width: "15.0625rem",
+  height: "7.3125rem",
+  border: "0.125rem solid #8AA353",
+  fontFamily: "Pretendard-SemiBold",
+  fontSize: "1.75rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative",
 };

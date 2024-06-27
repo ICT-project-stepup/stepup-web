@@ -25,7 +25,7 @@ export default function MarkerMap({ post }) {
             position={{ lat: center.lat, lng: center.lng }}
             icon={{
               url: MapMarkerIcon,
-              scaledSize: new window.google.maps.Size(60, 60),
+              scaledSize: new window.google.maps.Size(50, 50),
             }}
           />
         </GoogleMap>
