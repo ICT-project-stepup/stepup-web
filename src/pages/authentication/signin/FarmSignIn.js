@@ -148,11 +148,6 @@ export default function HmlsSignIn() {
     }),
   };
 
-  const onAddressSelect = (address, detailedAddress) => {
-    setValue("address", address);
-    setValue("detailedAddress", detailedAddress);
-  };
-
   const [selectedGender, setSelectedGender] = useState(null);
 
   const toggleGender = (gender) => {
@@ -342,16 +337,7 @@ export default function HmlsSignIn() {
                     width: "6.4375rem",
                   }}
                 />
-                <span
-                  style={{
-                    fontFamily: "Pretendard-Medium",
-                    fontSize: "1.375rem",
-                    color: "#6E6E6E",
-                    padding: "0 1.1875rem",
-                  }}
-                >
-                  -
-                </span>
+                <DashText>-</DashText>
                 <PlaceHolder
                   type="tel"
                   name="phoneNumber2"
@@ -361,16 +347,7 @@ export default function HmlsSignIn() {
                     width: "6.4375rem",
                   }}
                 />
-                <span
-                  style={{
-                    fontFamily: "Pretendard-Medium",
-                    fontSize: "1.375rem",
-                    color: "#6E6E6E",
-                    padding: "0 1.1875rem",
-                  }}
-                >
-                  -
-                </span>
+                <DashText>-</DashText>
                 <PlaceHolder
                   type="tel"
                   name="phoneNumber3"
@@ -437,15 +414,25 @@ export default function HmlsSignIn() {
               <td
                 style={{
                   display: "flex",
-                  alignItems: "row",
+                  flexDirection: "column",
                 }}
               >
                 <Controller
                   name="address"
                   control={control}
                   render={({ field }) => (
-                    <AddressInput onSelect={onAddressSelect} {...field} />
+                    <AddressInput
+                      onAddressChange={(address) =>
+                        setValue("address", address)
+                      }
+                    />
                   )}
+                />
+                <PlaceHolder
+                  placeholder="상세 주소 입력"
+                  type="text"
+                  name="detailedAddress"
+                  {...register("detailedAddress")}
                 />
               </td>
             </tr>
@@ -573,6 +560,13 @@ const ErrorMessage = styled.div`
   color: #d66f6f;
   font-size: 1.25rem;
   margin-left: 1rem;
+`;
+
+const DashText = styled.div`
+  font-family: Pretendard-Medium;
+  font-size: 1.375rem;
+  color: #6e6e6e;
+  padding: 0 1.1875rem;
 `;
 
 const GenderButton = styled.button`
