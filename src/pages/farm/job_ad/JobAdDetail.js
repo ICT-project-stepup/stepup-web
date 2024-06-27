@@ -4,7 +4,6 @@ import PageTitle from "../../../components/PageTitle";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import MarkerMap from "../../../components/MarkerMap";
 
 import { useNavigate } from "react-router-dom";
