@@ -29,7 +29,7 @@ jobs:
           aws s3 cp --region ap-northeast-2 ./react-build.zip s3://stepup78/react-build.zip
       - name: Deploy 
         run: aws deploy create-deployment
-          --application-name test-codeDeploy 
+          --application-name stepUp
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name onesteptwostep-front
           --s3-location bucket=stepup78,bundleType=zip,key=react-build.zip
