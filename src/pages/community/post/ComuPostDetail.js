@@ -40,7 +40,7 @@ export default function ComuPostDetail() {
     useEffect(() => {
         const fetchComuPosts = async () => {
             try {
-                const response = await fetch(`/comupost/${id}`); // 백엔드 엔드포인트 URL
+                const response = await fetch(`/api/comupost/${id}`); // 백엔드 엔드포인트 URL
                 if (!response.ok) {
                     throw new Error('Failed to fetch comu post');
                 }
