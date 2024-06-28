@@ -82,6 +82,8 @@ export default function PublishJobAd() {
     }
   };
 
+  const [customWorkType, setCustomWorkType] = useState("");
+
   const TimeHourOptions = Array.from({ length: 24 }, (_, i) => ({
     value: i + 1,
     label: `${i + 1}`,
@@ -648,6 +650,15 @@ export default function PublishJobAd() {
                       onClick={() =>
                         field.onChange(field.value === "repair" ? "" : "repair")
                       }
+                    />
+                    <StyledPlaceHolder
+                      placeholder="직접 입력"
+                      value={customWorkType}
+                      onFocus={() => setValue("workType", "")} // 직접 입력 시, 기존 선택 값 초기화
+                      onChange={(e) => {
+                        setCustomWorkType(e.target.value);
+                        setValue("workType", e.target.value);
+                      }}
                     />
                   </>
                 )}
