@@ -5,6 +5,7 @@ import ListStyle from "./ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import CustomSelect from "../../CustomSelect";
+import axios from "axios";
 
 const Career = ({ isEditing, careerData, setCareerData }) => {
   const careerLabel = [
@@ -14,6 +15,8 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     { label: "입사연월", key: "startDate", className: "startDate" },
     { label: "퇴사연월", key: "endDate", className: "endDate" },
   ];
+
+  const baseURL = 'http://localhost:8081'; // API 서버의 baseURL을 설정
 
   const handleInputChange = (index, key, value) => {
     const newCareerData = [...careerData];
@@ -27,9 +30,15 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     setCareerData(newCareerData);
   };
 
-  const handleDeleteRow = (index) => {
-    const newCareerData = careerData.filter((_, i) => i !== index);
-    setCareerData(newCareerData);
+  const handleDeleteRow = async (index) => {
+    const careerId = careerData[index].careerId;
+    try {
+      await axios.delete(`${baseURL}/api/resume/career/${careerId}`);
+      const newCareerData = careerData.filter((_, i) => i !== index);
+      setCareerData(newCareerData);
+    } catch (error) {
+      console.error("Failed to delete career", error);
+    }
   };
 
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
