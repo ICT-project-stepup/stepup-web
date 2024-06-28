@@ -80,6 +80,7 @@ export default function HmlsSignIn() {
     watch,
     control,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -326,7 +327,12 @@ export default function HmlsSignIn() {
                     <CustomCalendarWrapper>
                       <Calendar
                         selectedDate={selectedDate}
-                        handleDateChange={handleDateChange}
+                        handleDateChange={(date) => {
+                          handleDateChange(date);
+                          if (date) {
+                            clearErrors("birthdate"); // 생년월일 선택 시 에러 메시지 제거
+                          }
+                        }}
                       />
                     </CustomCalendarWrapper>
                   )}
