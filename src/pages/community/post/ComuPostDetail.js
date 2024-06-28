@@ -8,19 +8,6 @@ import CommentSection from "./CommentSection";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 
 
-const comuPostInfo = {
-    comuTitle: "마늘 같이 뽑으러 가실 분~~",
-    comuWriter: "홍익인간",
-    comuDate: "2024.05.17",
-    numOfView: "67",
-    comuContent: "혹시 다음주에 마늘 같이 뽑으러 가실 분 있으신가요?\n가서 같이 일하면서 친해져요 ㅎ\n댓글 부탁요.",
-}
-
-const adPostInfo = {
-    area: "경남 창녕군",
-    postTitle: "마늘 뽑으실 분 구합니다",
-}
-
 /* 채민 */
 export default function ComuPostDetail() {
     const navigate = useNavigate();
@@ -110,7 +97,7 @@ export default function ComuPostDetail() {
                         }}>{comuPost.jobAdTitle}</span>
                     </AdPostTitle>
                 </AdPostLinkWrapper>
-                <CommentSection />
+                <CommentSection postId={comuPost.communityNumber} />
                 <ReturnListBtn>
                     <RoundWhiteBtn 
                         text="목록으로"
