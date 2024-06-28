@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import PageTitle from "../../../components/PageTitle";
 import { ReactComponent as LinkIcon} from "../../../icons/LinkIcon.svg";
@@ -23,40 +24,90 @@ const adPostInfo = {
 /* 채민 */
 export default function ComuPostDetail() {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const [comuPost, setcomuPost] = useState([]);
+    const [loading, setLoading] = useState(true); // 로딩 상태
+    const [error, setError] = useState(null); // 오류 상태
 
     const handleGoListClick = () => {
         navigate("/communitymain");
     };
+
+    const formatDate = (isoDateString) => {  // 날짜 형식 변환
+        const date = new Date(isoDateString);
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        if (day < 10) {
+            day = `0${day}`;
+        }
+
+        return `${year}.${month}.${day}`;
+    };
+
+    /* 커뮤글 불러오기*/
+    useEffect(() => {
+        const fetchComuPosts = async () => {
+            try {
+                const response = await fetch(`/comupost/${id}`); // 백엔드 엔드포인트 URL
+                if (!response.ok) {
+                    throw new Error('Failed to fetch comu post');
+                }
+                const data = await response.json();
+                setcomuPost(data); // 커뮤글 목록 state 업데이트
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false); // 로딩 상태 해제
+            }
+        };
+        fetchComuPosts();
+    }, [id]);
+
+    /* 페이지 로딩 상태 관리 */
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+    if (!comuPost) {
+        return <div>No post found</div>;
+    }
 
     return(
         <ComuDetailContainer>
             <PageTitle text="커뮤니티" />
             <PostDetailWrapper>
                 <PostTitle>
-                    {comuPostInfo.comuTitle}
+                    {comuPost.title}
                 </PostTitle>
                 <PostDetailInfoWrapper>
-                    <span>{comuPostInfo.comuWriter}</span>
+                    <span>{comuPost.userNickname}</span>
                     <span>|</span>
-                    <span>{comuPostInfo.comuDate}</span>
+                    <span>{formatDate(comuPost.createdTime)}</span>
                     <span>|</span>
                     <span>조회수</span>
-                    <span>{comuPostInfo.numOfView}</span>
+                    <span>{comuPost.viewCount}</span>
                 </PostDetailInfoWrapper>
                 <PostContentWrapper>
-                    <span>{comuPostInfo.comuContent}</span>
+                    <span>{comuPost.content}</span>
                 </PostContentWrapper>
                 <AdPostLinkWrapper>
-                    <PostLink to="/jobaddetail">
+                    <PostLink to={`/jobaddetail/${comuPost.jobAd}`}>
                         <LinkIcon />
                         <span style={{marginLeft: "1rem"}}>해당 글 바로가기 클릭</span>
                     </PostLink>
                     <AdPostTitle>
-                        <span>{adPostInfo.area}</span>
+                        <span>{comuPost.jobAdArea}</span>
                         <span style={{
                             fontFamily: "Pretendard-SemiBold",
                             marginLeft: "1rem"
-                        }}>{adPostInfo.postTitle}</span>
+                        }}>{comuPost.jobAdTitle}</span>
                     </AdPostTitle>
                 </AdPostLinkWrapper>
                 <CommentSection />

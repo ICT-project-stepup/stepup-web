@@ -1,41 +1,12 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../../components/PageTitle";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
 import MarkerMap from "../../../components/MarkerMap";
-
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-const postData = [
-  {
-    area: "경남 창녕군",
-    postTitle: "마늘 뽑으실 분 구합니다",
-    salaryType: "일급",
-    salary: "100,000",
-    workPeriod: "1주일",
-    workTime: "09:00 ~ 16:00",
-    post_date: "2024-05-17",
-    close_date: "2024-05-25",
-    start_date: "2024-06-01",
-    end_date: "2024-06-08",
-    postState: "모집 중",
-    workNum: "10명",
-    roomYN: "가능",
-    vehicleYN: "불가",
-    workAge: "연령 무관",
-    workGender: "성별 무관",
-    workType: "고추 수확",
-    postDetail:
-      "초보자도 쉽게 가능한 일입니다. \n작년까지도 초보자분들 많이 지원하시고, 일 배워갔습니다. \n많은 관심 부탁드립니다.",
-    address: "경남 창녕군 창녕읍 섬마길3 창녕농협창고",
-    name: "장복희",
-    phoneNum: "010-1234-1234",
-    latitude: 35.514335220719,
-    longitude: 128.49032089639,
-  },
-];
 
 export default function JobAdDetail() {
   // const navigate = useNavigate();
@@ -48,7 +19,62 @@ export default function JobAdDetail() {
   //   navigate("/interestpost");
   // };
 
-  const post = postData[0];
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 오류 상태
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`/jobad/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch job ad');
+        }
+        const data = await response.json();
+        setPost(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false); // 로딩 상태 해제
+      }
+    };
+    fetchPost();
+  }, [id]);
+
+  /* 페이지 로딩 상태 관리 */
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  if (!post) {
+    return <div>No post found</div>;
+  }
+
+  /* 날짜 형식 변환 */
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+        month = `0${month}`;
+    }
+    if (day < 10) {
+        day = `0${day}`;
+    }
+
+    return `${year}.${month}.${day}`;
+};
+
+  /* 차량 또는 숙소 제공 여부 */
+  const formatAvailability = (availability) => {
+    return availability ? "가능" : "불가";
+  };
+
 
   return (
     <Container>
@@ -105,11 +131,9 @@ export default function JobAdDetail() {
                 <td>
                   {post.salaryType} {post.salary}
                 </td>
-                <td>{post.workPeriod}</td>
-                <td>
-                  {post.start_date}~{post.end_date}
-                </td>
-                <td>{post.workTime}</td>
+                <td>{post.period}</td>
+                <td>{formatDate(post.startDate)} ~ {formatDate(post.endDate)}</td>
+                <td>{post.startTime} ~ {post.endTime}</td>
               </tr>
             </tbody>
           </RequirementsTable>
@@ -120,20 +144,20 @@ export default function JobAdDetail() {
             <tbody>
               <tr>
                 <td>모집인원</td>
-                <td>{post.workNum}</td>
+                <td>{post.recruitsNum}</td>
                 <td>연령</td>
                 {/* 20대 30대 40대 등 복수 선택도 고려해야함 */}
-                <td>{post.workAge}</td>
+                <td>{post.recruitsAge}</td>
               </tr>
               <tr>
                 <td>숙소 제공 여부</td>
-                <td>{post.roomYN}</td>
+                <td>{formatAvailability(post.roomsYn)}</td>
                 <td>성별</td>
-                <td>{post.workGender}</td>
+                <td>{post.recruitsGender}</td>
               </tr>
               <tr>
                 <td>차량 지원 여부</td>
-                <td>{post.vehicleYN}</td>
+                <td>{formatAvailability(post.vehiclesYn)}</td>
                 <td>근무 종류</td>
                 <td>{post.workType}</td>
               </tr>
@@ -142,7 +166,7 @@ export default function JobAdDetail() {
         </PostContent>
         <SectionTitle>상세 정보</SectionTitle>
         <PostContent>
-          <DetailText>{post.postDetail}</DetailText>
+          <DetailText>{post.content}</DetailText>
           {/* <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder> */}
         </PostContent>
         <SectionTitle>근무지 정보</SectionTitle>
@@ -168,11 +192,11 @@ export default function JobAdDetail() {
             <tbody>
               <tr>
                 <td>이름</td>
-                <td>{post.name}</td>
+                <td>{post.userName}</td>
               </tr>
               <tr>
                 <td>연락처</td>
-                <td>{post.phoneNum}</td>
+                <td>{post.userPhone}</td>
               </tr>
             </tbody>
           </RequirementsTable>
@@ -238,6 +262,9 @@ const DetailText = styled.p`
   justify-content: center;
   text-align: left;
   flex-wrap: wrap;
+  white-space: pre-line;
+  line-height: 2.3;
+  padding-left: 3.5rem;
 `;
 
 const PostingWrapper = styled.div`
