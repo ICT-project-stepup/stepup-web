@@ -7,6 +7,7 @@ import CustomSelect from "../../../components/CustomSelect";
 import AddressInput from "../../../components/input/address";
 import Chip from "@mui/material/Chip";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
+import Tooltip from "@mui/material/Tooltip";
 
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -81,6 +82,8 @@ export default function PublishJobAd() {
     }
   };
 
+  const [customWorkType, setCustomWorkType] = useState("");
+
   const TimeHourOptions = Array.from({ length: 24 }, (_, i) => ({
     value: i + 1,
     label: `${i + 1}`,
@@ -117,7 +120,7 @@ export default function PublishJobAd() {
           name="title"
           control={control}
           render={({ field }) => (
-            <StyledPlaceHolder {...field} placeholder="제목을 입력하세요." />
+            <StyledTitleInput {...field} placeholder="제목을 입력하세요." />
           )}
         />
       </SectionWrapper>
@@ -133,22 +136,56 @@ export default function PublishJobAd() {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <CustomChip
-                      label="단기"
-                      clickable
-                      color={field.value === "short" ? "primary" : "default"}
-                      onClick={() =>
-                        field.onChange(field.value === "short" ? "" : "short")
-                      }
-                    />
-                    <CustomChip
-                      label="장기"
-                      clickable
-                      color={field.value === "long" ? "primary" : "default"}
-                      onClick={() =>
-                        field.onChange(field.value === "long" ? "" : "long")
-                      }
-                    />
+                    <Tooltip
+                      title="일하는 기간이 한 달 이내라면, 단기로 클릭!"
+                      placement="top"
+                      componentsProps={{
+                        tooltip: {
+                          sx: {
+                            background: "#8aa353",
+                            color: "#ffffff",
+                            fontFamily: "Pretendard-Regular",
+                            fontSize: "1rem",
+                            boxShadow: "0 0.09375rem rgba(228, 236, 209, 0.4)",
+                            borderRadius: "0.6rem",
+                          },
+                        },
+                      }}
+                    >
+                      <CustomChip
+                        label="단기"
+                        clickable
+                        color={field.value === "short" ? "primary" : "default"}
+                        onClick={() =>
+                          field.onChange(field.value === "short" ? "" : "short")
+                        }
+                      />
+                    </Tooltip>
+                    <Tooltip
+                      title="일하는 기간이 한 달 이상이라면, 장기로 클릭!"
+                      placement="top"
+                      componentsProps={{
+                        tooltip: {
+                          sx: {
+                            background: "#8aa353",
+                            color: "#ffffff",
+                            fontFamily: "Pretendard-Regular",
+                            fontSize: "1rem",
+                            boxShadow: "0 0.09375rem rgba(228, 236, 209, 0.4)",
+                            borderRadius: "0.6rem",
+                          },
+                        },
+                      }}
+                    >
+                      <CustomChip
+                        label="장기"
+                        clickable
+                        color={field.value === "long" ? "primary" : "default"}
+                        onClick={() =>
+                          field.onChange(field.value === "long" ? "" : "long")
+                        }
+                      />
+                    </Tooltip>
                   </>
                 )}
               />
@@ -346,11 +383,7 @@ export default function PublishJobAd() {
                   control={control}
                   render={({ field }) => (
                     <>
-                      <PlaceHolder
-                        {...field}
-                        type="tel"
-                        style={{ width: "14.375rem", height: "3.125rem" }}
-                      />
+                      <StyledPlaceHolder {...field} type="tel" />
                     </>
                   )}
                 />
@@ -618,6 +651,15 @@ export default function PublishJobAd() {
                         field.onChange(field.value === "repair" ? "" : "repair")
                       }
                     />
+                    <StyledPlaceHolder
+                      placeholder="직접 입력"
+                      value={customWorkType}
+                      onFocus={() => setValue("workType", "")} // 직접 입력 시, 기존 선택 값 초기화
+                      onChange={(e) => {
+                        setCustomWorkType(e.target.value);
+                        setValue("workType", e.target.value);
+                      }}
+                    />
                   </>
                 )}
               />
@@ -668,11 +710,11 @@ export default function PublishJobAd() {
                   control={control}
                   render={({ field }) => (
                     <>
-                      <PlaceHolder
+                      <StyledPlaceHolder
                         {...field}
                         placeholder="상세 주소 입력"
                         type="text"
-                        style={{ height: "3.125rem" }}
+                        style={{ width: "25.3125rem" }}
                       />
                     </>
                   )}
@@ -694,10 +736,10 @@ export default function PublishJobAd() {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <PlaceHolder
+                    <StyledPlaceHolder
                       {...field}
                       type="text"
-                      style={{ width: "11.25rem", height: "3.125rem" }}
+                      style={{ width: "11.25rem" }}
                     />
                   </>
                 )}
@@ -712,11 +754,11 @@ export default function PublishJobAd() {
                 name="contact1"
                 control={control}
                 render={({ field }) => (
-                  <PlaceHolder
+                  <StyledPlaceHolder
                     {...field}
                     type="tel"
                     maxLength={3}
-                    style={{ width: "6.4375rem", height: "3.125rem" }}
+                    style={{ width: "6.4375rem" }}
                   />
                 )}
               />
@@ -725,11 +767,11 @@ export default function PublishJobAd() {
                 name="contact2"
                 control={control}
                 render={({ field }) => (
-                  <PlaceHolder
+                  <StyledPlaceHolder
                     {...field}
                     type="tel"
                     maxLength={4}
-                    style={{ width: "6.4375rem", height: "3.125rem" }}
+                    style={{ width: "6.4375rem" }}
                   />
                 )}
               />
@@ -738,11 +780,11 @@ export default function PublishJobAd() {
                 name="contact3"
                 control={control}
                 render={({ field }) => (
-                  <PlaceHolder
+                  <StyledPlaceHolder
                     {...field}
                     type="tel"
                     maxLength={4}
-                    style={{ width: "6.4375rem", height: "3.125rem" }}
+                    style={{ width: "6.4375rem" }}
                   />
                 )}
               />
@@ -798,7 +840,7 @@ const SectionTitle = styled.div`
   align-items: center;
 `;
 
-const StyledPlaceHolder = styled(PlaceHolder)`
+const StyledTitleInput = styled(PlaceHolder)`
   width: 37.5rem;
   height: 3.75rem;
   font-size: 1.6875rem;
@@ -808,6 +850,12 @@ const StyledPlaceHolder = styled(PlaceHolder)`
   &::placeholder {
     font-size: 1.375rem;
   }
+`;
+
+const StyledPlaceHolder = styled(PlaceHolder)`
+  width: 14.375rem;
+  height: 3.125rem;
+  font-size: 1.375rem;
 `;
 
 const PostContent = styled.div`
@@ -851,28 +899,6 @@ const SelectWrapper = styled.div`
 `;
 
 const CustomChip = styled(Chip)(({ theme }) => ({
-  // 클릭됐을 때 상태
-
-  "&.MuiChip-hover, &.MuiChip-focusVisible": {
-    backgroundColor: "#8AA353",
-  },
-
-  "&.MuiChip-clickableColorPrimary": {
-    backgroundColor: "#8AA353", // 기본 배경색
-    color: "#ffffff", // 기본 글자색
-    border: "0.09375rem solid #AFBFA5", // 기본 외곽선
-  },
-  "&.MuiTouchRipple-root": {
-    backgroundColor: "#8AA353", // 기본 배경색
-    color: "#ffffff", // 기본 글자색
-    border: "0.09375rem solid #AFBFA5", // 기본 외곽선
-  },
-  "&.MuiChip-colorPrimary": {
-    backgroundColor: "#8AA353", // 기본 배경색
-    color: "#ffffff", // 기본 글자색
-    border: "0.09375rem solid #AFBFA5", // 기본 외곽선
-  },
-
   "&.MuiButtonBase-root": {
     marginRight: "1.5rem",
     boxSizing: "border-box",
@@ -933,7 +959,7 @@ const CustomCalendarWrapper = styled.div`
 const customSelectStyles = {
   control: (provided) => ({
     ...provided,
-    width: "5rem",
+    width: "5.8rem",
     height: "3.125rem",
     border: "0.09375rem solid #AFBFA5",
     borderRadius: "0.9375rem",
