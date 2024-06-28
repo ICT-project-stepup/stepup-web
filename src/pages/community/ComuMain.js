@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
@@ -7,38 +7,29 @@ import ComuPostList from "./ComuPostList";
 import CustomPagination from '../../components/CustomPagination';
 
 
-const comuPosts = [
-    {
-        area: "경남 창녕군",
-        comuTitle: "마늘 같이 뽑으러 가실 분~~",
-        comuWriter: "홍익인간",
-        NumOfComment: "5",
-        NumOfView: "67",
-        comuDate: "2024.05.17",
-    },
-    {
-        area: "전남 진도군",
-        comuTitle: "요즘 다들 어떠신가요...",
-        comuWriter: "공수향",
-        NumOfComment: "7",
-        NumOfView: "76",
-        comuDate: "2024.05.11",
-    },
-    {
-        area: "충북 제천시",
-        comuTitle: "서비스 이용 이렇게 하는거맞나요?",
-        comuWriter: "임원복",
-        NumOfComment: "11",
-        NumOfView: "101",
-        comuDate: "2024.04.23",
-    },
-    {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},
-]
-
 /* 채민 */
 export default function ComuMain() {
-    const [activePage, setActivePage] = useState(1);
     const navigate = useNavigate();
+    const [activePage, setActivePage] = useState(1);
+    const [comuPosts, setcomuPosts] = useState([]);
+
+    useEffect(() => {
+        fetchComuPosts(); // 페이지 로딩 시 커뮤글 목록을 가져오는 함수 호출
+    }, []);
+
+    /* 커뮤글 목록 불러오기*/
+    const fetchComuPosts = async () => {
+        try {
+            const response = await fetch('/comupost'); // 백엔드 엔드포인트 URL
+            if (!response.ok) {
+                throw new Error('Failed to fetch comu posts');
+            }
+            const data = await response.json();
+            setcomuPosts(data); // 커뮤글 목록 state 업데이트
+        } catch (error) {
+            console.error('Error fetching comu posts:', error);
+        }
+    };
 
     /* 페이지네이션에 필요한 변수들 */
     const totalItemsCount = comuPosts.length;
