@@ -20,7 +20,7 @@ export default function ComuMain() {
     /* 커뮤글 목록 불러오기*/
     const fetchComuPosts = async () => {
         try {
-            const response = await fetch('/comupost'); // 백엔드 엔드포인트 URL
+            const response = await fetch('/api/comupost'); // 백엔드 엔드포인트 URL
             if (!response.ok) {
                 throw new Error('Failed to fetch comu posts');
             }

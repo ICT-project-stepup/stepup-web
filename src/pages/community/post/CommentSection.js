@@ -11,7 +11,7 @@ export default function CommentSection({ postId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`/comments/${postId}`);
+        const response = await fetch(`/api/comments/${postId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch comments');
         }
@@ -44,7 +44,7 @@ export default function CommentSection({ postId }) {
     };
 
     try {
-      const response = await fetch('/comments', {
+      const response = await fetch('/api/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

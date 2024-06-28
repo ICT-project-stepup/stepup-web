@@ -30,7 +30,7 @@ export default function ComuPostList({ postInfo }) {
     /* 조회수 업데이트 */
     const updatePostViews = async (postId) => {
         try {
-            const response = await fetch(`/comupost/${postId}/view`, {
+            const response = await fetch(`/api/comupost/${postId}/view`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -27,7 +27,7 @@ export default function JobAdDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/jobad/${id}`);
+        const response = await fetch(`/api/jobad/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch job ad');
         }

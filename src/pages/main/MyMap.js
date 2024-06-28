@@ -32,7 +32,7 @@ export default function MyMap() {
 
     const fetchJobAds = async () => {
         try {
-            const response = await fetch('/jobad'); // 백엔드 엔드포인트 URL
+            const response = await fetch('/api/jobad'); // 백엔드 엔드포인트 URL
             if (!response.ok) {
                 throw new Error('Failed to fetch job ads');
             }
