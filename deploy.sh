@@ -1,8 +1,15 @@
 #!/bin/bash
 REPOSITORY=/home/ubuntu/react
 
+echo "> run client project"
 cd $REPOSITORY
 
-sudo yarn install
+echo "> pm2 kill"
+pm2 kill
 
-sudo npx pm2 reload all
+echo "> npm build"
+npm install
+npm run build
+
+echo "> pm2 build"
+pm2 serve build/ 3000 --spa
