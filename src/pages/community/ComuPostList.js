@@ -20,7 +20,7 @@ export default function ComuPostList({ postInfo }) {
     };
 
     return(
-        <PostListWrapper to="/comupostdetail">
+        <PostListWrapper to={`/comupostdetail/${postInfo.communityNumber}`}>
             <span className="area">{postInfo.jobAdArea}</span>
             <span className="title">{postInfo.title}</span>
             <span className="writer">{postInfo.userNickname}</span>
