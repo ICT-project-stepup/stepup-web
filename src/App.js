@@ -58,7 +58,7 @@ export default function App() {
         <Route path="/manageresume" element={<ManageResume />} />
 
         <Route path="/communitymain" element={<ComuMain />} />
-        <Route path="/comupostdetail" element={<ComuPostDetail />} />
+        <Route path="/comupostdetail/:id" element={<ComuPostDetail />} />
         <Route path="/publishcomupost" element={<PublishComuPost />} />
 
         <Route path="/completemodify" element={<CompleteModify />} />
