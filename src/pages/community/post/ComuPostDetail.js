@@ -75,11 +75,10 @@ export default function ComuPostDetail() {
                 </PostTitle>
                 <PostDetailInfoWrapper>
                     <span>{comuPost.userNickname}</span>
-                    <span>|</span>
+                    <span style={{margin: "0 0.7rem"}}>|</span>
                     <span>{formatDate(comuPost.createdTime)}</span>
-                    <span>|</span>
-                    <span>조회수</span>
-                    <span>{comuPost.viewCount}</span>
+                    <span style={{margin: "0 0.7rem"}}>|</span>
+                    <span>조회수 {comuPost.viewCount}</span>
                 </PostDetailInfoWrapper>
                 <PostContentWrapper>
                     <span>{comuPost.content}</span>
@@ -143,7 +142,7 @@ const PostTitle = styled.div`
 `;
 
 const PostDetailInfoWrapper = styled.div`
-    width: 20rem;
+    width: auto;
     display: flex;
     justify-content: space-between;
     font-family: Pretendard-Regular;
