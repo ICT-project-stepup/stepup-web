@@ -3,14 +3,29 @@ import { Link } from 'react-router-dom';
 
 
 export default function ComuPostList({ postInfo }) {
+    const formatDate = (isoDateString) => {  // 날짜 형식 변환
+        const date = new Date(isoDateString);
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        if (day < 10) {
+            day = `0${day}`;
+        }
+
+        return `${year}.${month}.${day}`;
+    };
+
     return(
-        <PostListWrapper to="/comupostdetail">
-            <span className="area">{postInfo.area}</span>
-            <span className="title">{postInfo.comuTitle}</span>
-            <span className="writer">{postInfo.comuWriter}</span>
-            <span className="comment">{postInfo.NumOfComment}</span>
-            <span className="view">{postInfo.NumOfView}</span>
-            <span className="date">{postInfo.comuDate}</span>
+        <PostListWrapper to={`/comupostdetail/${postInfo.communityNumber}`}>
+            <span className="area">{postInfo.jobAdArea}</span>
+            <span className="title">{postInfo.title}</span>
+            <span className="writer">{postInfo.userNickname}</span>
+            <span className="view">{postInfo.viewCount}</span>
+            <span className="date">{formatDate(postInfo.createdTime)}</span>
         </PostListWrapper>
     );
 }
@@ -42,8 +57,7 @@ const PostListWrapper = styled(Link)`
         justify-content: center;
         font-family: "Pretendard-SemiBold";
     }
-    .view,
-    .comment {
+    .view {
         width: 5rem;
         display: flex;
         align-items: center;
