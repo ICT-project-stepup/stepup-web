@@ -32,4 +32,4 @@ jobs:
           --application-name test-codeDeploy 
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name onesteptwostep-front
-          --s3-location bucket=stepup78,bundleType=zip
+          --s3-location bucket=stepup78,bundleType=zip,key=react-build.zip
