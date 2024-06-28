@@ -32,7 +32,15 @@ const AddressInput = ({ subBoxStyle, onAddressChange, ...props }) => {
             alignItems: "row",
           }}
         >
-          <SubBox style={subBoxStyle}>{address}</SubBox>
+          <SubBox style={subBoxStyle}>
+            {address ? (
+              address
+            ) : (
+              <PlaceholderText>
+                돋보기 아이콘을 눌러 주소를 찾아보세요!
+              </PlaceholderText>
+            )}
+          </SubBox>
           <SearchIconWrapper onClick={toggleHandler}>
             <SearchIcon />
           </SearchIconWrapper>
@@ -64,6 +72,12 @@ const SearchIconWrapper = styled.button`
   cursor: pointer;
   margin-left: 0.5rem;
   margin-bottom: 0.5rem;
+`;
+
+const PlaceholderText = styled.span`
+  color: #afbfa5;
+  font-size: 1rem;
+  user-select: none;
 `;
 
 export default AddressInput;
