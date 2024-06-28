@@ -1,8 +1,10 @@
 import { styled } from "styled-components";
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 export default function ComuPostList({ postInfo }) {
+    const navigate = useNavigate();
+
     const formatDate = (isoDateString) => {  // 날짜 형식 변환
         const date = new Date(isoDateString);
         const year = date.getFullYear();
@@ -19,8 +21,33 @@ export default function ComuPostList({ postInfo }) {
         return `${year}.${month}.${day}`;
     };
 
+    /* 상세 페이지로 이동 */
+    const navigateToDetail = (postId) => {
+        navigate(`/comupostdetail/${postId}`);
+        updatePostViews(postId); // 상세 페이지로 이동 시 조회수 업데이트
+    };
+
+    /* 조회수 업데이트 */
+    const updatePostViews = async (postId) => {
+        try {
+            const response = await fetch(`/comupost/${postId}/view`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ postId }),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update post views');
+            }
+            // 조회수 업데이트 성공
+        } catch (error) {
+            console.error('Error updating post views:', error);
+        }
+    };
+
     return(
-        <PostListWrapper to={`/comupostdetail/${postInfo.communityNumber}`}>
+        <PostListWrapper onClick={() => navigateToDetail(postInfo.communityNumber)}>
             <span className="area">{postInfo.jobAdArea}</span>
             <span className="title">{postInfo.title}</span>
             <span className="writer">{postInfo.userNickname}</span>
@@ -30,7 +57,7 @@ export default function ComuPostList({ postInfo }) {
     );
 }
 
-const PostListWrapper = styled(Link)`
+const PostListWrapper = styled.div`
     width: 100%;
     height: 4.2rem;
     border-bottom: solid 0.1rem #6E6E6E;
@@ -41,6 +68,7 @@ const PostListWrapper = styled(Link)`
     font-family: "Pretendard-Regular";
     font-size: 1.5rem;
     color: black;
+    cursor: pointer;
 
     .area,
     .date,
