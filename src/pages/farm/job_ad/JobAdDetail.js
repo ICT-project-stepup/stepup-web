@@ -1,48 +1,81 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../../components/PageTitle";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
-
+import MarkerMap from "../../../components/MarkerMap";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const postData = [
-  {
-    area: "경남 창녕군",
-    postTitle: "마늘 뽑으실 분 구합니다",
-    salaryType: "일급",
-    salary: "100,000",
-    workPeriod: "1주일",
-    workTime: "09:00 ~ 16:00",
-    postDate: "2024.05.17",
-    postState: "모집 중",
-    workNum: "10명",
-    roomYN: "가능",
-    vehicleYN: "불가",
-    workAge: "연령 무관",
-    workGender: "성별 무관",
-    workType: "고추 수확",
-    postDetail:
-      "초보자도 쉽게 가능한 일입니다. 작년까지도 초보자분들 많이 지원하시고, 일 배워갔습니다. 많은 관심 부탁드립니다.",
-    address: "경남 창녕군 창녕읍 섬마길3 창녕농협창고",
-    name: "장복희",
-    phoneNum: "010-1234-1234",
-  },
-];
 
 export default function JobAdDetail() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleApplyClick = () => {
-    navigate("/manageresume");
+  // const handleApplyClick = () => {
+  //   navigate("/manageresume");
+  // };
+
+  // const handleInterestClick = () => {
+  //   navigate("/interestpost");
+  // };
+
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 오류 상태
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`/jobad/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch job ad');
+        }
+        const data = await response.json();
+        setPost(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false); // 로딩 상태 해제
+      }
+    };
+    fetchPost();
+  }, [id]);
+
+  /* 페이지 로딩 상태 관리 */
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  if (!post) {
+    return <div>No post found</div>;
+  }
+
+  /* 날짜 형식 변환 */
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+        month = `0${month}`;
+    }
+    if (day < 10) {
+        day = `0${day}`;
+    }
+
+    return `${year}.${month}.${day}`;
+};
+
+  /* 차량 또는 숙소 제공 여부 */
+  const formatAvailability = (availability) => {
+    return availability ? "가능" : "불가";
   };
 
-  const handleInterestClick = () => {
-    navigate("/interestpost");
-  };
-
-  const post = postData[0];
 
   return (
     <Container>
@@ -64,9 +97,9 @@ export default function JobAdDetail() {
                 <td>
                   {post.salaryType} {post.salary}
                 </td>
-                <td>{post.workPeriod}</td>
-                <td>{post.postDate}</td>
-                <td>{post.workTime}</td>
+                <td>{post.period}</td>
+                <td>{formatDate(post.startDate)} ~ {formatDate(post.endDate)}</td>
+                <td>{post.startTime} ~ {post.endTime}</td>
               </tr>
             </tbody>
           </RequirementsTable>
@@ -77,20 +110,20 @@ export default function JobAdDetail() {
             <tbody>
               <tr>
                 <td>모집인원</td>
-                <td>{post.workNum}</td>
+                <td>{post.recruitsNum}</td>
                 <td>연령</td>
                 {/* 20대 30대 40대 등 복수 선택도 고려해야함 */}
-                <td>{post.workAge}</td>
+                <td>{post.recruitsAge}</td>
               </tr>
               <tr>
                 <td>숙소 제공 여부</td>
-                <td>{post.roomYN}</td>
+                <td>{formatAvailability(post.roomsYn)}</td>
                 <td>성별</td>
-                <td>{post.workGender}</td>
+                <td>{post.recruitsGender}</td>
               </tr>
               <tr>
                 <td>차량 지원 여부</td>
-                <td>{post.vehicleYN}</td>
+                <td>{formatAvailability(post.vehiclesYn)}</td>
                 <td>근무 종류</td>
                 <td>{post.workType}</td>
               </tr>
@@ -99,8 +132,8 @@ export default function JobAdDetail() {
         </PostContent>
         <SectionTitle>상세 정보</SectionTitle>
         <PostContent>
-          <DetailText>{post.postDetail}</DetailText>
-          <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder>
+          <DetailText>{post.content}</DetailText>
+          {/* <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder> */}
         </PostContent>
         <SectionTitle>근무지 정보</SectionTitle>
         <PostContent>
@@ -113,7 +146,7 @@ export default function JobAdDetail() {
               <tr>
                 <td>지도</td>
                 <td>
-                  <Placeholder>지도 API 추가 예정</Placeholder>
+                  <MarkerMap post={post} />
                 </td>
               </tr>
             </tbody>
@@ -125,11 +158,11 @@ export default function JobAdDetail() {
             <tbody>
               <tr>
                 <td>이름</td>
-                <td>{post.name}</td>
+                <td>{post.userName}</td>
               </tr>
               <tr>
                 <td>연락처</td>
-                <td>{post.phoneNum}</td>
+                <td>{post.userPhone}</td>
               </tr>
             </tbody>
           </RequirementsTable>
@@ -139,37 +172,19 @@ export default function JobAdDetail() {
           <RoundWhiteBtn
             text="지원하기"
             icon={<ClipBoardIcon />}
-            onClick={handleApplyClick}
+            // onClick={handleApplyClick}
+            style={BtnStyle}
+          />
+          <div
             style={{
-              width: "15.0625rem",
-              height: "7.3125rem",
-              fontFamily: "Pretendard-SemiBold",
-              fontSize: "1.75rem",
-              border: "0.125rem solid #8AA353",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
               marginRight: "7.75rem",
-              position: "relative",
             }}
           />
           <RoundWhiteBtn
             text="저장하기"
             icon={<StarIcon />}
-            onClick={handleInterestClick}
-            style={{
-              width: "15.0625rem",
-              height: "7.3125rem",
-              fontFamily: "Pretendard-SemiBold",
-              fontSize: "1.75rem",
-              border: "0.125rem solid #8AA353",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
+            // onClick={handleInterestClick}
+            style={BtnStyle}
           />
         </PostingBtn>
       </PostingWrapper>
@@ -193,33 +208,21 @@ const RequirementsTable = styled.table`
   border-collapse: collapse;
 
   td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
+    padding: 0.8rem;
     font-size: 1.5rem;
   }
 `;
 
 const DetailText = styled.p`
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   text-align: left;
-  // flex-wrap: wrap;
-`;
-
-const Placeholder = styled.div`
-  width: 100%;
-  height: 10rem;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #999;
-  border-radius: 1.875rem;
-  margin-top: 2.375rem;
-  margin-bottom: 2.375rem;
+  flex-wrap: wrap;
+  white-space: pre-line;
+  line-height: 2.3;
+  padding-left: 3.5rem;
 `;
 
 const PostingWrapper = styled.div`
@@ -254,7 +257,6 @@ const SectionTitle = styled.div`
 const PostContent = styled.div`
   width: 100%;
   height: auto;
-
   border-top: 0.15rem solid #afbfa5;
   border-bottom: 0.15rem solid #afbfa5;
   border-left: none;
@@ -266,20 +268,6 @@ const PostContent = styled.div`
   align-items: flex-start;
 `;
 
-const InfoItem = styled.div`
-  width: 50%;
-  margin-bottom: 0.5rem;
-  filter: none;
-  font-family: Pretendard-Medium;
-  font-size: 1.5rem;
-  color: #6e6e6e;
-
-  text-align: left;
-  // margin-top: 3rem;
-  // display: flex;
-  // justify-content: center;
-  // text-align: center;
-`;
 const PostingBtn = styled.div`
   width: 100%;
   height: 13rem;
@@ -289,3 +277,16 @@ const PostingBtn = styled.div`
   align-items: center;
   padding: 4.6875rem 0;
 `;
+
+const BtnStyle = {
+  width: "15.0625rem",
+  height: "7.3125rem",
+  border: "0.125rem solid #8AA353",
+  fontFamily: "Pretendard-SemiBold",
+  fontSize: "1.75rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative",
+};

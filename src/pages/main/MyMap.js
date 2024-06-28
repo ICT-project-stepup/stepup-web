@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
 import MapMarkerIcon from '../../icons/MapMarkerIcon.svg';
@@ -20,28 +20,28 @@ const center = {
     lng: 128.490290241545
 };
 
-const markerInfo = [
-    {
-        postTitle: "양파 수확하실 분 구해요~",
-        markerLat: 35.51443486843741,
-        markerLng: 128.48735899814744,
-    },
-    {
-        postTitle: "마늘 뽑으실 분 구합니다",
-        markerLat: 35.51771224056322,
-        markerLng: 128.4883343730302,
-    },
-    {
-        postTitle: "과수원 일 도와주실 분 구해요",
-        markerLat: 35.51737886420564,
-        markerLng: 128.49343183849996,
-    },
-]
-
 export default function MyMap() {
     const navigate = useNavigate();
     const [mapLoaded, setMapLoaded] = useState(false);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [jobAds, setJobAds] = useState([]);
+
+    useEffect(() => {
+        fetchJobAds(); // 페이지 로딩 시 구인글 목록을 가져오는 함수 호출
+    }, []);
+
+    const fetchJobAds = async () => {
+        try {
+            const response = await fetch('/jobad'); // 백엔드 엔드포인트 URL
+            if (!response.ok) {
+                throw new Error('Failed to fetch job ads');
+            }
+            const data = await response.json();
+            setJobAds(data); // 구인글 목록 state 업데이트
+        } catch (error) {
+            console.error('Error fetching job ads:', error);
+        }
+    };
 
     const handleMapLoad = () => {
         setMapLoaded(true);
@@ -63,10 +63,10 @@ export default function MyMap() {
                     zoom={17}
                     onClick={handleMapClick}
                 >
-                    {markerInfo.map((marker, index) => (
+                    {jobAds.map((marker, index) => (
                         <MarkerF
                             key={index}
-                            position={{ lat: marker.markerLat, lng: marker.markerLng }}
+                            position={{ lat: marker.lat, lng: marker.lng }}
                             onClick={() => setSelectedMarker(marker)}
                             icon={{
                                 url: MapMarkerIcon,
@@ -76,7 +76,7 @@ export default function MyMap() {
                     ))}
                     {selectedMarker && (
                         <InfoWindowF
-                            position={{ lat: selectedMarker.markerLat, lng: selectedMarker.markerLng }}
+                            position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
                             onCloseClick={() => setSelectedMarker(null)}
                         >
                             <InfoWindowStyle>
@@ -87,7 +87,7 @@ export default function MyMap() {
                                         <RoundWhiteBtn 
                                             text="자세히 보기"
                                             onClick={() => {
-                                                navigate("/jobaddetail");
+                                                navigate(`/jobaddetail/${selectedMarker.boardNumber}`);
                                             }}
                                             style={{
                                                 width: "7.5rem",

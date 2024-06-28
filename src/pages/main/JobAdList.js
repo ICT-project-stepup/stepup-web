@@ -3,8 +3,24 @@ import { Link } from 'react-router-dom';
 
 
 export default function JobAdList({ postInfo }) {
+    const formatDate = (isoDateString) => {
+        const date = new Date(isoDateString);
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        if (day < 10) {
+            day = `0${day}`;
+        }
+
+        return `${year}.${month}.${day}`;
+    };
+
     return(
-        <PostListWrapper postState={postInfo.postState} to="/JobAdDetail">
+        <PostListWrapper postState={postInfo.postState} to={`/jobaddetail/${postInfo.boardNumber}`}>
             <span className="area">{postInfo.area}</span>
             <span className="title">{postInfo.postTitle}</span>
             <div className="salary">
@@ -15,8 +31,8 @@ export default function JobAdList({ postInfo }) {
                     <span>{postInfo.salary}</span>
                 </div>
             </div>
-            <span className="time">{postInfo.workTime}</span>
-            <span className="date">{postInfo.postDate}</span>
+            <span className="time">{postInfo.startTime} ~ {postInfo.endTime}</span>
+            <span className="date">{formatDate(postInfo.postDate)}</span>
             <span className="state">{postInfo.postState}</span>
         </PostListWrapper>
     );
