@@ -33,6 +33,7 @@ export default function PublishJobAd() {
       workType: "",
       details: "",
       address: "",
+      datailedAddress: "",
       name: "",
       contact1: "",
       contact2: "",
@@ -641,22 +642,43 @@ export default function PublishJobAd() {
         <PostContent>
           <DetailWrapper style={{ alignItems: "flex-start" }}>
             <DetailTitle>주소</DetailTitle>
-            <SelectWrapper>
-              <Controller
-                name="address"
-                control={control}
-                render={({ field }) => (
-                  <AddressInput
-                    {...field}
-                    subBoxStyle={{ height: "3.125rem", fontSize: "1.375rem" }}
-                    placeHolderStyle={{
-                      height: "3.125rem",
-                      fontSize: "1.375rem",
-                    }}
-                  />
-                )}
-              />
-            </SelectWrapper>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <SelectWrapper>
+                <Controller
+                  name="address"
+                  control={control}
+                  render={({ field }) => (
+                    <AddressInput
+                      {...field}
+                      subBoxStyle={{
+                        width: "25.3125rem",
+                        height: "3.125rem",
+                        fontSize: "1.375rem",
+                      }}
+                      onAddressChange={(address) =>
+                        setValue("address", address)
+                      }
+                    />
+                  )}
+                />
+              </SelectWrapper>
+              <SelectWrapper>
+                <Controller
+                  name="detailedAddress"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <PlaceHolder
+                        {...field}
+                        placeholder="상세 주소 입력"
+                        type="text"
+                        style={{ height: "3.125rem" }}
+                      />
+                    </>
+                  )}
+                />
+              </SelectWrapper>
+            </div>
           </DetailWrapper>
         </PostContent>
       </SectionWrapper>
