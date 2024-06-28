@@ -16,7 +16,10 @@ const postData = [
     salary: "100,000",
     workPeriod: "1주일",
     workTime: "09:00 ~ 16:00",
-    postDate: "2024.05.17",
+    post_date: "2024-05-17",
+    close_date: "2024-05-25",
+    start_date: "2024-06-01",
+    end_date: "2024-06-08",
     postState: "모집 중",
     workNum: "10명",
     roomYN: "가능",
@@ -51,7 +54,42 @@ export default function JobAdDetail() {
     <Container>
       <PageTitle text="상세글 보기" />
       <PostingWrapper>
-        <PostTitle>{post.postTitle}</PostTitle>
+        <SectionWrapper
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <PostTitle>{post.postTitle}</PostTitle>
+          <div
+            style={{ display: "flex", alignItems: "row", height: "1.625rem" }}
+          >
+            <div
+              style={{
+                fontFamily: "Pretendard-SemiBold",
+                color: "#8aa353",
+                fontSize: "1.375rem",
+                width: "4.8125rem",
+                height: "1.625rem",
+                marginRight: "1rem",
+              }}
+            >
+              모집일자
+            </div>
+            <div
+              style={{
+                fontFamily: "Pretendard-Regular",
+                color: "#6e6e6e",
+                fontSize: "1.375rem",
+                width: "16.75rem",
+                height: "1.625rem",
+              }}
+            >
+              {post.post_date}~{post.close_date}
+            </div>
+          </div>
+        </SectionWrapper>
         <PostContent>
           <RequirementsTable>
             <tbody>
@@ -68,7 +106,9 @@ export default function JobAdDetail() {
                   {post.salaryType} {post.salary}
                 </td>
                 <td>{post.workPeriod}</td>
-                <td>{post.postDate}</td>
+                <td>
+                  {post.start_date}~{post.end_date}
+                </td>
                 <td>{post.workTime}</td>
               </tr>
             </tbody>
@@ -173,6 +213,14 @@ const Container = styled.div`
   color: #2e2e2e;
 `;
 
+const SectionWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  margin-top: 3rem;
+`;
+
 const RequirementsTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -198,7 +246,7 @@ const PostingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 5.8125rem;
+  margin-top: 3.4375rem;
 `;
 
 const PostTitle = styled.div`
