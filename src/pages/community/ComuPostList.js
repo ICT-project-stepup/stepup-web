@@ -24,7 +24,6 @@ export default function ComuPostList({ postInfo }) {
             <span className="area">{postInfo.jobAdArea}</span>
             <span className="title">{postInfo.title}</span>
             <span className="writer">{postInfo.userNickname}</span>
-            <span className="comment">0</span>
             <span className="view">{postInfo.viewCount}</span>
             <span className="date">{formatDate(postInfo.createdTime)}</span>
         </PostListWrapper>
@@ -58,8 +57,7 @@ const PostListWrapper = styled(Link)`
         justify-content: center;
         font-family: "Pretendard-SemiBold";
     }
-    .view,
-    .comment {
+    .view {
         width: 5rem;
         display: flex;
         align-items: center;

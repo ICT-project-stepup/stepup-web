@@ -60,7 +60,6 @@ export default function ComuMain() {
                     <span className="area">지역</span>
                     <span className="title">제목</span>
                     <span className="writer">작성자</span>
-                    <span className="comment">댓글</span>
                     <span className="view">조회수</span>
                     <span className="date">등록일</span>
                 </ListTitle>
@@ -124,8 +123,7 @@ const ListTitle = styled.div`
         align-items: center;
         justify-content: center;
     }
-    .view,
-    .comment {
+    .view {
         width: 5rem;
         display: flex;
         align-items: center;
