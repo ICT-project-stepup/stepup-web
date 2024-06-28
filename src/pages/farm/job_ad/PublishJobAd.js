@@ -118,7 +118,7 @@ export default function PublishJobAd() {
           name="title"
           control={control}
           render={({ field }) => (
-            <StyledPlaceHolder {...field} placeholder="제목을 입력하세요." />
+            <StyledTitleInput {...field} placeholder="제목을 입력하세요." />
           )}
         />
       </SectionWrapper>
@@ -381,11 +381,7 @@ export default function PublishJobAd() {
                   control={control}
                   render={({ field }) => (
                     <>
-                      <PlaceHolder
-                        {...field}
-                        type="tel"
-                        style={{ width: "14.375rem", height: "3.125rem" }}
-                      />
+                      <StyledPlaceHolder {...field} type="tel" />
                     </>
                   )}
                 />
@@ -703,11 +699,11 @@ export default function PublishJobAd() {
                   control={control}
                   render={({ field }) => (
                     <>
-                      <PlaceHolder
+                      <StyledPlaceHolder
                         {...field}
                         placeholder="상세 주소 입력"
                         type="text"
-                        style={{ height: "3.125rem" }}
+                        style={{ width: "25.3125rem" }}
                       />
                     </>
                   )}
@@ -729,10 +725,10 @@ export default function PublishJobAd() {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <PlaceHolder
+                    <StyledPlaceHolder
                       {...field}
                       type="text"
-                      style={{ width: "11.25rem", height: "3.125rem" }}
+                      style={{ width: "11.25rem" }}
                     />
                   </>
                 )}
@@ -747,11 +743,11 @@ export default function PublishJobAd() {
                 name="contact1"
                 control={control}
                 render={({ field }) => (
-                  <PlaceHolder
+                  <StyledPlaceHolder
                     {...field}
                     type="tel"
                     maxLength={3}
-                    style={{ width: "6.4375rem", height: "3.125rem" }}
+                    style={{ width: "6.4375rem" }}
                   />
                 )}
               />
@@ -760,11 +756,11 @@ export default function PublishJobAd() {
                 name="contact2"
                 control={control}
                 render={({ field }) => (
-                  <PlaceHolder
+                  <StyledPlaceHolder
                     {...field}
                     type="tel"
                     maxLength={4}
-                    style={{ width: "6.4375rem", height: "3.125rem" }}
+                    style={{ width: "6.4375rem" }}
                   />
                 )}
               />
@@ -773,11 +769,11 @@ export default function PublishJobAd() {
                 name="contact3"
                 control={control}
                 render={({ field }) => (
-                  <PlaceHolder
+                  <StyledPlaceHolder
                     {...field}
                     type="tel"
                     maxLength={4}
-                    style={{ width: "6.4375rem", height: "3.125rem" }}
+                    style={{ width: "6.4375rem" }}
                   />
                 )}
               />
@@ -833,7 +829,7 @@ const SectionTitle = styled.div`
   align-items: center;
 `;
 
-const StyledPlaceHolder = styled(PlaceHolder)`
+const StyledTitleInput = styled(PlaceHolder)`
   width: 37.5rem;
   height: 3.75rem;
   font-size: 1.6875rem;
@@ -843,6 +839,12 @@ const StyledPlaceHolder = styled(PlaceHolder)`
   &::placeholder {
     font-size: 1.375rem;
   }
+`;
+
+const StyledPlaceHolder = styled(PlaceHolder)`
+  width: 14.375rem;
+  height: 3.125rem;
+  font-size: 1.375rem;
 `;
 
 const PostContent = styled.div`
@@ -886,28 +888,6 @@ const SelectWrapper = styled.div`
 `;
 
 const CustomChip = styled(Chip)(({ theme }) => ({
-  // 클릭됐을 때 상태
-
-  "&.MuiChip-hover, &.MuiChip-focusVisible": {
-    backgroundColor: "#8AA353",
-  },
-
-  "&.MuiChip-clickableColorPrimary": {
-    backgroundColor: "#8AA353", // 기본 배경색
-    color: "#ffffff", // 기본 글자색
-    border: "0.09375rem solid #AFBFA5", // 기본 외곽선
-  },
-  "&.MuiTouchRipple-root": {
-    backgroundColor: "#8AA353", // 기본 배경색
-    color: "#ffffff", // 기본 글자색
-    border: "0.09375rem solid #AFBFA5", // 기본 외곽선
-  },
-  "&.MuiChip-colorPrimary": {
-    backgroundColor: "#8AA353", // 기본 배경색
-    color: "#ffffff", // 기본 글자색
-    border: "0.09375rem solid #AFBFA5", // 기본 외곽선
-  },
-
   "&.MuiButtonBase-root": {
     marginRight: "1.5rem",
     boxSizing: "border-box",
@@ -968,7 +948,7 @@ const CustomCalendarWrapper = styled.div`
 const customSelectStyles = {
   control: (provided) => ({
     ...provided,
-    width: "5rem",
+    width: "5.8rem",
     height: "3.125rem",
     border: "0.09375rem solid #AFBFA5",
     borderRadius: "0.9375rem",
