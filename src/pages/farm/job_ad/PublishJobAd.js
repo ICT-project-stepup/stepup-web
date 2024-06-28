@@ -7,6 +7,7 @@ import CustomSelect from "../../../components/CustomSelect";
 import AddressInput from "../../../components/input/address";
 import Chip from "@mui/material/Chip";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
+import Tooltip from "@mui/material/Tooltip";
 
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -133,22 +134,56 @@ export default function PublishJobAd() {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <CustomChip
-                      label="단기"
-                      clickable
-                      color={field.value === "short" ? "primary" : "default"}
-                      onClick={() =>
-                        field.onChange(field.value === "short" ? "" : "short")
-                      }
-                    />
-                    <CustomChip
-                      label="장기"
-                      clickable
-                      color={field.value === "long" ? "primary" : "default"}
-                      onClick={() =>
-                        field.onChange(field.value === "long" ? "" : "long")
-                      }
-                    />
+                    <Tooltip
+                      title="일하는 기간이 한 달 이내라면, 단기로 클릭!"
+                      placement="top"
+                      componentsProps={{
+                        tooltip: {
+                          sx: {
+                            background: "#8aa353",
+                            color: "#ffffff",
+                            fontFamily: "Pretendard-Regular",
+                            fontSize: "1rem",
+                            boxShadow: "0 0.09375rem rgba(228, 236, 209, 0.4)",
+                            borderRadius: "0.6rem",
+                          },
+                        },
+                      }}
+                    >
+                      <CustomChip
+                        label="단기"
+                        clickable
+                        color={field.value === "short" ? "primary" : "default"}
+                        onClick={() =>
+                          field.onChange(field.value === "short" ? "" : "short")
+                        }
+                      />
+                    </Tooltip>
+                    <Tooltip
+                      title="일하는 기간이 한 달 이상이라면, 장기로 클릭!"
+                      placement="top"
+                      componentsProps={{
+                        tooltip: {
+                          sx: {
+                            background: "#8aa353",
+                            color: "#ffffff",
+                            fontFamily: "Pretendard-Regular",
+                            fontSize: "1rem",
+                            boxShadow: "0 0.09375rem rgba(228, 236, 209, 0.4)",
+                            borderRadius: "0.6rem",
+                          },
+                        },
+                      }}
+                    >
+                      <CustomChip
+                        label="장기"
+                        clickable
+                        color={field.value === "long" ? "primary" : "default"}
+                        onClick={() =>
+                          field.onChange(field.value === "long" ? "" : "long")
+                        }
+                      />
+                    </Tooltip>
                   </>
                 )}
               />
