@@ -1,110 +1,105 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RoundGreenBtn from '../../../components/buttons/RoundGreenBtn';
 
-
-export default function CommentSection() {
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      text: '저도 갈 생각인데, 지원하셨나요?',
-      author: '구수한숭늉',
-      dateTime: '2024.05.17 23:11',
-      replies: [
-        {
-          id: 1,
-          text: '@구수한 숭늉 네 했습니다!',
-          author: '홍익인간',
-          dateTime: '2024.05.17 23:22',
-          replies: [],
-        },
-        {
-          id: 2,
-          text: '@홍익인간 그럼 그날 뵙죠^^',
-          author: '구수한숭늉',
-          dateTime: '2024.05.17 23:44',
-          replies: [],
-        },
-      ],
-    },
-    {
-      id: 2,
-      text: '저 지원해놨습니다',
-      author: '너구리구리',
-      dateTime: '2024.05.17 23:15',
-      replies: [],
-    },
-    {
-      id: 3,
-      text: '혹시 마늘 일 해보셨나요? \n많이 어려울까요ㅠㅠㅠ',
-      author: '아홉수',
-      dateTime: '2024.05.17 23:15',
-      replies: [],
-    },
-  ]);
-
+export default function CommentSection({ postId }) {
+  const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [replyInfo, setReplyInfo] = useState({ commentId: null, parentAuthor: null });
 
-  const generateDateTimeString = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    return `${year}.${month}.${day} ${hours}:${minutes}`;
-  };
-
-  const addComment = () => {
-    if (commentText.trim() === '') return;
-
-    const currentDateTime = generateDateTimeString();
-
-    if (replyInfo.commentId) {
-      const newComments = comments.map((comment) => {
-        if (comment.id === replyInfo.commentId) {
-          const newReply = {
-            id: comment.replies.length + 1,
-            text: `@${replyInfo.parentAuthor} ${commentText}`,
-            author: '익명',
-            dateTime: currentDateTime,
-            replies: [],
-          };
-          return { ...comment, replies: [...comment.replies, newReply] };
+  /* 댓글 불러오기 */
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`/comments/${postId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch comments');
         }
-        return comment;
-      });
-      setComments(newComments);
-      setReplyInfo({ commentId: null, parentAuthor: null });
-    } else {
-      const newComment = {
-        id: comments.length + 1,
-        text: commentText,
-        author: '익명',
-        dateTime: currentDateTime,
-        replies: [],
-      };
-      setComments([...comments, newComment]);
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+    fetchComments();
+  }, [postId]);
+
+  /* 댓글 추가 */
+  const addComment = async () => {
+    if (commentText.trim() === '') {
+      alert("댓글을 작성해주세요.");
+      return;
     }
 
-    setCommentText('');
+    let newCommentText = commentText;
+    if (replyInfo.commentId !== null) {
+      newCommentText = `@${replyInfo.parentAuthor} ${commentText}`;
+    }
+
+    const newComment = {
+      communityId: postId,
+      userId: 'test2',
+      text: newCommentText,
+      parentId: replyInfo.commentId,
+    };
+
+    try {
+      const response = await fetch('/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newComment),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to add comment');
+      }
+      await response.json();
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+    window.location.reload(); // 등록 후 페이지 새로고침
+  };
+
+  const renderComments = (comments, parentId = null) => {
+    return comments
+      .filter(comment => comment.parentId === parentId)
+      .map(comment => (
+        <>
+          <CommentContainer className="commentContainer" key={comment.commentId} parentId={parentId}>
+            <CommentContent>
+              <span className='author'>{comment.userNickname}</span>
+              <span className='content'>{comment.text}</span>
+            </CommentContent>
+            <DateBtnWrapper>
+              <CommentDateTime>
+                {new Date(comment.createdTime).toLocaleString('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: false,
+                })}
+              </CommentDateTime>
+              <ReplyButton onClick={() => setReplyInfo({ commentId: comment.commentId, parentAuthor: comment.userNickname })}>답글 달기</ReplyButton>
+            </DateBtnWrapper>
+          </CommentContainer>
+          <Replies>
+            {renderComments(comments, comment.commentId)}
+          </Replies>
+        </>
+      ));
   };
 
   return (
     <CommentsContainer>
       <CommentCount>
-        <span>댓글</span> 
-        <span className='digit'>{comments.length + comments.reduce((acc, comment) => acc + comment.replies.length, 0)}개</span> 
-        </CommentCount>
+        <span>댓글</span>
+        <span className='digit'>{comments.length}개</span>
+      </CommentCount>
       <CommentsList>
-        {comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            onReply={(commentId, parentAuthor) => setReplyInfo({ commentId, parentAuthor })}
-          />
-        ))}
+        {renderComments(comments)}
       </CommentsList>
       <CommentForm>
         <CommentInput
@@ -113,8 +108,8 @@ export default function CommentSection() {
           onChange={(e) => setCommentText(e.target.value)}
           placeholder={replyInfo.commentId ? `@${replyInfo.parentAuthor} 님에게 답글을 입력하세요.` : '댓글을 입력하세요.'}
         />
-        <RoundGreenBtn 
-          text="등록하기" 
+        <RoundGreenBtn
+          text="등록하기"
           onClick={addComment}
           style={{
             width: "8.8rem", height: "3.6rem",
@@ -128,29 +123,7 @@ export default function CommentSection() {
       </CommentForm>
     </CommentsContainer>
   );
-};
-
-const Comment = ({ comment, onReply }) => {
-  return (
-    <>
-      <CommentContainer className='commentContainer'>
-        <CommentContent>
-          <span className='author'>{comment.author}</span>
-          <span className='content'>{comment.text}</span>
-        </CommentContent>
-        <DateBtnWrapper>
-          <CommentDateTime>{comment.dateTime}</CommentDateTime>
-          <ReplyButton onClick={() => onReply(comment.id, comment.author)}>답글 달기</ReplyButton>
-        </DateBtnWrapper>
-      </CommentContainer>
-      <Replies>
-        {comment.replies.map((reply) => (
-          <Comment key={reply.id} comment={reply} onReply={onReply} />
-        ))}
-      </Replies>
-    </>
-  );
-};
+}
 
 const CommentsContainer = styled.div`
   width: 100%;
