@@ -25,9 +25,6 @@ export default function ManageResume() {
 
   const [profileData, setProfileData] = useState("");
   const [careerData, setCareerData] = useState([]);
-  const [newCareers, setNewCareers] = useState([]);
-  const [updatedCareers, setUpdatedCareers] = useState([]);
-  const [deletedCareerIds, setDeletedCareerIds] = useState([]);
   const [applyWithData, setApplyWithData] = useState([]);
   const [isEditing, setIsEditing] = useState(true); // 초기 모드를 편집 모드로 설정
 
@@ -47,30 +44,46 @@ export default function ManageResume() {
       .catch((error) => {
         console.error("이력서 데이터를 불러오는데 실패했습니다.", error);
       });
-  }, [userId]);
+  }, []);
 
-  const handleSave = () => {
-    const updates = {
-      newCareers: newCareers,
-      updatedCareers: updatedCareers,
-      deletedCareerIds: deletedCareerIds,
-      introduction: introduction ? { content: introduction } : null,
-      applyWiths: applyWithData
-    };
-
-    axios
-      .put(`/api/resume/${userId}`, updates)
-      .then((response) => {
-        console.log("이력서가 성공적으로 업데이트되었습니다.", response.data);
-        setIsEditing(false);
-        // 저장 후 상태 초기화
-        setNewCareers([]);
-        setUpdatedCareers([]);
-        setDeletedCareerIds([]);
-      })
-      .catch((error) => {
-        console.error("이력서를 업데이트하는데 실패했습니다.", error);
-      });
+  const handleSave = async () => {
+    const deletedCareers = careerData.filter((item) => item.deleted);
+  
+    try {
+      // 1. 서버에서 삭제할 항목들을 모두 처리
+      await Promise.all(
+        deletedCareers.map(async (career) => {
+          if (career.id) {
+            await axios.delete(`/api/resume/career/${career.id}`);
+          }
+        })
+      );
+  
+      // 2. 클라이언트 상태에서 삭제된 항목 제거
+      const updatedCareerData = careerData.filter((item) => !item.deleted);
+      setCareerData(updatedCareerData);
+  
+      // 3. 서버에 업데이트할 데이터 준비
+      const updates = {
+        careers: updatedCareerData.map((career) => ({
+          careerId: career.careerId || null,
+          institution: career.institution || "",
+          work: career.work || "",
+          periodValue: career.periodValue || 0,
+          periodUnit: career.periodUnit || "",
+          startDate: career.startDate || null,
+          endDate: career.endDate || null,
+        })),
+        // 기타 필요한 데이터 업데이트 (introduction, applyWiths 등)
+      };
+  
+      // 4. 서버에 업데이트 요청
+      await axios.put(`/api/resume/${userId}`, updates);
+  
+      console.log("이력서가 성공적으로 업데이트되었습니다.");
+    } catch (error) {
+      console.error("이력서를 업데이트하는데 실패했습니다.", error);
+    }
   };
 
   const handleEdit = () => {

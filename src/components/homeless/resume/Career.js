@@ -28,22 +28,12 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     setCareerData(newCareerData);
   };
 
-  const handleDeleteRow = async (index) => {
-    const careerId = careerData[index].careerId;
-    if (!careerId) {
-      console.error("Failed to delete career: careerId is undefined");
-      const newCareerData = careerData.filter((_, i) => i !== index);
-      setCareerData(newCareerData);
-      return;
-    }
-    try {
-      await axios.delete(`/api/resume/career/${careerId}`);
-      const newCareerData = careerData.filter((_, i) => i !== index);
-      setCareerData(newCareerData);
-    } catch (error) {
-      console.error("Failed to delete career", error);
-    }
+  const handleDeleteRow = (index) => {
+    const newCareerData = [...careerData];
+    newCareerData[index].deleted = true; // 삭제 플래그 설정
+    setCareerData(newCareerData.filter(item => !item.deleted)); // 삭제된 항목 필터링
   };
+
 
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
     value: i + 1,
