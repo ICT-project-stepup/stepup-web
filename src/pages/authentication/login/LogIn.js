@@ -12,7 +12,7 @@ export default function LogIn() {
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
 
-    /* 로그인 버튼 클릭 시 호출되는 함수 */
+    /* 로그인 버튼 클릭 시 로컬에 토큰 저장 */
     const handleLogin = async () => {
         try {
           const response = await axios
@@ -22,16 +22,16 @@ export default function LogIn() {
             }, { "Content-Type": 'application/json', withCredentials: true });
           
             if(response.status === 200){                
-                //response header에 Authorization 값으로 토큰을 넣는다.
                 const accessToken = response.headers['authorization'].split(' ')[1];
                 
-                //localStorage에 토큰 값 넣는다.
+                // localStorage에 토큰 값 저장
                 window.localStorage.setItem("token", accessToken);
             }
-            alert("로그인 성공!");
-            navigate("/");
+            alert("로그인이 완료되었습니다.");
+            navigate("/");  // 홈 화면으로 이동
+            window.location.reload();
           } catch (error) {
-          alert("로그인 실패! 정보를 다시 확인해주세요.");
+          alert("로그인 에러: 정보를 다시 확인해주세요.");
         }
     }
 
