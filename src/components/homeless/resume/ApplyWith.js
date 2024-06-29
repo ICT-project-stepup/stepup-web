@@ -12,7 +12,7 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
     { label: "이름", key: "name", className: "name" },
   ];
 
-  const baseURL = 'http://localhost:8080'; // API 서버의 baseURL을 설정
+  //const baseURL = 'http://localhost:8080'; // API 서버의 baseURL을 설정
 
   const handleInputChange = (index, key, value) => {
     const newApplyWithData = [...applyWithData];
@@ -23,7 +23,7 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
   const handleDeleteRow = async (index) => {
     const applyWithId = applyWithData[index].applyWithId;
     try {
-      await axios.delete(`${baseURL}/api/resume/applyWith/${applyWithId}`);
+      await axios.delete(`/api/resume/applyWith/${applyWithId}`);
       const newApplyWithData = applyWithData.filter((_, i) => i !== index);
       setApplyWithData(newApplyWithData);
     } catch (error) {

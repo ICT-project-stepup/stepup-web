@@ -16,8 +16,6 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     { label: "퇴사연월", key: "endDate", className: "endDate" },
   ];
 
-  const baseURL = 'http://localhost:8081'; // API 서버의 baseURL을 설정
-
   const handleInputChange = (index, key, value) => {
     const newCareerData = [...careerData];
     newCareerData[index][key] = value;
@@ -32,8 +30,14 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
 
   const handleDeleteRow = async (index) => {
     const careerId = careerData[index].careerId;
+    if (!careerId) {
+      console.error("Failed to delete career: careerId is undefined");
+      const newCareerData = careerData.filter((_, i) => i !== index);
+      setCareerData(newCareerData);
+      return;
+    }
     try {
-      await axios.delete(`${baseURL}/api/resume/career/${careerId}`);
+      await axios.delete(`/api/resume/career/${careerId}`);
       const newCareerData = careerData.filter((_, i) => i !== index);
       setCareerData(newCareerData);
     } catch (error) {
@@ -139,7 +143,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
             </Row>
           )}
           onDelete={handleDeleteRow}
-          isEditing={isEditing} // isEditing prop 추가
+          isEditing={isEditing}
         />
         {isEditing && (
           <ButtonWrapper>
@@ -148,6 +152,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
                 setCareerData([
                   ...careerData,
                   {
+                    careerId: null,
                     institution: "",
                     work: "",
                     periodValue: "",

@@ -25,15 +25,18 @@ export default function ManageResume() {
 
   const [profileData, setProfileData] = useState("");
   const [careerData, setCareerData] = useState([]);
+  const [newCareers, setNewCareers] = useState([]);
+  const [updatedCareers, setUpdatedCareers] = useState([]);
+  const [deletedCareerIds, setDeletedCareerIds] = useState([]);
   const [applyWithData, setApplyWithData] = useState([]);
   const [isEditing, setIsEditing] = useState(true); // 초기 모드를 편집 모드로 설정
 
-  const userId = 1; // 예제 사용자 ID, 실제로는 로그인한 사용자의 ID를 사용
-  const baseURL = 'http://localhost:8081'; // API 서버의 baseURL을 설정
+  const userId = "test1"; // 예제 사용자 ID, 실제로는 로그인한 사용자의 ID를 사용
+  //const baseURL = 'http://localhost:8081'; // API 서버의 baseURL을 설정
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/resume/${userId}`)
+      .get(`/api/resume/${userId}`)
       .then((response) => {
         const { profile, careers, introduction, applyWiths } = response.data;
         setProfileData(profile || {});
@@ -48,16 +51,22 @@ export default function ManageResume() {
 
   const handleSave = () => {
     const updates = {
-      careers: careerData,
+      newCareers: newCareers,
+      updatedCareers: updatedCareers,
+      deletedCareerIds: deletedCareerIds,
       introduction: introduction ? { content: introduction } : null,
       applyWiths: applyWithData
     };
 
     axios
-      .put(`${baseURL}/api/resume/${userId}`, updates)
+      .put(`/api/resume/${userId}`, updates)
       .then((response) => {
         console.log("이력서가 성공적으로 업데이트되었습니다.", response.data);
         setIsEditing(false);
+        // 저장 후 상태 초기화
+        setNewCareers([]);
+        setUpdatedCareers([]);
+        setDeletedCareerIds([]);
       })
       .catch((error) => {
         console.error("이력서를 업데이트하는데 실패했습니다.", error);
