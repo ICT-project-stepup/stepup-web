@@ -34,22 +34,34 @@ export default function PublishJobAd() {
       work_type: "",
       content: "",
       address: "",
-      datailedAddress: "",
       lat: null,
       lng: null,
       user_name: "",
+      user_phone: "",
     },
   });
 
   const onSubmit = (data) => {
-    const user_phone = `${data.contact1}${data.contact2}${data.contact3}`;
+    let user_phone = null;
+    if (data.contact1 && data.contact2 && data.contact3) {
+      user_phone = `${data.contact1}${data.contact2}${data.contact3}`;
+    }
+    let address = null;
+    if (data.mainAddress && data.detailedAddress) {
+      address = `${data.mainAddress} ${data.detailedAddress}`;
+    } else if (data.mainAddress) {
+      address = `${data.mainAddress}`;
+    }
     const postData = {
       ...data,
       user_phone,
+      address,
     };
     delete postData.contact1;
     delete postData.contact2;
     delete postData.contact3;
+    delete postData.mainAddress;
+    delete postData.detailedAddress;
     console.log(postData);
     navigate("/jobaddetail");
   };
@@ -695,42 +707,27 @@ export default function PublishJobAd() {
             <DetailTitle>주소</DetailTitle>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <SelectWrapper>
-                <Controller
-                  name="address"
-                  control={control}
-                  render={({ field }) => (
-                    <AddressInput
-                      {...field}
-                      subBoxStyle={{
-                        width: "25.3125rem",
-                        height: "3.125rem",
-                        fontSize: "1.375rem",
-                      }}
-                      onAddressChange={(address, coordinates) => {
-                        setValue("address", address);
-                        if (coordinates) {
-                          setValue("lat", coordinates.lat);
-                          setValue("lng", coordinates.lng);
-                        }
-                      }}
-                    />
-                  )}
+                <AddressInput
+                  subBoxStyle={{
+                    width: "25.3125rem",
+                    height: "3.125rem",
+                    fontSize: "1.375rem",
+                  }}
+                  onAddressChange={(address, coordinates) => {
+                    setValue("mainAddress", address);
+                    if (coordinates) {
+                      setValue("lat", coordinates.lat);
+                      setValue("lng", coordinates.lng);
+                    }
+                  }}
                 />
               </SelectWrapper>
               <SelectWrapper>
-                <Controller
-                  name="detailedAddress"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <StyledPlaceHolder
-                        {...field}
-                        placeholder="상세 주소 입력"
-                        type="text"
-                        style={{ width: "25.3125rem" }}
-                      />
-                    </>
-                  )}
+                <StyledPlaceHolder
+                  placeholder="상세 주소 입력"
+                  type="text"
+                  style={{ width: "25.3125rem" }}
+                  onChange={(e) => setValue("detailedAddress", e.target.value)}
                 />
               </SelectWrapper>
             </div>
