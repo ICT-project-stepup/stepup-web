@@ -23,7 +23,7 @@ export default function Main() {
     /* 총 구인글 개수 */
     const fetchTotalJobAds = async () => {
         try {
-            const response = await fetch('/jobad/count'); // 백엔드 엔드포인트 URL
+            const response = await fetch('/api/jobad/count'); // 백엔드 엔드포인트 URL
             if (!response.ok) {
                 throw new Error('Failed to fetch total job ads');
             }
@@ -37,7 +37,7 @@ export default function Main() {
     /* 구인글 목록 불러오기*/
     const fetchJobAds = async () => {
         try {
-            const response = await fetch('/jobad'); // 백엔드 엔드포인트 URL
+            const response = await fetch('/api/jobad'); // 백엔드 엔드포인트 URL
             if (!response.ok) {
                 throw new Error('Failed to fetch job ads');
             }

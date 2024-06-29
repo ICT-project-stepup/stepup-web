@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as SearchIcon } from "../../icons/SearchIcon.svg";
-import PlaceHolder from "../../components/PlaceHolder2";
 
-const AddressInput = ({ subBoxStyle, placeHolderStyle, ...props }) => {
+const AddressInput = ({ subBoxStyle, onAddressChange, ...props }) => {
   const [address, setAddress] = useState(""); // 기본 주소
-  const [detailedAddress, setDetailedAddress] = useState(""); // 상세 주소
 
   const completeHandler = (data) => {
     const { address } = data;
     setAddress(address);
+    if (onAddressChange) {
+      onAddressChange(address);
+    }
   };
 
   const toggleHandler = () => {
@@ -22,10 +23,6 @@ const AddressInput = ({ subBoxStyle, placeHolderStyle, ...props }) => {
     });
   };
 
-  const inputChangeHandler = (event) => {
-    setDetailedAddress(event.target.value);
-  };
-
   return (
     <div style={{ textAlign: "left" }}>
       <div>
@@ -35,18 +32,19 @@ const AddressInput = ({ subBoxStyle, placeHolderStyle, ...props }) => {
             alignItems: "row",
           }}
         >
-          <SubBox style={subBoxStyle}>{address}</SubBox>
+          <SubBox style={subBoxStyle}>
+            {address ? (
+              address
+            ) : (
+              <PlaceholderText>
+                돋보기 아이콘을 눌러 주소를 찾아보세요!
+              </PlaceholderText>
+            )}
+          </SubBox>
           <SearchIconWrapper onClick={toggleHandler}>
             <SearchIcon />
           </SearchIconWrapper>
         </div>
-        <PlaceHolder
-          placeholder="상세 주소 입력"
-          style={{ ...defaultPlaceHolderStyle, ...placeHolderStyle }}
-          type="text"
-          value={detailedAddress}
-          onChange={inputChangeHandler}
-        />
       </div>
     </div>
   );
@@ -76,17 +74,10 @@ const SearchIconWrapper = styled.button`
   margin-bottom: 0.5rem;
 `;
 
-const defaultPlaceHolderStyle = {
-  boxSizing: "border-box",
-  width: "25.3125rem",
-  height: "2.8125rem",
-  border: "0.1rem solid #AFBFA5",
-  borderRadius: "15px",
-  fontFamily: "Pretendard-Medium",
-  fontSize: "1.3125rem",
-  lineHeight: "1.5rem",
-  color: "#8AA353",
-  padding: "0 1rem",
-};
+const PlaceholderText = styled.span`
+  color: #afbfa5;
+  font-size: 1rem;
+  user-select: none;
+`;
 
 export default AddressInput;

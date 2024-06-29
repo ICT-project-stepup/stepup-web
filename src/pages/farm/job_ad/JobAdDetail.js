@@ -8,7 +8,6 @@ import MarkerMap from "../../../components/MarkerMap";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
 export default function JobAdDetail() {
   // const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ export default function JobAdDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/jobad/${id}`);
+        const response = await fetch(`/api/jobad/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch job ad');
         }
@@ -81,7 +80,42 @@ export default function JobAdDetail() {
     <Container>
       <PageTitle text="상세글 보기" />
       <PostingWrapper>
-        <PostTitle>{post.postTitle}</PostTitle>
+        <SectionWrapper
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <PostTitle>{post.postTitle}</PostTitle>
+          <div
+            style={{ display: "flex", alignItems: "row", height: "1.625rem" }}
+          >
+            <div
+              style={{
+                fontFamily: "Pretendard-SemiBold",
+                color: "#8aa353",
+                fontSize: "1.375rem",
+                width: "4.8125rem",
+                height: "1.625rem",
+                marginRight: "1rem",
+              }}
+            >
+              모집일자
+            </div>
+            <div
+              style={{
+                fontFamily: "Pretendard-Regular",
+                color: "#6e6e6e",
+                fontSize: "1.375rem",
+                width: "16.75rem",
+                height: "1.625rem",
+              }}
+            >
+              {post.post_date}~{post.close_date}
+            </div>
+          </div>
+        </SectionWrapper>
         <PostContent>
           <RequirementsTable>
             <tbody>
@@ -203,6 +237,14 @@ const Container = styled.div`
   color: #2e2e2e;
 `;
 
+const SectionWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  margin-top: 3rem;
+`;
+
 const RequirementsTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -231,7 +273,7 @@ const PostingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 5.8125rem;
+  margin-top: 3.4375rem;
 `;
 
 const PostTitle = styled.div`
