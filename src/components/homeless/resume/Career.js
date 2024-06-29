@@ -5,6 +5,7 @@ import ListStyle from "./ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import CustomSelect from "../../CustomSelect";
+import axios from "axios";
 
 const Career = ({ isEditing, careerData, setCareerData }) => {
   const careerLabel = [
@@ -28,9 +29,11 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
   };
 
   const handleDeleteRow = (index) => {
-    const newCareerData = careerData.filter((_, i) => i !== index);
-    setCareerData(newCareerData);
+    const newCareerData = [...careerData];
+    newCareerData[index].deleted = true; // 삭제 플래그 설정
+    setCareerData(newCareerData.filter(item => !item.deleted)); // 삭제된 항목 필터링
   };
+
 
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
     value: i + 1,
@@ -130,7 +133,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
             </Row>
           )}
           onDelete={handleDeleteRow}
-          isEditing={isEditing} // isEditing prop 추가
+          isEditing={isEditing}
         />
         {isEditing && (
           <ButtonWrapper>
@@ -139,6 +142,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
                 setCareerData([
                   ...careerData,
                   {
+                    careerId: null,
                     institution: "",
                     work: "",
                     periodValue: "",
