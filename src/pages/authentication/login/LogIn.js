@@ -16,7 +16,7 @@ export default function LogIn() {
     const handleLogin = async () => {
         try {
           const response = await axios
-            .post("auth/login", {
+            .post("/api/auth/login", {
               userId: userId,
               password: password,
             }, { "Content-Type": 'application/json', withCredentials: true });
