@@ -1,10 +1,40 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import PageTitle from "../../../components/PageTitle";
 import { ReactComponent as BigLogo} from '../../../assets/BigLogo.svg';
+import axios from "axios";
 
 
 /* 채민 */
 export default function LogIn() {
+    const navigate = useNavigate();
+    const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
+
+    /* 로그인 버튼 클릭 시 로컬에 토큰 저장 */
+    const handleLogin = async () => {
+        try {
+          const response = await axios
+            .post("auth/login", {
+              userId: userId,
+              password: password,
+            }, { "Content-Type": 'application/json', withCredentials: true });
+          
+            if(response.status === 200){                
+                const accessToken = response.headers['authorization'].split(' ')[1];
+                
+                // localStorage에 토큰 값 저장
+                window.localStorage.setItem("token", accessToken);
+            }
+            alert("로그인이 완료되었습니다.");
+            navigate("/");  // 홈 화면으로 이동
+            window.location.reload();
+          } catch (error) {
+          alert("로그인 에러: 정보를 다시 확인해주세요.");
+        }
+    }
+
     return(
         <LoginPageContainer>
             <PageTitle text="로그인" />
@@ -13,10 +43,19 @@ export default function LogIn() {
                     width={'12.625rem'} height={'4.188rem'}
                 />
                 <LoginInputWrapper>
-                    <IdPasswordInput placeholder="아이디"/>
-                    <IdPasswordInput type="password" placeholder="비밀번호"/>
+                <IdPasswordInput
+                        placeholder="아이디"
+                        value={userId}
+                        onChange={(e) => setUserId(e.target.value)}
+                    />
+                    <IdPasswordInput
+                        type="password"
+                        placeholder="비밀번호"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </LoginInputWrapper>
-                <LoginBtn>로그인</LoginBtn>
+                <LoginBtn  onClick={() => handleLogin()}>로그인</LoginBtn>
             </LoginWrapper>
         </LoginPageContainer>
     )
