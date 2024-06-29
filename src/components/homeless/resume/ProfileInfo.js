@@ -10,7 +10,7 @@ const ProfileInfo = ({ profileData, isEditing }) => {
   const profileInfoLabel = [
     { label: "이름", value: profileData.name },
     { label: "나이", value: profileData.age },
-    { label: "전화번호", value: profileData.phone },
+    { label: "전화번호", value: profileData.phoneNumber },
     { label: "이메일", value: profileData.email },
     { label: "주소", value: profileData.address },
     { label: "성별", value: profileData.gender },

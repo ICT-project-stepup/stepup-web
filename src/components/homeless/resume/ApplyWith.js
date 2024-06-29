@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "./ListStyle";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
+import axios from "axios";
 
 const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
   const applyWithLabel = [
@@ -11,16 +12,23 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
     { label: "이름", key: "name", className: "name" },
   ];
 
+  //const baseURL = 'http://localhost:8080'; // API 서버의 baseURL을 설정
+
   const handleInputChange = (index, key, value) => {
     const newApplyWithData = [...applyWithData];
     newApplyWithData[index][key] = value;
     setApplyWithData(newApplyWithData);
   };
 
-  const handleDeleteRow = (index) => {
-    // 행 삭제
-    const newApplyData = applyWithData.filter((_, i) => i !== index);
-    setApplyWithData(newApplyData);
+  const handleDeleteRow = async (index) => {
+    const applyWithId = applyWithData[index].applyWithId;
+    try {
+      await axios.delete(`/api/resume/applyWith/${applyWithId}`);
+      const newApplyWithData = applyWithData.filter((_, i) => i !== index);
+      setApplyWithData(newApplyWithData);
+    } catch (error) {
+      console.error("Failed to delete applyWith", error);
+    }
   };
 
   const data = applyWithData.map((item, index) => ({
