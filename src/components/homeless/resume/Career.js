@@ -5,7 +5,6 @@ import ListStyle from "./ListStyle";
 import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import CustomSelect from "../../CustomSelect";
-import axios from "axios";
 
 const Career = ({ isEditing, careerData, setCareerData }) => {
   const careerLabel = [
@@ -34,7 +33,6 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     setCareerData(newCareerData.filter(item => !item.deleted)); // 삭제된 항목 필터링
   };
 
-
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
     value: i + 1,
     label: `${i + 1}`,
@@ -51,68 +49,68 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     institution: isEditing ? (
       <InputInstitution
         placeholder="입력하세요."
-        value={item.institution}
+        value={item.careerName || ""}
         onChange={(e) =>
-          handleInputChange(index, "institution", e.target.value)
+          handleInputChange(index, "careerName", e.target.value)
         }
       />
     ) : (
-      <Text>{item.institution}</Text>
+      <Text>{item.careerName}</Text>
     ),
 
     work: isEditing ? (
       <InputWork
         placeholder="입력하세요."
-        value={item.work}
-        onChange={(e) => handleInputChange(index, "work", e.target.value)}
+        value={item.careerType || ""}
+        onChange={(e) => handleInputChange(index, "careerType", e.target.value)}
       />
     ) : (
-      <Text>{item.work}</Text>
+      <Text>{item.careerType}</Text>
     ),
 
     period: isEditing ? (
       <PeriodWrapper>
         <CustomSelect
           value={periodOptions.find(
-            (option) => option.value === item.periodValue
+            (option) => option.value === parseInt(item.careerPeriod.split(" ")[0], 10)
           )}
           onChange={(selectedOption) =>
-            handleInputChange(index, "periodValue", selectedOption.value)
+            handleInputChange(index, "careerPeriodValue", selectedOption.value)
           }
           options={periodOptions}
           placeholder=""
         />
         <CustomSelect
           value={periodUnitOptions.find(
-            (option) => option.value === item.periodUnit
+            (option) => option.value === item.careerPeriod.split(" ")[1]
           )}
           onChange={(selectedOption) =>
-            handleInputChange(index, "periodUnit", selectedOption.value)
+            handleInputChange(index, "careerPeriodUnit", selectedOption.value)
           }
           options={periodUnitOptions}
           placeholder=""
         />
       </PeriodWrapper>
     ) : (
-      <Text>{`${item.periodValue} ${item.periodUnit}`}</Text>
+      <Text>{item.careerPeriod}</Text>
     ),
 
     startDate: isEditing ? (
       <Calendar
-        selectedDate={item.startDate}
-        handleDateChange={(date) => handleDateChange(index, "startDate", date)}
+        selectedDate={new Date(item.joinDate)}
+        handleDateChange={(date) => handleDateChange(index, "joinDate", date)}
       />
     ) : (
-      <Text>{item.startDate ? item.startDate.toLocaleDateString() : ""}</Text>
+      <Text>{item.joinDate ? new Date(item.joinDate).toLocaleDateString() : ""}</Text>
     ),
 
     endDate: isEditing ? (
       <Calendar
-        selectedDate={item.endDate}
-        handleDateChange={(date) => handleDateChange(index, "endDate", date)}
+        selectedDate={new Date(item.resignDate)}
+        handleDateChange={(date) => handleDateChange(index, "resignDate", date)}
       />
     ) : (
-      <Text>{item.endDate ? item.endDate.toLocaleDateString() : ""}</Text>
+      <Text>{item.resignDate ? new Date(item.resignDate).toLocaleDateString() : ""}</Text>
     ),
   }));
 
@@ -143,12 +141,11 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
                   ...careerData,
                   {
                     careerId: null,
-                    institution: "",
-                    work: "",
-                    periodValue: "",
-                    periodUnit: "",
-                    startDate: null,
-                    endDate: null,
+                    careerName: "",
+                    careerType: "",
+                    careerPeriod: "",
+                    joinDate: null,
+                    resignDate: null,
                   },
                 ])
               }
@@ -162,6 +159,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     </Container>
   );
 };
+
 
 const CareerBox = styled.div`
   display: flex;
