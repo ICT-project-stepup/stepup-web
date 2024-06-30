@@ -1,19 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as SearchIcon } from "../../icons/SearchIcon.svg";
 
 const AddressInput = ({ subBoxStyle, onAddressChange, ...props }) => {
   const [address, setAddress] = useState(""); // 기본 주소
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null }); // 위도와 경도
+  const [kakaoLoaded, setKakaoLoaded] = useState(false);
 
-  const completeHandler = (data) => {
-    const { address } = data;
-    setAddress(address);
-    if (onAddressChange) {
-      onAddressChange(address);
-    }
-  };
+  useEffect(() => {
+    // 카카오 지도 API 스크립트 동적 로드
+    const script = document.createElement("script");
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?appkey=f4566115fefc62958a9cd26e1e3e6b6a&libraries=services";
+    script.async = true;
+    script.onload = () => setKakaoLoaded(true);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  const completeHandler = useCallback(
+    (data) => {
+      const { address } = data;
+      setAddress(address);
+
+      if (!kakaoLoaded) {
+        console.error("Kakao API is not loaded");
+        return;
+      }
+
+      // address -> 위도, 경도값 반환
+      const geocoder = new window.kakao.maps.services.Geocoder();
+      geocoder.addressSearch(address, (result, status) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const { y: lat, x: lng } = result[0];
+          setCoordinates({ lat, lng });
+
+          if (onAddressChange) {
+            onAddressChange(address, { lat, lng });
+          }
+        } else {
+          setCoordinates({ lat: null, lng: null });
+          if (onAddressChange) {
+            onAddressChange(address, null);
+          }
+        }
+      });
+    },
+    [kakaoLoaded, onAddressChange]
+  );
 
   const toggleHandler = () => {
+    if (!window.daum || !window.daum.Postcode) {
+      console.error("Daum Postcode API is not loaded");
+      return;
+    }
+
     // 주소찾기 팝업 창
     new window.daum.Postcode({
       oncomplete: completeHandler,
