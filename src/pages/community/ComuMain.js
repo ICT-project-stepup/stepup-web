@@ -42,7 +42,12 @@ export default function ComuMain() {
     };
 
     const handleWritingClick = () => {
-        navigate("/publishComuPost");
+        const authority = window.localStorage.getItem("authority");
+        if (authority === "ROLE_USER1") {
+            navigate("/publishComuPost");
+            return;
+        }
+        alert("로그인 후 이용해주세요.");
     };
 
     return(
