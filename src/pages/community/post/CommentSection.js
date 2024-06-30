@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RoundGreenBtn from '../../../components/buttons/RoundGreenBtn';
+import { useNavigate } from "react-router-dom";
 
 export default function CommentSection({ postId }) {
+  const navigate = useNavigate();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [replyInfo, setReplyInfo] = useState({ commentId: null, parentAuthor: null });
@@ -26,6 +28,8 @@ export default function CommentSection({ postId }) {
 
   /* 댓글 추가 */
   const addComment = async () => {
+    const userId = window.localStorage.getItem("userId");
+
     if (commentText.trim() === '') {
       alert("댓글을 작성해주세요.");
       return;
@@ -38,7 +42,7 @@ export default function CommentSection({ postId }) {
 
     const newComment = {
       communityId: postId,
-      userId: 'test2',
+      userId: userId,
       text: newCommentText,
       parentId: replyInfo.commentId,
     };

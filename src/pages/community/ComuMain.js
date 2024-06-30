@@ -42,7 +42,16 @@ export default function ComuMain() {
     };
 
     const handleWritingClick = () => {
-        navigate("/publishComuPost");
+        const authority = window.localStorage.getItem("authority");
+        if (authority === "ROLE_USER1") {
+            navigate("/publishComuPost");
+            return;
+        } else if (authority === "ROLE_USER2") {
+            alert("커뮤니티 글은 구직자 회원만 작성하실 수 있습니다.");
+        }
+        else {
+            alert("로그인 후 이용해주세요.");
+        }
     };
 
     return(

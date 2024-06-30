@@ -7,39 +7,16 @@ import { ReactComponent as ResumeIcon } from "../../icons/ResumeIcon.svg";
 import { ReactComponent as ApplyIcon } from "../../icons/ApplyIcon.svg";
 import { ReactComponent as SaveIcon } from "../../icons/SaveIcon.svg";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-// const userDummy = {
-//   name: "이공주",
-// };
+const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
 
 /* 채은 */
-
-
-  
-
 export default function HmlsMyPage() {
 
   const navigate = useNavigate();
-  
-const userId = "test1";
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    // API 요청을 통해 사용자 데이터를 가져옵니다.
-    axios.post('/api/members/find-id', { userId })
-      .then((response) => {
-        setUserName(response.data.name);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch user data", error);
-      });
-  }, []);
-
 
   const handleModifyClick = () => {
-    navigate(`/homelessmodifyinfo/${userId}`);
+    navigate("/homelessmodifyinfo");
   };
 
   const handleResumeClick = () => {
@@ -47,11 +24,11 @@ const userId = "test1";
   };
 
   const handleApplyClick = () => {
-    navigate(`/applicationhistory/${userId}`);
+    navigate("/applicationhistory");
   };
 
   const handleSaveClick = () => {
-    navigate(`/interestpost/${userId}`);
+    navigate("/interestpost");
   };
 
   return (
@@ -59,7 +36,7 @@ const userId = "test1";
       <Test>
         <Content>
           <StyledProfile />
-          <Text>{userName}</Text>
+          <Text>{name}</Text>
           <RoundWhiteBtn
             text="정보 수정"
             onClick={handleModifyClick}
@@ -104,7 +81,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 52rem;
 `;
 
 const Test = styled.div`

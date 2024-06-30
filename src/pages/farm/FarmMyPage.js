@@ -7,9 +7,7 @@ import CustomPagination from "../../components/CustomPagination";
 import { useNavigate } from "react-router-dom";
 import MyPost from "../../components/farm/MyPost";
 
-const userDummy = {
-  name: "박농가",
-};
+const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
 
 const postData = [
   {
@@ -83,7 +81,7 @@ export default function FarmMyPage() {
       <PageTitle text="내 정보" style={{ position: "relative" }} />
       <ProfileBox>
         <StyledProfile />
-        <NameText>{userDummy.name} 님</NameText>
+        <NameText>{name} 님</NameText>
         <RoundWhiteBtn
           text="정보 수정"
           onClick={handleModifyClick}
