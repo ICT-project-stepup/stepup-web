@@ -16,7 +16,7 @@ const Calendar = ({ selectedDate, handleDateChange, showIcon = true }) => {
       <DatePickerContainer>
         <DatePicker
           selected={selectedDate}
-          onChange={handleDateChange}
+          onChange={date => handleDateChange(date)}
           dateFormat="yyyy년 MM월 dd일"
           locale="ko" // 로케일 설정
           renderCustomHeader={({

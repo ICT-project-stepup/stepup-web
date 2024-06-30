@@ -55,7 +55,7 @@ export default function App() {
         <Route path="/applicationhistory" element={<ApplicationHistory />} />
         <Route path="/interestpost" element={<InterestPost />} />
         <Route path="/homelessmodifyinfo" element={<HmlsModifyInfo />} />
-        <Route path="/manageresume" element={<ManageResume />} />
+        <Route path="/manageresume/:userId" element={<ManageResume />} />
 
         <Route path="/communitymain" element={<ComuMain />} />
         <Route path="/comupostdetail/:id" element={<ComuPostDetail />} />

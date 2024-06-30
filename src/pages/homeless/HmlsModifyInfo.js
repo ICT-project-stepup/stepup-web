@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
+import axios from "axios";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
@@ -12,22 +13,63 @@ import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
 import { ReactComponent as MustIcon } from "../../icons/MustIcon.svg";
 import CompleteModify from "../popup/CompleteModify.js";
 
+
 export default function HmlsModifyInfo() {
-  const infoData = {
+  const [infoData, setInfoData] = useState({
     userType: "구직자",
-    name: "홍익대",
-    userId: "lookat",
-    nickname: "홍익인간",
+    name: "",
+    userId: "",
+    nickname: "",
     password: "",
     passwordConfirm: "",
-    birthDate: "1964-07-11",
-    phoneNumber: "010-1964-0711",
-    email: "example@naver.com",
-    address: "서울 용산구 한강대로92길 6 갈월동빌딩",
-    center: "다시서기종합지원센터",
-    desiredArea: "충청도",
-    gender: "남자",
-  };
+    birthDate: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    center: "",
+    desiredArea: "",
+    gender: "",
+  });
+
+  const [profilePic, setProfilePic] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isDateChanged, setIsDateChanged] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isEmailDomainChanged, setIsEmailDomainChanged] = useState(false);
+
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const userId = window.localStorage.getItem("userId"); // 로컬 스토리지에서 사용자 ID를 불러옴
+      if (!userId) {
+        console.error("사용자 ID를 찾을 수 없습니다.");
+        return;
+      }
+
+      try {
+        const response = await axios.get(`/api/members/info/${userId}`);
+        setInfoData(response.data);
+
+        // 날짜 값이 유효한지 확인합니다.
+        const birthDate = new Date(response.data.birthDate);
+        if (!isNaN(birthDate.getTime())) {
+          setSelectedDate(birthDate);
+        }
+
+        setProfilePic(response.data.profileImage);
+        setPassword(response.data.password);
+        setPasswordConfirm(response.data.passwordConfirm);
+      } catch (error) {
+        console.error("회원 정보 불러오기 실패:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handlePicClick = () => {
     if (isEditing) {
@@ -35,9 +77,7 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [profilePic, setProfilePic] = useState(null);
   const handleProfilePicChange = (event) => {
-    // 프로필 사진 등록
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -48,27 +88,20 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [isDateChanged, setIsDateChanged] = useState(false); // 달력의 날짜 변경 여부
-  const [selectedDate, setSelectedDate] = useState( // 선택된 날짜 상태를 저장
-    new Date(infoData.birthDate)
-  );
   const handleDateChange = (date) => {
-    setSelectedDate(date); // 새로운 날짜를 선택 시 selectedDate 업데이트
-    setIsDateChanged(date !== new Date(infoData.birthDate)); // 새로운 날짜가 초기 생년월일과 다른 경우 isDateChanged를 true로 설정
+    setSelectedDate(date);
+    setIsDateChanged(date !== new Date(infoData.birthDate));
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCompleteClick = () => {
-    // 완료 버튼 클릭 후 모달 열기
     setIsModalOpen(true);
   };
+
   const closeModal = () => {
-    // 모달 닫기
     setIsModalOpen(false);
   };
 
   const emailOptions = [
-    // 이메일 옵션
     { value: "naver.com", label: "naver.com" },
     { value: "hanmail.net", label: "hanmail.net" },
     { value: "nate.com", label: "nate.com" },
@@ -104,34 +137,56 @@ export default function HmlsModifyInfo() {
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      display: "none", // dropdown indicator (아래 화살표) 숨기기
+      display: "none",
     }),
   };
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
-    // 수정하기 버튼 누른 뒤 완료하기 버튼으로 바뀌게
-    setIsEditing(!isEditing);
-    if (isEditing) {
-      handleCompleteClick();
+    setIsEditing(true);
+  };
+
+  const handleComplete = async () => {
+    const userId = window.localStorage.getItem("userId"); // 로컬 스토리지에서 사용자 ID를 불러옴
+    if (!userId) {
+      console.error("사용자 ID를 찾을 수 없습니다.");
+      return;
+    }
+
+    const updatedInfo = {
+      password,
+      passwordConfirm,
+      phoneNumber: infoData.phoneNumber,
+      email: `${infoData.email.split("@")[0]}@${emailOptions.find(
+        (option) => option.value === infoData.email.split("@")[1]
+      ).value}`,
+      address: infoData.address,
+      birth: selectedDate.toISOString().split("T")[0],
+      gender: infoData.gender,
+      profileImage: profilePic,
+      nickname: infoData.nickname,
+      favLocation: infoData.desiredArea,
+      center: infoData.center,
+      passwordMatch: password === passwordConfirm,
+    };
+
+    try {
+      const response = await axios.put("/api/members/update", updatedInfo);
+      if (response.status === 200) {
+        handleCompleteClick();
+        setIsEditing(false); // 수정 완료 후 수정 모드 해제
+      } else {
+        console.error("회원 정보 수정 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("회원 정보 수정 실패:", error);
     }
   };
 
-  const phoneParts = infoData.phoneNumber.split("-"); // 전화번호 세 파트로 분리
-
-  const [password, setPassword] = useState(infoData.password);
-  const [passwordConfirm, setPasswordConfirm] = useState(
-    infoData.passwordConfirm
-  );
-  const [passwordError, setPasswordError] = useState("");
-
   const handlePasswordChange = (e) => {
-    // 비밀번호 변경
     setPassword(e.target.value);
   };
 
   const handlePasswordConfirmChange = (e) => {
-    // 비밀번호 확인
     setPasswordConfirm(e.target.value);
     if (e.target.value !== password) {
       setPasswordError("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
@@ -140,12 +195,11 @@ export default function HmlsModifyInfo() {
     }
   };
 
-  const [isEmailDomainChanged, setIsEmailDomainChanged] = useState(false); // 이메일 도메인 변경 여부
   const handleEmailDomainChange = (selectedOption) => {
-    setIsEmailDomainChanged(
-      selectedOption.value !== infoData.email.split("@")[1]
-    );
+    setIsEmailDomainChanged(selectedOption.value !== infoData.email.split("@")[1]);
   };
+
+  const phoneParts = infoData.phoneNumber.split("-");
 
   return (
     <Container>
@@ -441,10 +495,10 @@ export default function HmlsModifyInfo() {
                       position: "relative",
                       marginRight: "1.5rem",
                       backgroundColor:
-                        infoData.gender === "남자" ? "#D9D9D9" : "#FFFFFF",
-                      color: infoData.gender === "남자" ? "#FFFFFF" : "#D9D9D9",
+                        infoData.gender === "남" ? "#D9D9D9" : "#FFFFFF",
+                      color: infoData.gender === "남" ? "#FFFFFF" : "#D9D9D9",
                       border:
-                        infoData.gender === "남자"
+                        infoData.gender === "남"
                           ? "none"
                           : "1.5px solid #D9D9D9",
                     }}
@@ -464,10 +518,10 @@ export default function HmlsModifyInfo() {
                       position: "relative",
                       marginRight: "1.5rem",
                       backgroundColor:
-                        infoData.gender === "여자" ? "#D9D9D9" : "#FFFFFF",
-                      color: infoData.gender === "여자" ? "#FFFFFF" : "#D9D9D9",
+                        infoData.gender === "여" ? "#D9D9D9" : "#FFFFFF",
+                      color: infoData.gender === "여" ? "#FFFFFF" : "#D9D9D9",
                       border:
-                        infoData.gender === "여자"
+                        infoData.gender === "여"
                           ? "none"
                           : "1.5px solid #D9D9D9",
                     }}
@@ -481,7 +535,7 @@ export default function HmlsModifyInfo() {
       <BtnWrapper>
         <RoundWhiteBtn
           text={isEditing ? "완료" : "수정하기"}
-          onClick={handleEditClick}
+          onClick={isEditing ? handleComplete : handleEditClick}
           style={{
             boxSizing: "border-box",
             width: "15.0625rem",

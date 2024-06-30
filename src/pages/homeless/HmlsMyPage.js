@@ -9,9 +9,11 @@ import { ReactComponent as SaveIcon } from "../../icons/SaveIcon.svg";
 import { useNavigate } from "react-router-dom";
 
 const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
+const userId = window.localStorage.getItem("userId");  // 로컬 스토리지에서 유저 이름 로드
 
 /* 채은 */
 export default function HmlsMyPage() {
+
   const navigate = useNavigate();
 
   const handleModifyClick = () => {
@@ -19,7 +21,7 @@ export default function HmlsMyPage() {
   };
 
   const handleResumeClick = () => {
-    navigate("/manageresume");
+    navigate(`/manageresume/${userId}`);
   };
 
   const handleApplyClick = () => {
