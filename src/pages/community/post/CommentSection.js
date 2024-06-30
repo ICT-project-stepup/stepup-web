@@ -30,11 +30,6 @@ export default function CommentSection({ postId }) {
   const addComment = async () => {
     const userId = window.localStorage.getItem("userId");
 
-    if (!userId) {
-      alert("로그인 후 댓글을 작성하실 수 있습니다.");
-      navigate("/login");
-      return;
-    }
     if (commentText.trim() === '') {
       alert("댓글을 작성해주세요.");
       return;

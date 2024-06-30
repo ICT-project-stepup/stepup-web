@@ -46,8 +46,12 @@ export default function ComuMain() {
         if (authority === "ROLE_USER1") {
             navigate("/publishComuPost");
             return;
+        } else if (authority === "ROLE_USER2") {
+            alert("커뮤니티 글은 구직자 회원만 작성하실 수 있습니다.");
         }
-        alert("로그인 후 이용해주세요.");
+        else {
+            alert("로그인 후 이용해주세요.");
+        }
     };
 
     return(

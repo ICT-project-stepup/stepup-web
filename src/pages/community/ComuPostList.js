@@ -23,8 +23,16 @@ export default function ComuPostList({ postInfo }) {
 
     /* 상세 페이지로 이동 */
     const navigateToDetail = (postId) => {
-        navigate(`/comupostdetail/${postId}`);
-        updatePostViews(postId); // 상세 페이지로 이동 시 조회수 업데이트
+        const authority = window.localStorage.getItem("authority");
+        if (authority === "ROLE_USER1") {
+            navigate(`/comupostdetail/${postId}`);
+            updatePostViews(postId); // 상세 페이지로 이동 시 조회수 업데이트
+        } else if (authority === "ROLE_USER2") {
+            alert("커뮤니티 글은 구직자 회원만 확인하실 수 있습니다.");
+        }
+        else {
+            alert("로그인 후 이용해주세요.");
+        }
     };
 
     /* 조회수 업데이트 */
