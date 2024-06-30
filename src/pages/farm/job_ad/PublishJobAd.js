@@ -34,19 +34,19 @@ export default function PublishJobAd() {
       work_type: "",
       content: "",
       address: "",
-      lat: null,
-      lng: null,
+      lat: "",
+      lng: "",
       user_name: "",
       user_phone: "",
     },
   });
 
   const onSubmit = (data) => {
-    let user_phone = null;
+    let user_phone = "";
     if (data.contact1 && data.contact2 && data.contact3) {
       user_phone = `${data.contact1}${data.contact2}${data.contact3}`;
     }
-    let address = null;
+    let address = "";
     if (data.mainAddress && data.detailedAddress) {
       address = `${data.mainAddress} ${data.detailedAddress}`;
     } else if (data.mainAddress) {
@@ -62,11 +62,23 @@ export default function PublishJobAd() {
     delete postData.contact3;
     delete postData.mainAddress;
     delete postData.detailedAddress;
+
+    console.log(postData);
+
+    // 필수 입력 알림
+    for (let key in postData) {
+      if (
+        postData[key] === "" ||
+        (Array.isArray(postData[key]) && postData[key].length === 0)
+      ) {
+        alert("모든 항목을 입력해주세요");
+        return;
+      }
+    }
+
     console.log(postData);
     navigate("/jobaddetail");
   };
-
-  const formValues = watch();
 
   const handleChipClick = (field, value) => {
     if (value === "anyAge") {
