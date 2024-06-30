@@ -8,9 +8,7 @@ import { ReactComponent as ApplyIcon } from "../../icons/ApplyIcon.svg";
 import { ReactComponent as SaveIcon } from "../../icons/SaveIcon.svg";
 import { useNavigate } from "react-router-dom";
 
-const userDummy = {
-  name: "이공주",
-};
+const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
 
 /* 채은 */
 export default function HmlsMyPage() {
@@ -37,7 +35,7 @@ export default function HmlsMyPage() {
       <Test>
         <Content>
           <StyledProfile />
-          <Text>{userDummy.name}</Text>
+          <Text>{name}</Text>
           <RoundWhiteBtn
             text="정보 수정"
             onClick={handleModifyClick}
@@ -82,7 +80,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 52rem;
 `;
 
 const Test = styled.div`
