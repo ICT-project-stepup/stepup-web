@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RoundGreenBtn from '../../../components/buttons/RoundGreenBtn';
+import { useNavigate } from "react-router-dom";
 
 export default function CommentSection({ postId }) {
+  const navigate = useNavigate();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [replyInfo, setReplyInfo] = useState({ commentId: null, parentAuthor: null });
@@ -29,7 +31,8 @@ export default function CommentSection({ postId }) {
     const userId = window.localStorage.getItem("userId");
 
     if (!userId) {
-      alert("로그인 후 이용해주세요.");
+      alert("로그인 후 댓글을 작성하실 수 있습니다.");
+      navigate("/login");
       return;
     }
     if (commentText.trim() === '') {
