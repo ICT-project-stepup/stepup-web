@@ -29,8 +29,8 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
 
   const handleDeleteRow = (index) => {
     const newCareerData = [...careerData];
-    newCareerData[index].deleted = true; // 삭제 플래그 설정
-    setCareerData(newCareerData.filter(item => !item.deleted)); // 삭제된 항목 필터링
+    newCareerData[index].deleted = true;
+    setCareerData(newCareerData.filter((item) => !item.deleted));
   };
 
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
@@ -50,9 +50,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
       <InputInstitution
         placeholder="입력하세요."
         value={item.careerName || ""}
-        onChange={(e) =>
-          handleInputChange(index, "careerName", e.target.value)
-        }
+        onChange={(e) => handleInputChange(index, "careerName", e.target.value)}
       />
     ) : (
       <Text>{item.careerName}</Text>
@@ -72,10 +70,11 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
       <PeriodWrapper>
         <CustomSelect
           value={periodOptions.find(
-            (option) => option.value === parseInt(item.careerPeriod.split(" ")[0], 10)
+            (option) =>
+              option.value === parseInt(item.careerPeriod.split(" ")[0], 10)
           )}
           onChange={(selectedOption) =>
-            handleInputChange(index, "careerPeriodValue", selectedOption.value)
+            handleInputChange(index, "periodValue", selectedOption.value)
           }
           options={periodOptions}
           placeholder=""
@@ -85,7 +84,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
             (option) => option.value === item.careerPeriod.split(" ")[1]
           )}
           onChange={(selectedOption) =>
-            handleInputChange(index, "careerPeriodUnit", selectedOption.value)
+            handleInputChange(index, "periodUnit", selectedOption.value)
           }
           options={periodUnitOptions}
           placeholder=""
@@ -140,10 +139,12 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
                 setCareerData([
                   ...careerData,
                   {
-                    careerId: null,
+                    id: null,
                     careerName: "",
                     careerType: "",
                     careerPeriod: "",
+                    periodValue: 0,
+                    periodUnit: "",
                     joinDate: null,
                     resignDate: null,
                   },
