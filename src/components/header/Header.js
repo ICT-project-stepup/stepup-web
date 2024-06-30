@@ -49,6 +49,18 @@ export default function Header() {
         }
     };
 
+    /* 권한에 따라 내 정보 페이지로 이동 */
+    const handleMyPage = () => {
+        const authority = window.localStorage.getItem("authority");
+        if (authority === "ROLE_USER1") {
+            navigate("/homelessmypage");
+        } else if (authority === "ROLE_USER2") {
+            navigate("/farmmypage");
+        } else {
+            alert("로그인 후 이용해주세요.");
+        }
+    };
+
     /* 로그아웃 */
     const handleLogout = () => {
         // 로컬스토리지에서 토큰 및 유저 정보 삭제
@@ -90,7 +102,7 @@ export default function Header() {
                         <CategoryWrapper>
                             <CategoryItem to="/">구인글 보기</CategoryItem>
                             <CategoryItem to="/communitymain">커뮤니티</CategoryItem>
-                            <CategoryItem to="/homelessmypage">내 정보</CategoryItem>
+                            <CategoryItem as="div" onClick={handleMyPage}>내 정보</CategoryItem>
                         </CategoryWrapper>
                     </SearchCategoryWrapper>
                 </LogoSearchContainer>
@@ -172,6 +184,7 @@ const CategoryItem = styled(Link)`
     font-family: "Pretendard-SemiBold";
     font-size: 1.25rem;
     color: #6E6E6E;
+    cursor: pointer; 
 `;
 
 const LoginWrapper = styled.div`
