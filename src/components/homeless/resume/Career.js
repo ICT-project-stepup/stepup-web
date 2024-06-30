@@ -96,7 +96,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
 
     startDate: isEditing ? (
       <Calendar
-        selectedDate={new Date(item.joinDate)}
+        selectedDate={item.joinDate ? new Date(item.joinDate) : new Date()}
         handleDateChange={(date) => handleDateChange(index, "joinDate", date)}
       />
     ) : (
@@ -105,7 +105,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
 
     endDate: isEditing ? (
       <Calendar
-        selectedDate={new Date(item.resignDate)}
+        selectedDate={item.resignDate  ? new Date(item.resignDate) : new Date()}
         handleDateChange={(date) => handleDateChange(index, "resignDate", date)}
       />
     ) : (
