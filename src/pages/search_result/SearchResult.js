@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import JobAdResult from './JobAdResult';
 import axios from 'axios';
+import ComuResult from './ComuResult';
 
 
 export default function SearchResult() {
@@ -37,6 +38,7 @@ export default function SearchResult() {
         <SearchResultContainer>
             <PageTitle text="검색 결과" />
             <JobAdResult postInfo={jobAds} />
+            <ComuResult postInfo={comuPosts} />
         </SearchResultContainer>
     );
 };
@@ -46,5 +48,5 @@ const SearchResultContainer = styled.div`
     height: 52rem;
     display: block;
     align-items: flex-start;
-    padding: 2rem 6rem 0 6rem;
+    padding: 2rem 6rem;
 `;
