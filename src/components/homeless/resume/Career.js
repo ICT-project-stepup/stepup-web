@@ -6,7 +6,7 @@ import Calendar from "../../Calendar";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
 import CustomSelect from "../../CustomSelect";
 
-const Career = ({ isEditing, careerData, setCareerData }) => {
+const Career = ({ isEditing, careerData, setCareerData, onDeleteRow }) => {
   const careerLabel = [
     { label: "기관", key: "institution", className: "institution" },
     { label: "업무", key: "work", className: "work" },
@@ -28,9 +28,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
   };
 
   const handleDeleteRow = (index) => {
-    const newCareerData = [...careerData];
-    newCareerData[index].deleted = true;
-    setCareerData(newCareerData.filter((item) => !item.deleted));
+    onDeleteRow(index); // 부모 컴포넌트에 삭제된 항목을 전달
   };
 
   const periodOptions = Array.from({ length: 11 }, (_, i) => ({
@@ -105,7 +103,7 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
 
     endDate: isEditing ? (
       <Calendar
-        selectedDate={item.resignDate  ? new Date(item.resignDate) : new Date()}
+        selectedDate={item.resignDate ? new Date(item.resignDate) : new Date()}
         handleDateChange={(date) => handleDateChange(index, "resignDate", date)}
       />
     ) : (
@@ -160,7 +158,6 @@ const Career = ({ isEditing, careerData, setCareerData }) => {
     </Container>
   );
 };
-
 
 const CareerBox = styled.div`
   display: flex;

@@ -15,6 +15,7 @@ export default function ManageResume() {
   const [careerData, setCareerData] = useState([]);
   const [applyWithData, setApplyWithData] = useState([]);
   const [isEditing, setIsEditing] = useState(true);
+  const [deletedCareers, setDeletedCareers] = useState([]);
 
   const userId = "test1";
 
@@ -35,28 +36,32 @@ export default function ManageResume() {
       });
   }, []);
 
-  const handleSave = async () => {
-    const deletedCareers = careerData.filter((item) => item.deleted);
+  const handleDeleteRow = (index) => {
+    const careerToDelete = careerData[index];
+    if (careerToDelete.id) {
+      setDeletedCareers((prev) => [...prev, careerToDelete.id]);
+    }
+    const newCareerData = careerData.filter((_, i) => i !== index); // 즉시 클라이언트에서 데이터 제거
+    setCareerData(newCareerData);
+  };
 
+  const handleSave = async () => {
     try {
+      // 서버에 삭제 요청 보내기
       await Promise.all(
-        deletedCareers.map(async (career) => {
-          if (career.id) {
-            await axios.delete(`/api/resume/career/${career.id}`);
-          }
+        deletedCareers.map(async (careerId) => {
+          await axios.delete(`/api/resume/career/${careerId}`);
         })
       );
 
-      const updatedCareerData = careerData.filter((item) => !item.deleted);
-      setCareerData(updatedCareerData);
-
+      // 삭제된 경력을 제외한 경력 데이터
       const updates = {
-        careers: updatedCareerData.map((career) => ({
+        careers: careerData.map((career) => ({
           id: career.id || undefined,
           careerName: career.careerName || "",
           careerType: career.careerType || "",
-          periodValue: career.periodValue || 0,
-          periodUnit: career.periodUnit || "",
+          periodValue: career.periodValue || 1, // 기본 값 설정
+          periodUnit: career.periodUnit || "개월", // 기본 값 설정
           joinDate: career.joinDate || null,
           resignDate: career.resignDate || null,
         })),
@@ -67,20 +72,14 @@ export default function ManageResume() {
       };
 
       for (const career of updates.careers) {
-        console.log(`검사 중인 경력: ${JSON.stringify(career)}`);
-        if (
-          !career.careerName.trim() ||
-          !career.careerType.trim() ||
-          !career.joinDate ||
-          !career.resignDate
-        ) {
+        if (!career.careerName.trim() || !career.careerType.trim() || !career.joinDate || !career.resignDate) {
           throw new Error("모든 필드를 채워야 합니다.");
         }
       }
 
       await axios.put(`/api/resume/${userId}`, updates);
 
-      console.log("이력서가 성공적으로 업데이트되었습니다.");
+      setDeletedCareers([]); // 초기화
       setIsEditing(false);
     } catch (error) {
       console.error("이력서를 업데이트하는데 실패했습니다.", error);
@@ -108,6 +107,7 @@ export default function ManageResume() {
         isEditing={isEditing}
         careerData={careerData}
         setCareerData={setCareerData}
+        onDeleteRow={handleDeleteRow}
       />
       <SelfIntroduction
         introduction={introduction}
@@ -132,11 +132,11 @@ export default function ManageResume() {
 }
 
 const btnStyle = {
-    width: "15rem", 
-    height: "4.1rem",
-    fontFamily: "Pretendard-SemiBold",
-    fontSize: "1.75rem",
-    border: "0.15rem solid #8AA353"
+  width: "15rem",
+  height: "4.1rem",
+  fontFamily: "Pretendard-SemiBold",
+  fontSize: "1.75rem",
+  border: "0.15rem solid #8AA353"
 };
 
 const Container = styled.div`
@@ -144,13 +144,11 @@ const Container = styled.div`
   margin-top: 6rem;
   font-family: "Pretendard-Bold";
   font-size: 3rem;
-
   padding: 2rem 6rem 0 6rem; // 페이지 여백 조절
 `;
 
 const TitleWrapper = styled.div`
   /*이력서 관리 텍스트*/
-
   left: 5.3125rem;
   top: 11.875rem;
   position: absolute;
