@@ -18,6 +18,9 @@ const Career = ({ isEditing, careerData, setCareerData, onDeleteRow }) => {
   const handleInputChange = (index, key, value) => {
     const newCareerData = [...careerData];
     newCareerData[index][key] = value;
+    if (key === "periodValue" || key === "periodUnit") {
+      newCareerData[index].careerPeriod = `${newCareerData[index].periodValue} ${newCareerData[index].periodUnit}`;
+    }
     setCareerData(newCareerData);
   };
 
@@ -43,73 +46,82 @@ const Career = ({ isEditing, careerData, setCareerData, onDeleteRow }) => {
     { value: "년", label: "년" },
   ];
 
-  const data = careerData.map((item, index) => ({
-    institution: isEditing ? (
-      <InputInstitution
-        placeholder="입력하세요."
-        value={item.careerName || ""}
-        onChange={(e) => handleInputChange(index, "careerName", e.target.value)}
-      />
-    ) : (
-      <Text>{item.careerName}</Text>
-    ),
+  const data = careerData.map((item, index) => {
+    // 초기화 로직 추가
+    if (!item.periodValue || !item.periodUnit) {
+      const [value, unit] = item.careerPeriod.split(" ");
+      item.periodValue = parseInt(value, 10);
+      item.periodUnit = unit;
+    }
 
-    work: isEditing ? (
-      <InputWork
-        placeholder="입력하세요."
-        value={item.careerType || ""}
-        onChange={(e) => handleInputChange(index, "careerType", e.target.value)}
-      />
-    ) : (
-      <Text>{item.careerType}</Text>
-    ),
-
-    period: isEditing ? (
-      <PeriodWrapper>
-        <CustomSelect
-          value={periodOptions.find(
-            (option) =>
-              option.value === parseInt(item.careerPeriod.split(" ")[0], 10)
-          )}
-          onChange={(selectedOption) =>
-            handleInputChange(index, "periodValue", selectedOption.value)
-          }
-          options={periodOptions}
-          placeholder=""
+    return {
+      institution: isEditing ? (
+        <InputInstitution
+          placeholder="입력하세요."
+          value={item.careerName || ""}
+          onChange={(e) => handleInputChange(index, "careerName", e.target.value)}
         />
-        <CustomSelect
-          value={periodUnitOptions.find(
-            (option) => option.value === item.careerPeriod.split(" ")[1]
-          )}
-          onChange={(selectedOption) =>
-            handleInputChange(index, "periodUnit", selectedOption.value)
-          }
-          options={periodUnitOptions}
-          placeholder=""
+      ) : (
+        <Text>{item.careerName}</Text>
+      ),
+
+      work: isEditing ? (
+        <InputWork
+          placeholder="입력하세요."
+          value={item.careerType || ""}
+          onChange={(e) => handleInputChange(index, "careerType", e.target.value)}
         />
-      </PeriodWrapper>
-    ) : (
-      <Text>{item.careerPeriod}</Text>
-    ),
+      ) : (
+        <Text>{item.careerType}</Text>
+      ),
 
-    startDate: isEditing ? (
-      <Calendar
-        selectedDate={item.joinDate ? new Date(item.joinDate) : new Date()}
-        handleDateChange={(date) => handleDateChange(index, "joinDate", date)}
-      />
-    ) : (
-      <Text>{item.joinDate ? new Date(item.joinDate).toLocaleDateString() : ""}</Text>
-    ),
+      period: isEditing ? (
+        <PeriodWrapper>
+          <CustomSelect
+            value={periodOptions.find(
+              (option) =>
+                option.value === (item.periodValue || 1)
+            )}
+            onChange={(selectedOption) =>
+              handleInputChange(index, "periodValue", selectedOption.value)
+            }
+            options={periodOptions}
+            placeholder=""
+          />
+          <CustomSelect
+            value={periodUnitOptions.find(
+              (option) => option.value === (item.periodUnit || "개월")
+            )}
+            onChange={(selectedOption) =>
+              handleInputChange(index, "periodUnit", selectedOption.value)
+            }
+            options={periodUnitOptions}
+            placeholder=""
+          />
+        </PeriodWrapper>
+      ) : (
+        <Text>{item.careerPeriod}</Text>
+      ),
 
-    endDate: isEditing ? (
-      <Calendar
-        selectedDate={item.resignDate ? new Date(item.resignDate) : new Date()}
-        handleDateChange={(date) => handleDateChange(index, "resignDate", date)}
-      />
-    ) : (
-      <Text>{item.resignDate ? new Date(item.resignDate).toLocaleDateString() : ""}</Text>
-    ),
-  }));
+      startDate: isEditing ? (
+        <Calendar
+          selectedDate={item.joinDate ? new Date(item.joinDate) : new Date()}
+          handleDateChange={(date) => handleDateChange(index, "joinDate", date)}
+        />
+      ) : (
+        <Text>{item.joinDate ? new Date(item.joinDate).toLocaleDateString() : ""}</Text>
+      ),
+
+      endDate: isEditing ? (
+        <Calendar
+          selectedDate={item.resignDate ? new Date(item.resignDate) : new Date()}
+          handleDateChange={(date) => handleDateChange(index, "resignDate", date)}
+        />
+      ) : (
+        <Text>{item.resignDate ? new Date(item.resignDate).toLocaleDateString() : ""}</Text>
+      ),
+    };
+  });
 
   return (
     <Container>
@@ -140,9 +152,8 @@ const Career = ({ isEditing, careerData, setCareerData, onDeleteRow }) => {
                     id: null,
                     careerName: "",
                     careerType: "",
-                    careerPeriod: "",
-                    periodValue: 0,
-                    periodUnit: "",
+                    periodValue: 1,
+                    periodUnit: "개월",
                     joinDate: null,
                     resignDate: null,
                   },

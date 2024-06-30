@@ -35,7 +35,7 @@ export default function ManageResume() {
       .catch((error) => {
         console.error("이력서 데이터를 불러오는데 실패했습니다.", error);
       });
-  }, []);
+  }, [userId]);
 
   const handleDeleteRow = (index) => {
     const careerToDelete = careerData[index];
