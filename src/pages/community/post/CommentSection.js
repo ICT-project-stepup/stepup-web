@@ -26,6 +26,12 @@ export default function CommentSection({ postId }) {
 
   /* 댓글 추가 */
   const addComment = async () => {
+    const userId = window.localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
     if (commentText.trim() === '') {
       alert("댓글을 작성해주세요.");
       return;
@@ -38,7 +44,7 @@ export default function CommentSection({ postId }) {
 
     const newComment = {
       communityId: postId,
-      userId: 'test2',
+      userId: userId,
       text: newCommentText,
       parentId: replyInfo.commentId,
     };
