@@ -1,34 +1,49 @@
+import { useState } from 'react';
 import { styled } from "styled-components";
 import PropTypes from "prop-types";
 import { ReactComponent as SearchIcon } from '../../icons/SearchIcon.svg';
+import { useNavigate } from "react-router-dom";
 
 
 export default function SearchBar({ value, onChange }) {
-    return (
-      <SearchWrapper>
-        <SearchInput
-          placeholder="검색어를 입력하세요"
-          onChange={onChange}
-          value={value}
-        />
-        <button
-          style={{
-            position: "absolute",
-            right: "1rem",
-            backgroundColor: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-            <SearchIcon />
-        </button>
-      </SearchWrapper>
-    );
-  }
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
 
-  SearchBar.propTypes = {
-    text: PropTypes.string,
+  const handleSearch = () => {
+    if (keyword.trim() === "") {
+      alert("검색어를 입력하세요.");
+      return;
+    }
+    navigate(`/searchresult?keyword=${keyword}`);
   };
+
+  return (
+    <SearchWrapper>
+      <SearchInput
+        placeholder="검색어를 입력하세요"
+        onChange={(e) => setKeyword(e.target.value)}
+        value={keyword}
+      />
+      <button
+        style={{
+          position: "absolute",
+          right: "1rem",
+          backgroundColor: "white",
+          border: "none",
+          cursor: "pointer",
+        }}
+        onClick={handleSearch}
+      >
+        <SearchIcon />
+      </button>
+    </SearchWrapper>
+  );
+}
+
+SearchBar.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 const SearchWrapper = styled.div`
   width: 100%;

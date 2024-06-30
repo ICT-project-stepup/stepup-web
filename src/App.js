@@ -29,6 +29,7 @@ import NoResume from "./pages/popup/NoResume";
 import SignInWelcome from "./pages/popup/SignInWelcome";
 import NoAccess from "./pages/popup/NoAccess";
 import AboutStep from "./pages/about/aboutstep";
+import SearchResult from "./pages/search_result/SearchResult";
 
 
 export default function App() {
@@ -68,6 +69,7 @@ export default function App() {
         <Route path="/noaccess" element={<NoAccess />} />
 
         <Route path="/aboutstep" element={<AboutStep/>} />
+        <Route path="/searchresult" element={<SearchResult/>} />
 
       </Routes>
       <Footer />
