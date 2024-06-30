@@ -69,7 +69,7 @@ export default function ComuResult({ postInfo = [] }) {
 
     return (
         <MainContainer>
-            <ResultCount>커뮤니티 글 {totalItemsCount}건</ResultCount>
+            <ResultCount>커뮤니티글 {totalItemsCount}건</ResultCount>
             <ComuResultContainer>
                 <ListTitle>
                     <span className="area">지역</span>
