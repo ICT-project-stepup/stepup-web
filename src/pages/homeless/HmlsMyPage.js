@@ -7,29 +7,51 @@ import { ReactComponent as ResumeIcon } from "../../icons/ResumeIcon.svg";
 import { ReactComponent as ApplyIcon } from "../../icons/ApplyIcon.svg";
 import { ReactComponent as SaveIcon } from "../../icons/SaveIcon.svg";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const userDummy = {
-  name: "이공주",
-};
+// const userDummy = {
+//   name: "이공주",
+// };
 
 /* 채은 */
+
+
+  
+
 export default function HmlsMyPage() {
+
   const navigate = useNavigate();
+  
+const userId = "test1";
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    // API 요청을 통해 사용자 데이터를 가져옵니다.
+    axios.post('/api/members/find-id', { userId })
+      .then((response) => {
+        setUserName(response.data.name);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch user data", error);
+      });
+  }, []);
+
 
   const handleModifyClick = () => {
-    navigate("/homelessmodifyinfo");
+    navigate(`/homelessmodifyinfo/${userId}`);
   };
 
   const handleResumeClick = () => {
-    navigate("/manageresume");
+    navigate(`/manageresume/${userId}`);
   };
 
   const handleApplyClick = () => {
-    navigate("/applicationhistory");
+    navigate(`/applicationhistory/${userId}`);
   };
 
   const handleSaveClick = () => {
-    navigate("/interestpost");
+    navigate(`/interestpost/${userId}`);
   };
 
   return (
@@ -37,7 +59,7 @@ export default function HmlsMyPage() {
       <Test>
         <Content>
           <StyledProfile />
-          <Text>{userDummy.name}</Text>
+          <Text>{userName}</Text>
           <RoundWhiteBtn
             text="정보 수정"
             onClick={handleModifyClick}

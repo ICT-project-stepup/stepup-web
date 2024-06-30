@@ -7,6 +7,7 @@ import PageTitle from "../../../components/PageTitle";
 import ApplyWith from "../../../components/homeless/resume/ApplyWith";
 import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 /* 채은 */
 export default function ManageResume() {
@@ -17,7 +18,7 @@ export default function ManageResume() {
   const [isEditing, setIsEditing] = useState(true);
   const [deletedCareers, setDeletedCareers] = useState([]);
 
-  const userId = "test1";
+  const { userId } = useParams();
 
   useEffect(() => {
     axios

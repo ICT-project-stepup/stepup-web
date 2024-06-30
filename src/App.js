@@ -52,10 +52,10 @@ export default function App() {
         <Route path="/jobaddetail/:id" element={<JobAdDetail />} />
 
         <Route path="/homelessmypage" element={<HmlsMyPage />} />
-        <Route path="/applicationhistory" element={<ApplicationHistory />} />
-        <Route path="/interestpost" element={<InterestPost />} />
-        <Route path="/homelessmodifyinfo" element={<HmlsModifyInfo />} />
-        <Route path="/manageresume" element={<ManageResume />} />
+        <Route path="/applicationhistory/:userId" element={<ApplicationHistory />} />
+        <Route path="/interestpost/:userId" element={<InterestPost />} />
+        <Route path="/homelessmodifyinfo/:userId" element={<HmlsModifyInfo />} />
+        <Route path="/manageresume/:userId" element={<ManageResume />} />
 
         <Route path="/communitymain" element={<ComuMain />} />
         <Route path="/comupostdetail/:id" element={<ComuPostDetail />} />
