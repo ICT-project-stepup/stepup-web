@@ -3,6 +3,10 @@ import { styled } from "styled-components";
 
 
 export default function CustomPagination({ activePage, totalItemsCount, handlePageChange }) {
+    if (totalItemsCount === 0) {
+        return null; // totalItemsCount가 0일 때 페이지네이션을 숨김
+    }
+    
     return (
         <PaginationWrapper>
             <Pagination
