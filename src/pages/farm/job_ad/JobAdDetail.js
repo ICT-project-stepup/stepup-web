@@ -33,18 +33,18 @@ export default function JobAdDetail() {
     fetchPost();
   }, [id]);
 
-  const handleApplyClick = () => {
+  const handleApplyClick = async () => {
     const applicantId = window.localStorage.getItem("id");
     if (applicantId) {
-      axios.get(`/api/applicant/${applicantId}`)
-        .then(response => {
-          // 여기서 데이터를 구인자에게 보여주는 로직을 추가합니다.
-          // 예시: navigate("/showApplicantDetails", { state: { applicantData: response.data } });
-          console.log("Applicant data:", response.data);
-        })
-        .catch(error => {
-          console.error('There was an error fetching the applicant details!', error);
-        });
+      try {
+        const requestData = { applicantId, boardNumber: id };
+        console.log("Sending request data:", requestData);
+        await axios.post('/api/applicant', requestData);
+        alert("지원이 완료되었습니다.");
+      } catch (error) {
+        console.error('There was an error applying!', error);
+        console.error('Error response:', error.response);
+      }
     } else {
       console.error('Applicant ID is not found in localStorage');
     }
