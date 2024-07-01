@@ -96,7 +96,7 @@ export default function JobAdDetail() {
               모집일자
             </div>
             <div style={{ fontFamily: "Pretendard-Regular", color: "#6e6e6e", fontSize: "1.375rem", width: "16.75rem", height: "1.625rem" }}>
-              {post.post_date}~{post.close_date}
+              {formatDate(post.recruitStart)}~{formatDate(post.recruitEnd)}
             </div>
           </div>
         </SectionWrapper>
