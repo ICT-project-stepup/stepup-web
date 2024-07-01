@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import RoundGreenBtn from "../../components/buttons/RoundGreenBtn";
@@ -7,18 +8,34 @@ import JobAdList from './JobAdList';
 import CustomPagination from '../../components/CustomPagination';
 import MyMap from './MyMap';
 
+
 /* 채민 */
 export default function Main() {
+    const navigate = useNavigate();
     const [isListMode, setListMode] = useState(true);
     const [activePage, setActivePage] = useState(1);
     const [mapKey, setMapKey] = useState(0);
     const [totalJobAds, setTotalJobAds] = useState(0);
     const [jobAds, setJobAds] = useState([]);
+    const [isFarm, setFarm] = useState(false);
 
     useEffect(() => {
         fetchTotalJobAds(); // 페이지 로딩 시 총 구인글 개수를 가져오는 함수 호출
         fetchJobAds(); // 페이지 로딩 시 구인글 목록을 가져오는 함수 호출
+        checkUserAuthority(); // 권한 확인 함수 호출
     }, []);
+
+    useEffect(() => {
+        checkUserAuthority();
+    }, [localStorage.getItem('authority')]);
+
+    /* 권한 확인 함수 */
+    const checkUserAuthority = () => {
+        const authority = localStorage.getItem('authority');
+        if (authority === 'ROLE_USER2') {
+            setFarm(true);
+        }
+    };
 
     /* 총 구인글 개수 */
     const fetchTotalJobAds = async () => {
@@ -67,39 +84,56 @@ export default function Main() {
         setActivePage(pageNumber);
     };
 
-    return(
+    const handleWritingClick = () => {
+        navigate("/publishjobad")
+    };
+
+    return (
         <MainContainer>
-            <PageTitle text="구인글 보기" />
+            <TitlePostWrapper>
+                <div>
+                    <PageTitle text="구인글 보기" />
+                </div>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    {isFarm && (
+                        <RoundGreenBtn
+                            text="구인글 쓰기"
+                            onClick={handleWritingClick}
+                            style={{ width: "8.625rem", height: "2.75rem", fontFamily: "Pretendard-regular" }}
+                        />
+                    )}
+                </div>
+            </TitlePostWrapper>
             <CountModeWrapper>
                 <span>총 {totalJobAds}건</span>
                 <ModeBtnWrapper>
-                    <div style={{display: "flex", justifyContent: "flex-start"}}>
+                    <div style={{ display: "flex", justifyContent: "flex-start" }}>
                         {isListMode ? (
-                            <RoundGreenBtn 
+                            <RoundGreenBtn
                                 text="목록형"
                                 onClick={toggleListMode}
-                                style={{width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-regular"}}
+                                style={{ width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-regular" }}
                             />
                         ) : (
-                            <RoundWhiteBtn 
+                            <RoundWhiteBtn
                                 text="목록형"
                                 onClick={toggleListMode}
-                                style={{width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-regular"}}
+                                style={{ width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-regular" }}
                             />
                         )}
                     </div>
-                    <div style={{display: "flex", justifyContent: "flex-end"}}>
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
                         {isListMode ? (
-                            <RoundWhiteBtn 
+                            <RoundWhiteBtn
                                 text="지도형"
                                 onClick={toggleMapMode}
-                                style={{width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-Regular"}}
+                                style={{ width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-Regular" }}
                             />
                         ) : (
-                            <RoundGreenBtn 
+                            <RoundGreenBtn
                                 text="지도형"
                                 onClick={toggleMapMode}
-                                style={{width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-Regular"}}
+                                style={{ width: "5.5rem", height: "2.75rem", fontFamily: "Pretendard-Regular" }}
                             />
                         )}
                     </div>
@@ -115,7 +149,7 @@ export default function Main() {
                         <span className="date">등록일</span>
                         <span className="state">현황</span>
                     </ListTitle>
-                    {currentPosts.map((jobAds, index) => ( <JobAdList key={index} postInfo={jobAds} /> ))}
+                    {currentPosts.map((jobAds, index) => (<JobAdList key={index} postInfo={jobAds} />))}
                     <CustomPagination
                         activePage={activePage}
                         totalItemsCount={totalItemsCount}
@@ -129,7 +163,7 @@ export default function Main() {
             )}
         </MainContainer>
     )
-}  
+}
 
 const MainContainer = styled.div`
     width: auto;
@@ -137,6 +171,12 @@ const MainContainer = styled.div`
     display: block;
     align-items: flex-start;
     padding: 2rem 6rem 0 6rem;
+`;
+
+const TitlePostWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 `;
 
 const CountModeWrapper = styled.div`
