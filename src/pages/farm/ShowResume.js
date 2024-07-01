@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function ShowResume() {
-  const applicantId = "user123";
+  const { applicantId } = useParams();
   const [profileData, setProfileData] = useState({});
   const [careerData, setCareerData] = useState([]);
   const [introduction, setIntroduction] = useState("");

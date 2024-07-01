@@ -6,7 +6,7 @@ export default function MyPost({ applicantData }) {
   const navigate = useNavigate();
 
   const handleResumeClick = () => {
-    navigate("/showresume");
+    navigate(`/showresume/${applicantData.userId}`);
   };
 
   return (

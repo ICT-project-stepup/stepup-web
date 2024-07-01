@@ -4,7 +4,7 @@ import axios from 'axios';
 import PageTitle from '../../components/PageTitle';
 import CustomPagination from '../../components/CustomPagination';
 import MyApplicant from '../../components/farm/MyApplicant';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function ShowApplicant() {
   const [applicants, setApplicants] = useState([]);
@@ -14,7 +14,6 @@ export default function ShowApplicant() {
   //const { boardNumber } = useParams();
 
   const boardNumber = 14;
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/api/applicant/${boardNumber}`)
@@ -25,10 +24,6 @@ export default function ShowApplicant() {
         console.error('There was an error fetching the applicants!', error);
       });
   }, [boardNumber]);
-
-  const handleApplicantClick = (id) => {
-    navigate(`/showresume/${id}`)
-  };
 
   // Pagination variables
   const totalItemsCount = applicants.length;
@@ -57,7 +52,7 @@ export default function ShowApplicant() {
           <span className="resume" />
         </ListTitle>
         {currentPosts.map((applicantData, index) => (
-          <div key={index} onClick={() => handleApplicantClick(applicantData.userId)}>
+          <div key={index}>
             <MyApplicant applicantData={applicantData} />
           </div>
         ))}
