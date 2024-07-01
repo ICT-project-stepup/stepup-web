@@ -4,32 +4,73 @@ import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo} from '../../assets/Logo.svg';
 import SearchBar from "./SearchBar";
+import axios from "axios";
 
 
 export default function Header() {
     const navigate = useNavigate();
     const [userId, setUserId] = useState("");
+    const [name, setName] = useState("");
 
     /* 토큰 확인하여 로그인 여부 확인 후 유저 아이디 추출 */
     useEffect(() => {
         const token = window.localStorage.getItem("token");
         if (token) {
-        try {
-            const decodedToken = parseJwt(token);
-            setUserId(decodedToken.sub); // sub 클레임에서 유저 아이디 추출
-        } catch (error) {
-            console.error("토큰 디코딩 오류:", error);
-            setUserId(""); // 토큰 디코딩 실패 시 초기화
-        }
+            try {
+                const decodedToken = parseJwt(token);
+                const userId = decodedToken.sub; // sub 클레임에서 유저 아이디 추출
+                setUserId(userId);
+                fetchUserData(userId); // 아이디를 바탕으로 유저 데이터 요청
+            } catch (error) {
+                console.error("토큰 디코딩 오류:", error);
+                setUserId(""); // 토큰 디코딩 실패 시 초기화
+            }
         } else {
-        setUserId(""); // 토큰이 없는 경우 초기화
+            setUserId(""); // 토큰이 없는 경우 초기화
         }
     }, []);
 
+    /* 유저 데이터 요청 함수 */
+    const fetchUserData = async (userId) => {
+        try {
+            const response = await axios.post('/api/members/find-id', { userId }, {
+                headers: { "Content-Type": 'application/json' }
+            });
+            if (response.status === 200) {  // 받아온 유저 데이터를 로컬 스토리지에 저장
+                const { id, name, authority } = response.data;
+                window.localStorage.setItem("id", id);
+                window.localStorage.setItem("name", name);
+                window.localStorage.setItem("authority", authority);
+                window.localStorage.setItem("userId", userId);
+                setName(name);
+            }
+        } catch (error) {
+            console.error("유저 데이터 요청 오류:", error);
+        }
+    };
+
+    /* 권한에 따라 내 정보 페이지로 이동 */
+    const handleMyPage = () => {
+        const authority = window.localStorage.getItem("authority");
+        if (authority === "ROLE_USER1") {
+            navigate("/homelessmypage");
+        } else if (authority === "ROLE_USER2") {
+            navigate("/farmmypage");
+        } else {
+            alert("로그인 후 이용해주세요.");
+        }
+    };
+
     /* 로그아웃 */
     const handleLogout = () => {
-        window.localStorage.removeItem("token"); // 로컬스토리지에서 사용자 토큰 삭제
+        // 로컬스토리지에서 토큰 및 유저 정보 삭제
+        window.localStorage.removeItem("token");
+        window.localStorage.removeItem("id");
+        window.localStorage.removeItem("name");
+        window.localStorage.removeItem("authority");
+        window.localStorage.removeItem("userId");
         setUserId("");
+
         alert("로그아웃이 완료되었습니다.")
         navigate("/login"); // 로그아웃 후 로그인 페이지로 이동
     };
@@ -61,13 +102,13 @@ export default function Header() {
                         <CategoryWrapper>
                             <CategoryItem to="/">구인글 보기</CategoryItem>
                             <CategoryItem to="/communitymain">커뮤니티</CategoryItem>
-                            <CategoryItem to="/homelessmypage">내 정보</CategoryItem>
+                            <CategoryItem as="div" onClick={handleMyPage}>내 정보</CategoryItem>
                         </CategoryWrapper>
                     </SearchCategoryWrapper>
                 </LogoSearchContainer>
                 {userId ? (
                     <LoginWrapper>
-                        <span>{userId} 님</span>
+                        <span>{name} 님</span>
                         <span style={{margin: "0 0.7rem"}}>|</span>
                         <span 
                             onClick={handleLogout}
@@ -143,6 +184,7 @@ const CategoryItem = styled(Link)`
     font-family: "Pretendard-SemiBold";
     font-size: 1.25rem;
     color: #6E6E6E;
+    cursor: pointer; 
 `;
 
 const LoginWrapper = styled.div`

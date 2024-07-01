@@ -29,6 +29,7 @@ import NoResume from "./pages/popup/NoResume";
 import SignInWelcome from "./pages/popup/SignInWelcome";
 import NoAccess from "./pages/popup/NoAccess";
 import AboutStep from "./pages/about/aboutstep";
+import SearchResult from "./pages/search_result/SearchResult";
 
 
 export default function App() {
@@ -55,7 +56,7 @@ export default function App() {
         <Route path="/applicationhistory" element={<ApplicationHistory />} />
         <Route path="/interestpost" element={<InterestPost />} />
         <Route path="/homelessmodifyinfo" element={<HmlsModifyInfo />} />
-        <Route path="/manageresume" element={<ManageResume />} />
+        <Route path="/manageresume/:userId" element={<ManageResume />} />
 
         <Route path="/communitymain" element={<ComuMain />} />
         <Route path="/comupostdetail/:id" element={<ComuPostDetail />} />
@@ -68,6 +69,7 @@ export default function App() {
         <Route path="/noaccess" element={<NoAccess />} />
 
         <Route path="/aboutstep" element={<AboutStep/>} />
+        <Route path="/searchresult" element={<SearchResult/>} />
 
       </Routes>
       <Footer />
