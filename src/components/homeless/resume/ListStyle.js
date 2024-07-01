@@ -56,8 +56,8 @@ const ListHeader = styled.div`
   .period,
   .work,
   .number,
-  .id,
-  .name {
+  .parterUserId,
+  .partnerName {
     flex: 1; /* Flex 속성 사용 */
     display: flex;
     align-items: center;
@@ -93,8 +93,8 @@ const ListItem = styled.div`
   .period,
   .work,
   .number,
-  .id,
-  .name {
+  .parterUserId,
+  .partnerName {
     flex: 1; /* Flex 속성 사용 */
     display: flex;
     align-items: center;
