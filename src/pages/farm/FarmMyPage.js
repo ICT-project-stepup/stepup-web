@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
@@ -6,61 +6,34 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import CustomPagination from "../../components/CustomPagination";
 import { useNavigate } from "react-router-dom";
 import MyPost from "../../components/farm/MyPost";
+import axios from "axios";
 
-const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
-
-const postData = [
-  {
-    postTitle: "마늘 뽑으실 분 구합니다",
-    postDate: "2024.05.17",
-    postState: "모집 중",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-];
+const name = window.localStorage.getItem("name"); // 로컬 스토리지에서 유저 이름 로드
+const id = window.localStorage.getItem("id"); // 로컬 스토리지에서 유저 ID 로드
 
 /* 예은 */
 export default function FarmMyPage() {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState(1);
+  const [postData, setPostData] = useState([]);
+
+  useEffect(() => {
+    // 데이터 fetching 함수
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/jobad/my/${id}`);
+        setPostData(response.data);
+      } catch (error) {
+        console.error("내가 쓴 글 데이터를 불러오는데 실패했습니다.", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleModifyClick = () => {
     navigate("/farmmodifyinfo");
   };
-
-  const [activePage, setActivePage] = useState(1);
 
   /* 페이지네이션에 필요한 변수들 */
   const totalItemsCount = postData.length;
@@ -71,10 +44,6 @@ export default function FarmMyPage() {
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
-
-  const currentStatusPosts = currentPosts.filter((post) =>
-    postData.includes(post)
-  );
 
   return (
     <Container>
@@ -112,7 +81,7 @@ export default function FarmMyPage() {
           <span className="state">현황</span>
           <span className="applicant" />
         </ListTitle>
-        {currentStatusPosts.map((postInfo, index) => (
+        {currentPosts.map((postInfo, index) => (
           <MyPost key={index} postInfo={postInfo} />
         ))}
         <CustomPagination
@@ -130,7 +99,7 @@ const Container = styled.div`
   height: auto;
   display: block;
   align-items: flex-start;
-  padding: 2rem 6rem 2rem 6rem;
+  padding: 2rem 6rem 6rem 6rem;
 `;
 
 const ProfileBox = styled.div`

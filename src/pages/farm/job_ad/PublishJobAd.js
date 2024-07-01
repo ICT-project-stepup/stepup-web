@@ -46,7 +46,7 @@ export default function PublishJobAd() {
   const onSubmit = (data) => {
     let userPhone = "";
     if (data.contact1 && data.contact2 && data.contact3) {
-      userPhone = `${data.contact1}${data.contact2}${data.contact3}`;
+      userPhone = `${data.contact1}-${data.contact2}-${data.contact3}`;
     }
     let address = "";
     if (data.mainAddress && data.detailedAddress) {
@@ -291,7 +291,6 @@ export default function PublishJobAd() {
                     <CustomCalendarWrapper>
                       <Calendar
                         selectedDate={field.value}
-                        dateFormat="yyyy.MM.dd"
                         handleDateChange={(date) =>
                           handleDateChange("endDate", date)
                         }

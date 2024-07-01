@@ -46,8 +46,8 @@ export default function App() {
         <Route path="/homelesssignin" element={<HmlsSignIn />} />
 
         <Route path="/farmmypage" element={<FarmMyPage />} />
-        <Route path="/showapplicant" element={<ShowApplicant />} />
-        <Route path="/showresume/:applicantId" element={<ShowResume />} />
+        <Route path="/showapplicant/:boardNumber" element={<ShowApplicant />} />
+        <Route path="/showresume/:applicantId/:boardNumber" element={<ShowResume />} />
         <Route path="/farmmodifyinfo" element={<FarmModifyInfo />} />
         <Route path="/publishjobad" element={<PublishJobAd />} />
         <Route path="/jobaddetail/:id" element={<JobAdDetail />} />

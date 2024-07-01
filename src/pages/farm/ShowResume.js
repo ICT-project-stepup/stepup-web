@@ -5,20 +5,22 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as YesIcon } from "../../icons/YesIcon.svg";
 import { ReactComponent as NoIcon } from "../../icons/NoIcon.svg";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function ShowResume() {
-  const { applicantId } = useParams();
+  const { applicantId, boardNumber } = useParams();
   const [profileData, setProfileData] = useState({});
   const [careerData, setCareerData] = useState([]);
   const [introduction, setIntroduction] = useState("");
   const [applyWithData, setApplyWithData] = useState([]);
+  const [id, setId] = useState(0);
+  const [isPass, setIsPass] = useState(false);
+  const [isFail, setIsFail] = useState(false);
 
-  const handleNoClick = () => {};
+  const navigate = useNavigate();
 
-  const handleYesClick = () => {};
-
+  /* 이력서 데이터 로드 */
   useEffect(() => {
     axios
       .get(`/api/resume/${applicantId}`)
@@ -29,11 +31,51 @@ export default function ShowResume() {
         setCareerData(careers || []);
         setIntroduction(introduction ? introduction.content : "");
         setApplyWithData(applyWiths || []);
+        fetchUserData(applicantId);
       })
       .catch((error) => {
         console.error("이력서 데이터를 불러오는데 실패했습니다.", error);
       });
   }, [applicantId]);
+
+  /* String 유저 아이디 바탕으로 int 유저 아이디 추출 */
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await axios.post('/api/members/find-id', { userId }, {
+        headers: { "Content-Type": 'application/json' }
+      });
+      if (response.status === 200) {
+        const { id } = response.data;
+        setId(id);
+      }
+    } catch (error) {
+      console.error("유저 데이터 요청 오류:", error);
+    }
+  };
+
+  /* 탈락 또는 합격 여부 선정 */
+  const handlePassStateChange = (userId, boardNumber, passState) => {
+    axios.post(`/api/applicant/pass?userId=${userId}&boardNumber=${boardNumber}&passState=${passState}`)
+      .then(response => {
+        console.log('Pass state updated successfully');
+        if (passState) {
+          alert("지원자 합격 처리가 완료되었습니다.\n이력서의 연락처로 합격 여부를 전달해주세요.");
+        } else {
+          alert("지원자 불합격 처리가 완료되었습니다.");
+        }
+        navigate(`/showapplicant/${boardNumber}`);
+      })
+      .catch(error => {
+        console.error('Error updating pass state:', error);
+      });
+      if (passState) {  // 합격 여부 저장
+        setIsPass(true);
+        setIsFail(false);
+      } else {
+        setIsPass(false);
+        setIsFail(true);
+      }
+  };
 
   const profileInfoLabel = [
     { label: "이름", value: profileData.name },
@@ -133,7 +175,7 @@ export default function ShowResume() {
         <RoundWhiteBtn
           text="탈락시키기"
           icon={<NoIcon />}
-          onClick={handleNoClick}
+          onClick={() => handlePassStateChange(id, boardNumber, false)}
           style={{
             width: "15.0625rem",
             height: "7.3125rem",
@@ -151,7 +193,7 @@ export default function ShowResume() {
         <RoundWhiteBtn
           text="합격시키기"
           icon={<YesIcon />}
-          onClick={handleYesClick}
+          onClick={() => handlePassStateChange(id, boardNumber, true)}
           style={{
             width: "15.0625rem",
             height: "7.3125rem",
