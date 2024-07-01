@@ -14,6 +14,7 @@ export default function JobAdDetail() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [authority, setAuthority] = useState("");
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -30,7 +31,14 @@ export default function JobAdDetail() {
         setLoading(false);
       }
     };
+
+    const fetchAuthority = () => {
+      const userAuthority = localStorage.getItem("authority");
+      setAuthority(userAuthority);
+    };
+
     fetchPost();
+    fetchAuthority();
   }, [id]);
 
   const handleApplyClick = async () => {
@@ -203,7 +211,7 @@ export default function JobAdDetail() {
             </tbody>
           </RequirementsTable>
         </PostContent>
-        <PostingBtn>
+        {authority === "ROLE_USER1" ? (<PostingBtn>
           <RoundWhiteBtn
             text="지원하기"
             icon={<ClipBoardIcon />}
@@ -217,7 +225,7 @@ export default function JobAdDetail() {
             onClick={handleInterestClick}
             style={BtnStyle}
           />
-        </PostingBtn>
+        </PostingBtn>) : null}
       </PostingWrapper>
     </Container>
   );
@@ -228,7 +236,7 @@ const Container = styled.div`
   height: auto;
   display: block;
   align-items: flex-start;
-  padding: 2rem 6rem 2rem 6rem;
+  padding: 2rem 6rem 6rem 6rem;
   font-family: Pretendard-Medium;
   font-size: 1.5rem;
   color: #2e2e2e;
