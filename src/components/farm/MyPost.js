@@ -6,9 +6,26 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 export default function MyPost({ postInfo }) {
   const navigate = useNavigate();
 
+  /* 날짜 형식 변환 */
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    if (day < 10) {
+      day = `0${day}`;
+    }
+
+    return `${year}.${month}.${day}`;
+  };
+
   const handleApplicantClick = (e) => {
     e.preventDefault(); // 기존의 JobAdDetail로 이동하지 못하게 막음
-    navigate("/showapplicant");
+    navigate(`/showapplicant/${postInfo.boardNumber}`);
   };
 
   const formatDate = (isoDateString) => {
@@ -82,7 +99,7 @@ const PostListWrapper = styled(Link)`
     justify-content: center;
     font-family: "Pretendard-SemiBold";
     color: ${({ postState }) =>
-      postState === "모집 중" ? "#6698D2" : "#D66F6F"};
+    postState === "모집 중" ? "#6698D2" : "#D66F6F"};
   }
   .title {
     width: 20rem;

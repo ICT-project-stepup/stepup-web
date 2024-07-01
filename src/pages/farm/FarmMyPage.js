@@ -6,60 +6,40 @@ import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import CustomPagination from "../../components/CustomPagination";
 import { useNavigate } from "react-router-dom";
 import MyPost from "../../components/farm/MyPost";
+import axios from "axios";
 
 const name = window.localStorage.getItem("name"); // 로컬 스토리지에서 유저 이름 로드
-const recruiter = window.localStorage.getItem("recruiter"); // 로컬 스토리지에서 유저 아이디 로드
+const id = window.localStorage.getItem("id"); // 로컬 스토리지에서 유저 ID 로드
 
 /* 예은 */
 export default function FarmMyPage() {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState(1);
+  const [postData, setPostData] = useState([]);
+
+  useEffect(() => {
+    // 데이터 fetching 함수
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/jobad/my/${id}`);
+        setPostData(response.data);
+      } catch (error) {
+        console.error("내가 쓴 글 데이터를 불러오는데 실패했습니다.", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleModifyClick = () => {
     navigate("/farmmodifyinfo");
   };
 
-  const [activePage, setActivePage] = useState(1);
-  const [totalJobAds, setTotalJobAds] = useState(0);
-  const [jobAds, setJobAds] = useState([]);
-
-  useEffect(() => {
-    fetchTotalJobAds(); // 페이지 로딩 시 총 구인글 개수를 가져오는 함수 호출
-    fetchJobAds(); // 페이지 로딩 시 구인글 목록을 가져오는 함수 호출
-  }, []);
-
-  /* 총 구인글 개수 */
-  const fetchTotalJobAds = async () => {
-    try {
-      const response = await fetch(`/api/jobad/my/${recruiter}`); // 백엔드 엔드포인트 URL
-      if (!response.ok) {
-        throw new Error("Failed to fetch total job ads");
-      }
-      const data = await response.json();
-      setTotalJobAds(data); // 총 구인글 개수 state 업데이트
-    } catch (error) {
-      console.error("Error fetching total job ads:", error);
-    }
-  };
-
-  /* 구인글 목록 불러오기*/
-  const fetchJobAds = async () => {
-    try {
-      const response = await fetch(`/api/jobad/my/${recruiter}`); // 백엔드 엔드포인트 URL
-      if (!response.ok) {
-        throw new Error("Failed to fetch job ads");
-      }
-      const data = await response.json();
-      setJobAds(data); // 구인글 목록 state 업데이트
-    } catch (error) {
-      console.error("Error fetching job ads:", error);
-    }
-  };
-
   /* 페이지네이션에 필요한 변수들 */
-  const totalItemsCount = jobAds.length;
+  const totalItemsCount = postData.length;
   const indexOfLastPost = activePage * 7;
   const indexOfFirstPost = indexOfLastPost - 7;
-  const currentPosts = jobAds.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = postData.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -92,7 +72,7 @@ export default function FarmMyPage() {
 
       <PageTitle text="내가 쓴 글" style={{ position: "relative" }} />
       <CountWrapper>
-        <span>총 {totalJobAds}건</span>
+        <span>총 {totalItemsCount}건</span>
       </CountWrapper>
       <ListWrapper>
         <ListTitle>
@@ -119,7 +99,7 @@ const Container = styled.div`
   height: auto;
   display: block;
   align-items: flex-start;
-  padding: 2rem 6rem 2rem 6rem;
+  padding: 2rem 6rem 6rem 6rem;
 `;
 
 const ProfileBox = styled.div`
