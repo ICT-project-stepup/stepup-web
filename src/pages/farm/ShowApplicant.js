@@ -1,47 +1,49 @@
-import { React, useState } from "react";
-import { styled } from "styled-components";
-import PageTitle from "../../components/PageTitle";
-import CustomPagination from "../../components/CustomPagination";
-import MyApplicant from "../../components/farm/MyApplicant";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import PageTitle from '../../components/PageTitle';
+import CustomPagination from '../../components/CustomPagination';
+import MyApplicant from '../../components/farm/MyApplicant';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const applicantData = [
-  {
-    applicantArea: "서울",
-    applicantName: "복귀주",
-    applicantAge: "31",
-    applicantGender: "남자",
-    applicantDate: "2024.05.16",
-  },
-  {
-    applicantArea: "경기 수원시",
-    applicantName: "송삼동",
-    applicantAge: "43",
-    applicantGender: "남자",
-    applicantDate: "2024.05.14",
-  },
-];
-
-/* 예은 */
 export default function ShowApplicant() {
+  const [applicants, setApplicants] = useState([]);
   const [activePage, setActivePage] = useState(1);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
 
-  /* 페이지네이션에 필요한 변수들 */
-  const totalItemsCount = applicantData.length;
-  const indexOfLastPost = activePage * 7;
-  const indexOfFirstPost = indexOfLastPost - 7;
-  const currentPosts = applicantData.slice(indexOfFirstPost, indexOfLastPost);
+  //const { boardNumber } = useParams();
+
+  const boardNumber = 14;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`/api/applicant/${boardNumber}`)
+      .then(response => {
+        setApplicants(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the applicants!', error);
+      });
+  }, [boardNumber]);
+
+  const handleApplicantClick = (id) => {
+    navigate(`/showresume/${id}`)
+  };
+
+  // Pagination variables
+  const totalItemsCount = applicants.length;
+  const itemsPerPage = 7;
+  const indexOfLastPost = activePage * itemsPerPage;
+  const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+  const currentPosts = applicants.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
 
-  const currentStatusPosts = currentPosts.filter((post) =>
-    applicantData.includes(post)
-  );
-
   return (
     <Container>
-      <PageTitle text="지원자 정보" style={{ position: "relative" }} />
+      <PageTitle text="지원자 정보" style={{ position: 'relative' }} />
       <CountWrapper>
         <span>총 {totalItemsCount}건</span>
       </CountWrapper>
@@ -54,15 +56,28 @@ export default function ShowApplicant() {
           <span className="applyDate">지원일</span>
           <span className="resume" />
         </ListTitle>
-        {currentStatusPosts.map((applicantData, index) => (
-          <MyApplicant key={index} applicantData={applicantData} />
+        {currentPosts.map((applicantData, index) => (
+          <div key={index} onClick={() => handleApplicantClick(applicantData.userId)}>
+            <MyApplicant applicantData={applicantData} />
+          </div>
         ))}
         <CustomPagination
           activePage={activePage}
           totalItemsCount={totalItemsCount}
+          itemsCountPerPage={itemsPerPage}
           handlePageChange={handlePageChange}
         />
       </ListWrapper>
+      {selectedApplicant && (
+        <ApplicantDetails>
+          <h2>지원자 상세 정보</h2>
+          <p>이름: {selectedApplicant.applicantName}</p>
+          <p>지역: {selectedApplicant.applicantArea}</p>
+          <p>나이: {selectedApplicant.applicantAge}</p>
+          <p>성별: {selectedApplicant.applicantGender}</p>
+          <p>지원일: {selectedApplicant.applicantDate}</p>
+        </ApplicantDetails>
+      )}
     </Container>
   );
 }
@@ -78,7 +93,7 @@ const Container = styled.div`
 const CountWrapper = styled.div`
   width: 100%;
   height: 1.625rem;
-  font-family: "Pretendard-Regular";
+  font-family: 'Pretendard-Regular';
   font-size: 1.375rem;
   color: #6e6e6e;
   display: flex;
@@ -102,7 +117,7 @@ const ListTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: "Pretendard-Regular";
+  font-family: 'Pretendard-Regular';
   font-size: 1.5rem;
 
   .area,
@@ -115,5 +130,19 @@ const ListTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+`;
+
+const ApplicantDetails = styled.div`
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  h2 {
+    margin-bottom: 1rem;
+  }
+  p {
+    margin: 0.5rem 0;
   }
 `;
