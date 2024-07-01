@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
-import { styled } from "styled-components";
-import PageTitle from "../../../components/PageTitle";
-import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
-import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
-import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
-import MarkerMap from "../../../components/MarkerMap";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { styled } from 'styled-components';
+import PageTitle from '../../../components/PageTitle';
+import RoundWhiteBtn from '../../../components/buttons/RoundWhiteBtn';
+import { ReactComponent as StarIcon } from '../../../icons/StarIcon.svg';
+import { ReactComponent as ClipBoardIcon } from '../../../icons/ClipBoardIcon.svg';
+import MarkerMap from '../../../components/MarkerMap';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function JobAdDetail() {
-  // const navigate = useNavigate();
-
-  // const handleApplyClick = () => {
-  //   navigate("/manageresume");
-  // };
-
-  // const handleInterestClick = () => {
-  //   navigate("/interestpost");
-  // };
-
+  const navigate = useNavigate();
   const { id } = useParams();
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null); // 오류 상태
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -36,13 +27,33 @@ export default function JobAdDetail() {
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false); // 로딩 상태 해제
+        setLoading(false);
       }
     };
     fetchPost();
   }, [id]);
 
-  /* 페이지 로딩 상태 관리 */
+  const handleApplyClick = () => {
+    const applicantId = window.localStorage.getItem("id");
+    if (applicantId) {
+      axios.get(`/api/applicant/${applicantId}`)
+        .then(response => {
+          // 여기서 데이터를 구인자에게 보여주는 로직을 추가합니다.
+          // 예시: navigate("/showApplicantDetails", { state: { applicantData: response.data } });
+          console.log("Applicant data:", response.data);
+        })
+        .catch(error => {
+          console.error('There was an error fetching the applicant details!', error);
+        });
+    } else {
+      console.error('Applicant ID is not found in localStorage');
+    }
+  };
+
+  const handleInterestClick = () => {
+    navigate("/interestpost");
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -53,7 +64,6 @@ export default function JobAdDetail() {
     return <div>No post found</div>;
   }
 
-  /* 날짜 형식 변환 */
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
     const year = date.getFullYear();
@@ -68,50 +78,23 @@ export default function JobAdDetail() {
     }
 
     return `${year}.${month}.${day}`;
-};
+  };
 
-  /* 차량 또는 숙소 제공 여부 */
   const formatAvailability = (availability) => {
     return availability ? "가능" : "불가";
   };
-
 
   return (
     <Container>
       <PageTitle text="상세글 보기" />
       <PostingWrapper>
-        <SectionWrapper
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
+        <SectionWrapper style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
           <PostTitle>{post.postTitle}</PostTitle>
-          <div
-            style={{ display: "flex", alignItems: "row", height: "1.625rem" }}
-          >
-            <div
-              style={{
-                fontFamily: "Pretendard-SemiBold",
-                color: "#8aa353",
-                fontSize: "1.375rem",
-                width: "4.8125rem",
-                height: "1.625rem",
-                marginRight: "1rem",
-              }}
-            >
+          <div style={{ display: "flex", alignItems: "row", height: "1.625rem" }}>
+            <div style={{ fontFamily: "Pretendard-SemiBold", color: "#8aa353", fontSize: "1.375rem", width: "4.8125rem", height: "1.625rem", marginRight: "1rem" }}>
               모집일자
             </div>
-            <div
-              style={{
-                fontFamily: "Pretendard-Regular",
-                color: "#6e6e6e",
-                fontSize: "1.375rem",
-                width: "16.75rem",
-                height: "1.625rem",
-              }}
-            >
+            <div style={{ fontFamily: "Pretendard-Regular", color: "#6e6e6e", fontSize: "1.375rem", width: "16.75rem", height: "1.625rem" }}>
               {post.post_date}~{post.close_date}
             </div>
           </div>
@@ -128,9 +111,7 @@ export default function JobAdDetail() {
               </tr>
               <tr>
                 <td>{post.area}</td>
-                <td>
-                  {post.salaryType} {post.salary}
-                </td>
+                <td>{post.salaryType} {post.salary}</td>
                 <td>{post.period}</td>
                 <td>{formatDate(post.startDate)} ~ {formatDate(post.endDate)}</td>
                 <td>{post.startTime} ~ {post.endTime}</td>
@@ -146,7 +127,6 @@ export default function JobAdDetail() {
                 <td>모집인원</td>
                 <td>{post.recruitsNum}</td>
                 <td>연령</td>
-                {/* 20대 30대 40대 등 복수 선택도 고려해야함 */}
                 <td>{post.recruitsAge}</td>
               </tr>
               <tr>
@@ -167,7 +147,6 @@ export default function JobAdDetail() {
         <SectionTitle>상세 정보</SectionTitle>
         <PostContent>
           <DetailText>{post.content}</DetailText>
-          {/* <Placeholder>(첨부했을 경우,) 첨부한 사진 나오는 칸</Placeholder> */}
         </PostContent>
         <SectionTitle>근무지 정보</SectionTitle>
         <PostContent>
@@ -179,9 +158,7 @@ export default function JobAdDetail() {
               </tr>
               <tr>
                 <td>지도</td>
-                <td>
-                  <MarkerMap post={post} />
-                </td>
+                <td><MarkerMap post={post} /></td>
               </tr>
             </tbody>
           </RequirementsTable>
@@ -201,23 +178,18 @@ export default function JobAdDetail() {
             </tbody>
           </RequirementsTable>
         </PostContent>
-
         <PostingBtn>
           <RoundWhiteBtn
             text="지원하기"
             icon={<ClipBoardIcon />}
-            // onClick={handleApplyClick}
+            onClick={handleApplyClick}
             style={BtnStyle}
           />
-          <div
-            style={{
-              marginRight: "7.75rem",
-            }}
-          />
+          <div style={{ marginRight: "7.75rem" }} />
           <RoundWhiteBtn
             text="저장하기"
             icon={<StarIcon />}
-            // onClick={handleInterestClick}
+            onClick={handleInterestClick}
             style={BtnStyle}
           />
         </PostingBtn>
@@ -241,7 +213,6 @@ const SectionWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  //align-items: center;
   margin-top: 3rem;
 `;
 
@@ -257,7 +228,6 @@ const RequirementsTable = styled.table`
 
 const DetailText = styled.p`
   font-size: 1.5rem;
-  // margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   text-align: left;
@@ -328,7 +298,7 @@ const BtnStyle = {
   fontSize: "1.75rem",
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+  AlignItems: "center",
   justifyContent: "center",
   position: "relative",
 };
