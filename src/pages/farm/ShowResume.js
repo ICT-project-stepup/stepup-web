@@ -1,85 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as YesIcon } from "../../icons/YesIcon.svg";
 import { ReactComponent as NoIcon } from "../../icons/NoIcon.svg";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-/* 예은 */
 export default function ShowResume() {
+  const applicantId = "user123";
+  const [profileData, setProfileData] = useState({});
+  const [careerData, setCareerData] = useState([]);
+  const [introduction, setIntroduction] = useState("");
+  const [applyWithData, setApplyWithData] = useState([]);
+
   const handleNoClick = () => {};
 
   const handleYesClick = () => {};
 
-  const profileData = {
-    name: "이공주",
-    age: "61세",
-    phone: "010-1964-0711",
-    email: "lookat@naver.com",
-    address: "서울 용산구 한강대로92길 6 갈월동빌딩",
-    gender: "여자",
-  };
+  useEffect(() => {
+    axios
+      .get(`/api/resume/${applicantId}`)
+      .then((response) => {
+        const { profile, careers, introduction, applyWiths } = response.data;
+        console.log("API 응답 데이터:", response.data);
+        setProfileData(profile || {});
+        setCareerData(careers || []);
+        setIntroduction(introduction ? introduction.content : "");
+        setApplyWithData(applyWiths || []);
+      })
+      .catch((error) => {
+        console.error("이력서 데이터를 불러오는데 실패했습니다.", error);
+      });
+  }, [applicantId]);
+
   const profileInfoLabel = [
     { label: "이름", value: profileData.name },
-    { label: "나이", value: profileData.age },
-    { label: "전화번호", value: profileData.phone },
+    { label: "나이", value: `${profileData.age}세` },
+    { label: "전화번호", value: profileData.phoneNumber },
     { label: "이메일", value: profileData.email },
     { label: "주소", value: profileData.address },
     { label: "성별", value: profileData.gender },
   ];
 
-  const careerData = [
-    {
-      institution: "개인 농가",
-      work: "모종 심기",
-      period: "1 개월",
-      startDate: "2024.04.06",
-      endDate: "2024.05.06",
-    },
-    {
-      // 추가 경력
-      institution: "흥부 농가",
-      work: "모내기",
-      period: "2 개월",
-      startDate: "2023.03.01",
-      endDate: "2023.04.30",
-    },
-  ];
   const careerLabel = [
-    {
-      label: "기관",
-      key: "institution",
-      className: "institution",
-    },
-    { label: "업무", key: "work", className: "work" },
-    {
-      label: "근무 기간",
-      key: "period",
-      className: "period",
-    },
-    {
-      label: "입사연월",
-      key: "startDate",
-      className: "startDate",
-    },
-    {
-      label: "퇴사연월",
-      key: "endDate",
-      className: "endDate",
-    },
+    { label: "기관", key: "careerName", className: "institution" },
+    { label: "업무", key: "careerType", className: "work" },
+    { label: "근무 기간", key: "careerPeriod", className: "period" },
+    { label: "입사연월", key: "joinDate", className: "startDate" },
+    { label: "퇴사연월", key: "resignDate", className: "endDate" },
   ];
 
-  const applyWithData = [{ number: "1", id: "qkr1212", name: "박중화" }];
   const applyWithLabel = [
     { label: "번호", key: "number", className: "number" },
     { label: "아이디", key: "id", className: "id" },
     { label: "이름", key: "name", className: "name" },
   ];
-
-  const selfIntroData = {
-    introduction: "응 안녕, 룩앳미 룩앳미",
-  };
 
   return (
     <Container>
@@ -109,29 +86,24 @@ export default function ShowResume() {
               </span>
             ))}
           </ListHeader>
-          {careerData.map(
-            (
-              career,
-              index // 여러 경력 반복 렌더링
-            ) => (
-              <ItemWrapper key={index}>
-                <ListItem>
-                  <Row>
-                    <div className="institution">{career.institution}</div>
-                    <div className="work">{career.work}</div>
-                    <div className="period">{career.period}</div>
-                    <div className="startDate">{career.startDate}</div>
-                    <div className="endDate">{career.endDate}</div>
-                  </Row>
-                </ListItem>
-              </ItemWrapper>
-            )
-          )}
+          {careerData.map((career, index) => (
+            <ItemWrapper key={index}>
+              <ListItem>
+                <Row>
+                  <div className="institution">{career.careerName}</div>
+                  <div className="work">{career.careerType}</div>
+                  <div className="period">{career.careerPeriod}</div>
+                  <div className="startDate">{new Date(career.joinDate).toLocaleDateString()}</div>
+                  <div className="endDate">{new Date(career.resignDate).toLocaleDateString()}</div>
+                </Row>
+              </ListItem>
+            </ItemWrapper>
+          ))}
         </ListWrapper>
       </CareerBox>
 
       <SubText>자기소개</SubText>
-      <SelfIntroBox>{selfIntroData.introduction}</SelfIntroBox>
+      <SelfIntroBox>{introduction}</SelfIntroBox>
 
       <SubText>같이 지원하기</SubText>
       <ApplyWithBox>
@@ -147,16 +119,7 @@ export default function ShowResume() {
             <ItemWrapper key={index}>
               <ListItem>
                 <Row>
-                  <div
-                    className="number"
-                    style={{
-                      fontFamily: "Pretendard-Medium",
-                      fontSize: "1.5rem",
-                      color: "#8AA353",
-                    }}
-                  >
-                    {applyWith.number}
-                  </div>
+                  <div className="number">{applyWith.number}</div>
                   <div className="id">{applyWith.id}</div>
                   <div className="name">{applyWith.name}</div>
                 </Row>
