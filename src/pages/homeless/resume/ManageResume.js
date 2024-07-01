@@ -17,6 +17,7 @@ export default function ManageResume() {
   const [applyWithData, setApplyWithData] = useState([]);
   const [isEditing, setIsEditing] = useState(true);
   const [deletedCareers, setDeletedCareers] = useState([]);
+  const [deletedApplyWiths, setDeletedApplyWiths] = useState([]); // applyWiths 삭제 목록 추가
 
   const { userId } = useParams();
 
@@ -46,6 +47,15 @@ export default function ManageResume() {
     setCareerData(newCareerData);
   };
 
+  const handleDeleteApplyWith = (index) => {
+    const applyWithToDelete = applyWithData[index];
+    if (applyWithToDelete.id) {
+      setDeletedApplyWiths((prev) => [...prev, applyWithToDelete.id]);
+    }
+    const newApplyWithData = applyWithData.filter((_, i) => i !== index); // 즉시 클라이언트에서 데이터 제거
+    setApplyWithData(newApplyWithData);
+  };
+
   const handleSave = async () => {
     try {
       // 서버에 삭제 요청 보내기
@@ -55,7 +65,13 @@ export default function ManageResume() {
         })
       );
 
-      // 삭제된 경력을 제외한 경력 데이터
+      await Promise.all(
+        deletedApplyWiths.map(async (applyWithId) => {
+          await axios.delete(`/api/resume/applyWith/${applyWithId}`);
+        })
+      );
+
+      // 삭제된 경력 및 applyWith를 제외한 데이터
       const updates = {
         careers: careerData.map((career) => ({
           id: career.id || undefined,
@@ -70,6 +86,11 @@ export default function ManageResume() {
           id: introduction.id || null,
           content: introduction,
         },
+        applyWiths: applyWithData.map((applyWith) => ({
+          id: applyWith.id || undefined,
+          partnerUserId: applyWith.partnerUserId || "",
+          partnerName: applyWith.partnerName || "",
+        })),
       };
 
       for (const career of updates.careers) {
@@ -78,9 +99,12 @@ export default function ManageResume() {
         }
       }
 
+      console.log("전송할 업데이트 데이터:", updates);
+
       await axios.put(`/api/resume/${userId}`, updates);
 
       setDeletedCareers([]); // 초기화
+      setDeletedApplyWiths([]); // 초기화
       setIsEditing(false);
     } catch (error) {
       console.error("이력서를 업데이트하는데 실패했습니다.", error);
@@ -119,6 +143,7 @@ export default function ManageResume() {
         isEditing={isEditing}
         applyWithData={applyWithData}
         setApplyWithData={setApplyWithData}
+        onDeleteRow={handleDeleteApplyWith}
       />
 
       <ButtonContainer>

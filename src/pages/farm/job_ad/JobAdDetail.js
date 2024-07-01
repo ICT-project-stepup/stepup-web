@@ -1,13 +1,12 @@
-
-import React, { useState, useEffect } from 'react';
-import { styled } from 'styled-components';
-import PageTitle from '../../../components/PageTitle';
-import RoundWhiteBtn from '../../../components/buttons/RoundWhiteBtn';
-import { ReactComponent as StarIcon } from '../../../icons/StarIcon.svg';
-import { ReactComponent as ClipBoardIcon } from '../../../icons/ClipBoardIcon.svg';
-import MarkerMap from '../../../components/MarkerMap';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { styled } from "styled-components";
+import PageTitle from "../../../components/PageTitle";
+import RoundWhiteBtn from "../../../components/buttons/RoundWhiteBtn";
+import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
+import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
+import MarkerMap from "../../../components/MarkerMap";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function JobAdDetail() {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ export default function JobAdDetail() {
       try {
         const response = await fetch(`/api/jobad/${id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch job ad');
+          throw new Error("Failed to fetch job ad");
         }
         const data = await response.json();
         setPost(data);
@@ -40,14 +39,14 @@ export default function JobAdDetail() {
       try {
         const requestData = { applicantId, boardNumber: id };
         console.log("Sending request data:", requestData);
-        await axios.post('/api/applicant', requestData);
+        await axios.post("/api/applicant", requestData);
         alert("지원이 완료되었습니다.");
       } catch (error) {
-        console.error('There was an error applying!', error);
-        console.error('Error response:', error.response);
+        console.error("There was an error applying!", error);
+        console.error("Error response:", error.response);
       }
     } else {
-      console.error('Applicant ID is not found in localStorage');
+      console.error("Applicant ID is not found in localStorage");
     }
   };
 
@@ -89,10 +88,27 @@ export default function JobAdDetail() {
     <Container>
       <PageTitle text="상세글 보기" />
       <PostingWrapper>
-        <SectionWrapper style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <SectionWrapper
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <PostTitle>{post.postTitle}</PostTitle>
-          <div style={{ display: "flex", alignItems: "row", height: "1.625rem" }}>
-            <div style={{ fontFamily: "Pretendard-SemiBold", color: "#8aa353", fontSize: "1.375rem", width: "4.8125rem", height: "1.625rem", marginRight: "1rem" }}>
+          <div
+            style={{ display: "flex", alignItems: "row", height: "1.625rem" }}
+          >
+            <div
+              style={{
+                fontFamily: "Pretendard-SemiBold",
+                color: "#8aa353",
+                fontSize: "1.375rem",
+                width: "4.8125rem",
+                height: "1.625rem",
+                marginRight: "1rem",
+              }}
+            >
               모집일자
             </div>
             <div style={{ fontFamily: "Pretendard-Regular", color: "#6e6e6e", fontSize: "1.375rem", width: "16.75rem", height: "1.625rem" }}>
@@ -112,10 +128,16 @@ export default function JobAdDetail() {
               </tr>
               <tr>
                 <td>{post.area}</td>
-                <td>{post.salaryType} {post.salary}</td>
+                <td>
+                  {post.salaryType} {post.salary}
+                </td>
                 <td>{post.period}</td>
-                <td>{formatDate(post.startDate)} ~ {formatDate(post.endDate)}</td>
-                <td>{post.startTime} ~ {post.endTime}</td>
+                <td>
+                  {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
+                </td>
+                <td>
+                  {post.startTime} ~ {post.endTime}
+                </td>
               </tr>
             </tbody>
           </RequirementsTable>
@@ -159,7 +181,9 @@ export default function JobAdDetail() {
               </tr>
               <tr>
                 <td>지도</td>
-                <td><MarkerMap post={post} /></td>
+                <td>
+                  <MarkerMap post={post} />
+                </td>
               </tr>
             </tbody>
           </RequirementsTable>
