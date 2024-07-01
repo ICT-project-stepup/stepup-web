@@ -6,7 +6,7 @@ import { ReactComponent as StarIcon } from "../../../icons/StarIcon.svg";
 import { ReactComponent as ClipBoardIcon } from "../../../icons/ClipBoardIcon.svg";
 import MarkerMap from "../../../components/MarkerMap";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 
 export default function JobAdDetail() {
   // const navigate = useNavigate();
@@ -61,14 +61,14 @@ export default function JobAdDetail() {
     let day = date.getDate();
 
     if (month < 10) {
-        month = `0${month}`;
+      month = `0${month}`;
     }
     if (day < 10) {
-        day = `0${day}`;
+      day = `0${day}`;
     }
 
     return `${year}.${month}.${day}`;
-};
+  };
 
   /* 차량 또는 숙소 제공 여부 */
   const formatAvailability = (availability) => {
@@ -112,7 +112,7 @@ export default function JobAdDetail() {
                 height: "1.625rem",
               }}
             >
-              {post.post_date}~{post.close_date}
+              {formatDate(post.recruitStart)}~{formatDate(post.recruitEnd)}
             </div>
           </div>
         </SectionWrapper>
