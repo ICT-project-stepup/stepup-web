@@ -29,7 +29,7 @@ export default function JobAdDetail() {
       try {
         const response = await fetch(`/api/jobad/${id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch job ad');
+          throw new Error("Failed to fetch job ad");
         }
         const data = await response.json();
         setPost(data);
@@ -61,20 +61,19 @@ export default function JobAdDetail() {
     let day = date.getDate();
 
     if (month < 10) {
-        month = `0${month}`;
+      month = `0${month}`;
     }
     if (day < 10) {
-        day = `0${day}`;
+      day = `0${day}`;
     }
 
     return `${year}.${month}.${day}`;
-};
+  };
 
   /* 차량 또는 숙소 제공 여부 */
   const formatAvailability = (availability) => {
     return availability ? "가능" : "불가";
   };
-
 
   return (
     <Container>
@@ -112,7 +111,7 @@ export default function JobAdDetail() {
                 height: "1.625rem",
               }}
             >
-              {post.post_date}~{post.close_date}
+              {post.recruitStart}~{post.recruitEnd}
             </div>
           </div>
         </SectionWrapper>
@@ -132,8 +131,12 @@ export default function JobAdDetail() {
                   {post.salaryType} {post.salary}
                 </td>
                 <td>{post.period}</td>
-                <td>{formatDate(post.startDate)} ~ {formatDate(post.endDate)}</td>
-                <td>{post.startTime} ~ {post.endTime}</td>
+                <td>
+                  {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
+                </td>
+                <td>
+                  {post.startTime} ~ {post.endTime}
+                </td>
               </tr>
             </tbody>
           </RequirementsTable>
