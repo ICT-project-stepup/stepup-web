@@ -21,7 +21,7 @@ export default function JobAdDetail() {
       try {
         const response = await fetch(`/api/jobad/${id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch job ad');
+          throw new Error("Failed to fetch job ad");
         }
         const data = await response.json();
         setPost(data);
@@ -95,8 +95,16 @@ export default function JobAdDetail() {
             <div style={{ fontFamily: "Pretendard-SemiBold", color: "#8aa353", fontSize: "1.375rem", width: "4.8125rem", height: "1.625rem", marginRight: "1rem" }}>
               모집일자
             </div>
-            <div style={{ fontFamily: "Pretendard-Regular", color: "#6e6e6e", fontSize: "1.375rem", width: "16.75rem", height: "1.625rem" }}>
-              {post.post_date}~{post.close_date}
+            <div
+              style={{
+                fontFamily: "Pretendard-Regular",
+                color: "#6e6e6e",
+                fontSize: "1.375rem",
+                width: "16.75rem",
+                height: "1.625rem",
+              }}
+            >
+              {post.recruitStart}~{post.recruitEnd}
             </div>
           </div>
         </SectionWrapper>
@@ -114,8 +122,12 @@ export default function JobAdDetail() {
                 <td>{post.area}</td>
                 <td>{post.salaryType} {post.salary}</td>
                 <td>{post.period}</td>
-                <td>{formatDate(post.startDate)} ~ {formatDate(post.endDate)}</td>
-                <td>{post.startTime} ~ {post.endTime}</td>
+                <td>
+                  {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
+                </td>
+                <td>
+                  {post.startTime} ~ {post.endTime}
+                </td>
               </tr>
             </tbody>
           </RequirementsTable>
