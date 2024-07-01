@@ -11,14 +11,12 @@ export default function ShowApplicant() {
   const [activePage, setActivePage] = useState(1);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
 
-  //const { boardNumber } = useParams();
-
-  const boardNumber = 14;
+  const { boardNumber } = useParams();
 
   useEffect(() => {
     axios.get(`/api/applicant/${boardNumber}`)
       .then(response => {
-        setApplicants(response.data);
+        setApplicants(Array.isArray(response.data) ? response.data : []);
       })
       .catch(error => {
         console.error('There was an error fetching the applicants!', error);

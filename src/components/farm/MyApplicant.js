@@ -9,6 +9,10 @@ export default function MyPost({ applicantData }) {
     navigate(`/showresume/${applicantData.userId}`);
   };
 
+  if (!applicantData) {
+    return null;
+  }
+
   return (
     <PostListWrapper>
       <span className="area">{applicantData.applicantArea}</span>
