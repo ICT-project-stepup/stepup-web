@@ -2,11 +2,11 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 
-export default function MyPost({ applicantData }) {
+export default function MyPost({ applicantData, boardNumber }) {
   const navigate = useNavigate();
 
   const handleResumeClick = () => {
-    navigate(`/showresume/${applicantData.userId}`);
+    navigate(`/showresume/${applicantData.userId}/${boardNumber}`);
   };
 
   if (!applicantData) {
