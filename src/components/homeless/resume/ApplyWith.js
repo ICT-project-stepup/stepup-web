@@ -3,16 +3,13 @@ import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import ListStyle from "./ListStyle";
 import { ReactComponent as AddIcon } from "../../../icons/AddIcon.svg";
-import axios from "axios";
 
-const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
+const ApplyWith = ({ isEditing, applyWithData, setApplyWithData, onDeleteRow }) => {
   const applyWithLabel = [
     { label: "번호", key: "number", className: "number" },
-    { label: "아이디", key: "id", className: "id" },
-    { label: "이름", key: "name", className: "name" },
+    { label: "아이디", key: "partnerUserId", className: "partnerUserId" },
+    { label: "이름", key: "partnerName", className: "partnerName" },
   ];
-
-  //const baseURL = 'http://localhost:8080'; // API 서버의 baseURL을 설정
 
   const handleInputChange = (index, key, value) => {
     const newApplyWithData = [...applyWithData];
@@ -20,36 +17,29 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
     setApplyWithData(newApplyWithData);
   };
 
-  const handleDeleteRow = async (index) => {
-    const applyWithId = applyWithData[index].applyWithId;
-    try {
-      await axios.delete(`/api/resume/applyWith/${applyWithId}`);
-      const newApplyWithData = applyWithData.filter((_, i) => i !== index);
-      setApplyWithData(newApplyWithData);
-    } catch (error) {
-      console.error("Failed to delete applyWith", error);
-    }
+  const handleDeleteRow = (index) => {
+    onDeleteRow(index); // 부모 컴포넌트에 삭제된 항목을 전달
   };
 
   const data = applyWithData.map((item, index) => ({
     number: index + 1, // 번호는 인덱스 + 1로 설정
-    id: isEditing ? (
+    partnerUserId: isEditing ? (
       <InputId
         placeholder="입력하세요."
-        value={item.id}
-        onChange={(e) => handleInputChange(index, "id", e.target.value)}
+        value={item.partnerUserId}
+        onChange={(e) => handleInputChange(index, "partnerUserId", e.target.value)}
       />
     ) : (
-      <Text>{item.id}</Text>
+      <Text>{item.partnerUserId}</Text>
     ),
-    name: isEditing ? (
+    partnerName: isEditing ? (
       <InputName
         placeholder="입력하세요."
-        value={item.name}
-        onChange={(e) => handleInputChange(index, "name", e.target.value)}
+        value={item.partnerName}
+        onChange={(e) => handleInputChange(index, "partnerName", e.target.value)}
       />
     ) : (
-      <Text>{item.name}</Text>
+      <Text>{item.partnerName}</Text>
     ),
   }));
 
@@ -69,9 +59,8 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
           renderRow={(item) => (
             <Row>
               <div className="number">{item.number}</div>
-              <div className="id">{item.id}</div>
-              <div className="name">{item.name}</div>
-              <div className="delete">{item.delete}</div>
+              <div className="partnerUserId">{item.partnerUserId}</div>
+              <div className="partnerName">{item.partnerName}</div>
             </Row>
           )}
           onDelete={handleDeleteRow}
@@ -84,9 +73,8 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData }) => {
                 setApplyWithData([
                   ...applyWithData,
                   {
-                    number: applyWithData.length + 1,
-                    id: "",
-                    name: "",
+                    partnerUserId: "",
+                    partnerName: "",
                   },
                 ])
               }
