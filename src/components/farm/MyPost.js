@@ -28,22 +28,6 @@ export default function MyPost({ postInfo }) {
     navigate(`/showapplicant/${postInfo.boardNumber}`);
   };
 
-  const formatDate = (isoDateString) => {
-    const date = new Date(isoDateString);
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    if (day < 10) {
-      day = `0${day}`;
-    }
-
-    return `${year}.${month}.${day}`;
-  };
-
   return (
     <PostListWrapper
       postState={postInfo.postState}
@@ -99,7 +83,7 @@ const PostListWrapper = styled(Link)`
     justify-content: center;
     font-family: "Pretendard-SemiBold";
     color: ${({ postState }) =>
-    postState === "모집 중" ? "#6698D2" : "#D66F6F"};
+      postState === "모집 중" ? "#6698D2" : "#D66F6F"};
   }
   .title {
     width: 20rem;
