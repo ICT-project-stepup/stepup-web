@@ -51,7 +51,7 @@ export default function ShowApplicant() {
         </ListTitle>
         {currentPosts.map((applicantData, index) => (
           <div key={index}>
-            <MyApplicant applicantData={applicantData} />
+            <MyApplicant applicantData={applicantData} boardNumber={boardNumber} />
           </div>
         ))}
         <CustomPagination
