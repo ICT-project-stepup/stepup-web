@@ -16,8 +16,8 @@ const containerStyle = {
 };
   
 const center = {
-    lat: 35.516183073073336,
-    lng: 128.490290241545
+    lat: 37.30057497545008,
+    lng: 127.34279185902241
 };
 
 export default function MyMap() {
@@ -60,7 +60,7 @@ export default function MyMap() {
                 <GoogleMap
                     mapContainerStyle={containerStyle}
                     center={center}
-                    zoom={17}
+                    zoom={9}
                     onClick={handleMapClick}
                 >
                     {jobAds.map((marker, index) => (

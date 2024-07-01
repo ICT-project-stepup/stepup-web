@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import PageTitle from '../../../components/PageTitle';
@@ -71,10 +72,10 @@ export default function JobAdDetail() {
     let day = date.getDate();
 
     if (month < 10) {
-        month = `0${month}`;
+      month = `0${month}`;
     }
     if (day < 10) {
-        day = `0${day}`;
+      day = `0${day}`;
     }
 
     return `${year}.${month}.${day}`;
