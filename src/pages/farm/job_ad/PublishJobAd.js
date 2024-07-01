@@ -18,43 +18,77 @@ export default function PublishJobAd() {
 
   const { handleSubmit, control, setValue, watch } = useForm({
     defaultValues: {
-      post_title: "",
+      postTitle: "",
       period: "",
-      start_date: "",
-      end_date: "",
-      start_time: "",
-      end_time: "",
-      salary_type: "",
+      recruitStart: "",
+      recruitEnd: "",
+      startDate: "",
+      endDate: "",
+      startTime: "",
+      endTime: "",
+      salaryType: "",
       salary: "",
-      recruits_num: "",
-      recruits_age: [],
-      recruits_gender: "",
-      rooms_yn: "",
-      vehicles_yn: "",
-      work_type: "",
+      recruitsNum: "",
+      recruitsAge: [],
+      recruitsGender: "",
+      roomYn: "",
+      vehiclesYn: "",
+      workType: "",
       content: "",
       address: "",
-      datailedAddress: "",
-      lat: null,
-      lng: null,
-      user_name: "",
+      lat: "",
+      lng: "",
+      userName: "",
+      userPhone: "",
     },
   });
 
   const onSubmit = (data) => {
-    const user_phone = `${data.contact1}${data.contact2}${data.contact3}`;
+    let userPhone = "";
+    if (data.contact1 && data.contact2 && data.contact3) {
+      userPhone = `${data.contact1}${data.contact2}${data.contact3}`;
+    }
+    let address = "";
+    if (data.mainAddress && data.detailedAddress) {
+      address = `${data.mainAddress} ${data.detailedAddress}`;
+    } else if (data.mainAddress) {
+      address = `${data.mainAddress}`;
+    }
+    console.log(new Date().toISOString());
+
     const postData = {
       ...data,
-      user_phone,
+      userPhone,
+      address,
+      recruitStart: formatDateISO(new Date().toISOString()),
+      recruitEnd: formatDate(data.recruitEnd),
+      startDate: formatDate(data.startDate),
+      endDate: formatDate(data.endDate),
+      startTime: formatTime(data.startTime),
+      endTime: formatTime(data.endTime),
     };
     delete postData.contact1;
     delete postData.contact2;
     delete postData.contact3;
+    delete postData.mainAddress;
+    delete postData.detailedAddress;
+
+    console.log(postData);
+
+    // 필수 입력 알림
+    for (let key in postData) {
+      if (
+        postData[key] === "" ||
+        (Array.isArray(postData[key]) && postData[key].length === 0)
+      ) {
+        alert("모든 항목을 입력해주세요");
+        return;
+      }
+    }
+
     console.log(postData);
     navigate("/jobaddetail");
   };
-
-  const formValues = watch();
 
   const handleChipClick = (field, value) => {
     if (value === "anyAge") {
@@ -110,6 +144,36 @@ export default function PublishJobAd() {
     setValue(name, date);
   };
 
+  /* 날짜 형식 변환 */
+  const formatDateISO = (date) => {
+    const formattedDate = date;
+    return formattedDate.slice(0, 19);
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString); // 주어진 날짜 문자열을 Date 객체로 변환
+    const formattedDate = date.toISOString().slice(0, 19); // UTC 형식의 문자열로 변환 후 초단위 까지 자름
+    return formattedDate;
+  };
+
+  /* 시간 형식 변환 */
+  const formatTime = (timeObj) => {
+    if (
+      !timeObj ||
+      typeof timeObj !== "object" ||
+      !("hours" in timeObj) ||
+      !("minutes" in timeObj)
+    ) {
+      return "";
+    }
+
+    const hours = String(timeObj.hours).padStart(2, "0");
+    const minutes = String(timeObj.minutes).padStart(2, "0");
+
+    return `${hours}:${minutes}:00`;
+  };
+
   return (
     <Container>
       <PageTitle text="구인글 쓰기" style={{ position: "relative" }} />
@@ -124,7 +188,7 @@ export default function PublishJobAd() {
           제목
         </SectionTitle>
         <Controller
-          name="post_title"
+          name="postTitle"
           control={control}
           render={({ field }) => (
             <StyledTitleInput {...field} placeholder="제목을 입력하세요." />
@@ -162,9 +226,9 @@ export default function PublishJobAd() {
                       <CustomChip
                         label="단기"
                         clickable
-                        color={field.value === "short" ? "primary" : "default"}
+                        color={field.value === "단기" ? "primary" : "default"}
                         onClick={() =>
-                          field.onChange(field.value === "short" ? "" : "short")
+                          field.onChange(field.value === "단기" ? "" : "단기")
                         }
                       />
                     </Tooltip>
@@ -187,9 +251,9 @@ export default function PublishJobAd() {
                       <CustomChip
                         label="장기"
                         clickable
-                        color={field.value === "long" ? "primary" : "default"}
+                        color={field.value === "장기" ? "primary" : "default"}
                         onClick={() =>
-                          field.onChange(field.value === "long" ? "" : "long")
+                          field.onChange(field.value === "장기" ? "" : "장기")
                         }
                       />
                     </Tooltip>
@@ -203,14 +267,14 @@ export default function PublishJobAd() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <SelectWrapper>
                 <Controller
-                  name="start_date"
+                  name="startDate"
                   control={control}
                   render={({ field }) => (
                     <CustomCalendarWrapper>
                       <Calendar
                         selectedDate={field.value}
                         handleDateChange={(date) =>
-                          handleDateChange("start_date", date)
+                          handleDateChange("startDate", date)
                         }
                       />
                     </CustomCalendarWrapper>
@@ -221,14 +285,15 @@ export default function PublishJobAd() {
 
               <SelectWrapper style={{ marginTop: "0.625rem" }}>
                 <Controller
-                  name="end_date"
+                  name="endDate"
                   control={control}
                   render={({ field }) => (
                     <CustomCalendarWrapper>
                       <Calendar
                         selectedDate={field.value}
+                        dateFormat="yyyy.MM.dd"
                         handleDateChange={(date) =>
-                          handleDateChange("end_date", date)
+                          handleDateChange("endDate", date)
                         }
                       />
                     </CustomCalendarWrapper>
@@ -243,7 +308,7 @@ export default function PublishJobAd() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <SelectWrapper>
                 <Controller
-                  name="start_time"
+                  name="startTime"
                   control={control}
                   render={({ field }) => (
                     <>
@@ -253,7 +318,7 @@ export default function PublishJobAd() {
                           (option) => option.value === field.value?.hours
                         )}
                         onChange={(selectedOption) =>
-                          setValue("start_time", {
+                          setValue("startTime", {
                             ...field.value,
                             hours: selectedOption.value,
                           })
@@ -266,7 +331,7 @@ export default function PublishJobAd() {
                   )}
                 />
                 <Controller
-                  name="start_time"
+                  name="startTime"
                   control={control}
                   render={({ field }) => (
                     <>
@@ -276,7 +341,7 @@ export default function PublishJobAd() {
                           (option) => option.value === field.value?.minutes
                         )}
                         onChange={(selectedOption) =>
-                          setValue("start_time", {
+                          setValue("startTime", {
                             ...field.value,
                             minutes: selectedOption.value,
                           })
@@ -292,7 +357,7 @@ export default function PublishJobAd() {
               </SelectWrapper>
               <SelectWrapper style={{ marginTop: "0.625rem" }}>
                 <Controller
-                  name="end_time"
+                  name="endTime"
                   control={control}
                   render={({ field }) => (
                     <>
@@ -302,7 +367,7 @@ export default function PublishJobAd() {
                           (option) => option.value === field.value?.hours
                         )}
                         onChange={(selectedOption) =>
-                          setValue("end_time", {
+                          setValue("endTime", {
                             ...field.value,
                             hours: selectedOption.value,
                           })
@@ -315,7 +380,7 @@ export default function PublishJobAd() {
                   )}
                 />
                 <Controller
-                  name="end_time"
+                  name="endTime"
                   control={control}
                   render={({ field }) => (
                     <>
@@ -325,7 +390,7 @@ export default function PublishJobAd() {
                           (option) => option.value === field.value?.minutes
                         )}
                         onChange={(selectedOption) =>
-                          setValue("end_time", {
+                          setValue("endTime", {
                             ...field.value,
                             minutes: selectedOption.value,
                           })
@@ -346,38 +411,32 @@ export default function PublishJobAd() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <SelectWrapper>
                 <Controller
-                  name="salary_type"
+                  name="salaryType"
                   control={control}
                   render={({ field }) => (
                     <>
                       <CustomChip
                         label="시급"
                         clickable
-                        color={field.value === "hourly" ? "primary" : "default"}
+                        color={field.value === "시급" ? "primary" : "default"}
                         onClick={() =>
-                          field.onChange(
-                            field.value === "hourly" ? "" : "hourly"
-                          )
+                          field.onChange(field.value === "시급" ? "" : "시급")
                         }
                       />
                       <CustomChip
                         label="일급"
                         clickable
-                        color={field.value === "daily" ? "primary" : "default"}
+                        color={field.value === "일급" ? "primary" : "default"}
                         onClick={() =>
-                          field.onChange(field.value === "daily" ? "" : "daily")
+                          field.onChange(field.value === "일급" ? "" : "일급")
                         }
                       />
                       <CustomChip
                         label="건당"
                         clickable
-                        color={
-                          field.value === "perTask" ? "primary" : "default"
-                        }
+                        color={field.value === "건당" ? "primary" : "default"}
                         onClick={() =>
-                          field.onChange(
-                            field.value === "perTask" ? "" : "perTask"
-                          )
+                          field.onChange(field.value === "건당" ? "" : "건당")
                         }
                       />
                     </>
@@ -398,6 +457,27 @@ export default function PublishJobAd() {
               </SelectWrapper>
             </div>
           </DetailWrapper>
+
+          <DetailWrapper>
+            <DetailTitle>모집 마감일</DetailTitle>
+            <SelectWrapper>
+              <Controller
+                name="recruitEnd"
+                control={control}
+                render={({ field }) => (
+                  <CustomCalendarWrapper>
+                    <Calendar
+                      selectedDate={field.value}
+                      handleDateChange={(date) =>
+                        handleDateChange("recruitEnd", date)
+                      }
+                    />
+                  </CustomCalendarWrapper>
+                )}
+              />
+              <Subtext>까지</Subtext>
+            </SelectWrapper>
+          </DetailWrapper>
         </PostContent>
       </SectionWrapper>
 
@@ -409,7 +489,7 @@ export default function PublishJobAd() {
 
             <SelectWrapper>
               <Controller
-                name="recruits_num"
+                name="recruitsNum"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -419,7 +499,7 @@ export default function PublishJobAd() {
                         (option) => option.value === field.value
                       )}
                       onChange={(selectedOption) =>
-                        setValue("recruits_num", selectedOption.value)
+                        setValue("recruitsNum", selectedOption.value)
                       }
                       options={NumberOptions}
                       placeholder=""
@@ -435,7 +515,7 @@ export default function PublishJobAd() {
             <DetailTitle>연령</DetailTitle>
             <SelectWrapper>
               <Controller
-                name="recruits_age"
+                name="recruitsAge"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -443,76 +523,80 @@ export default function PublishJobAd() {
                       label="20대"
                       clickable
                       color={
-                        watch("recruits_age").includes("twenty")
+                        watch("recruitsAge").includes("20대")
                           ? "primary"
                           : "default"
                       }
-                      onClick={() => handleChipClick("recruits_age", "twenty")}
+                      onClick={() => handleChipClick("recruitsAge", "20대")}
                     />
 
                     <CustomChip
                       label="30대"
                       clickable
                       color={
-                        watch("recruits_age").includes("thirty")
+                        watch("recruitsAge").includes("30대")
                           ? "primary"
                           : "default"
                       }
-                      onClick={() => handleChipClick("recruits_age", "thirty")}
+                      onClick={() => handleChipClick("recruitsAge", "30대")}
                     />
 
                     <CustomChip
                       label="40대"
                       clickable
                       color={
-                        watch("recruits_age").includes("forty")
+                        watch("recruitsAge").includes("40대")
                           ? "primary"
                           : "default"
                       }
-                      onClick={() => handleChipClick("recruits_age", "forty")}
+                      onClick={() => handleChipClick("recruitsAge", "40대")}
                     />
 
                     <CustomChip
                       label="50대"
                       clickable
                       color={
-                        watch("recruits_age").includes("fifty")
+                        watch("recruitsAge").includes("50대")
                           ? "primary"
                           : "default"
                       }
-                      onClick={() => handleChipClick("recruits_age", "fifty")}
+                      onClick={() => handleChipClick("recruitsAge", "50대")}
                     />
 
                     <CustomChip
                       label="60대"
                       clickable
                       color={
-                        watch("recruits_age").includes("sixty")
+                        watch("recruitsAge").includes("60대")
                           ? "primary"
                           : "default"
                       }
-                      onClick={() => handleChipClick("recruits_age", "sixty")}
+                      onClick={() => handleChipClick("recruitsAge", "60대")}
                     />
 
                     <CustomChip
                       label="70대 이상"
                       clickable
                       color={
-                        watch("recruits_age").includes("upSeventy")
+                        watch("recruitsAge").includes("70대 이상")
                           ? "primary"
                           : "default"
                       }
                       onClick={() =>
-                        handleChipClick("recruits_age", "upSeventy")
+                        handleChipClick("recruitsAge", "70대 이상")
                       }
                       style={{ width: "9.125rem" }}
                     />
                     <CustomChip
                       label="연령 무관"
                       clickable
-                      color={field.value === "anyAge" ? "primary" : "default"}
+                      color={
+                        field.value === "연령 무관" ? "primary" : "default"
+                      }
                       onClick={() =>
-                        field.onChange(field.value === "anyAge" ? "" : "anyAge")
+                        field.onChange(
+                          field.value === "연령 무관" ? "" : "연령 무관"
+                        )
                       }
                       style={{ width: "9.125rem" }}
                     />
@@ -527,35 +611,35 @@ export default function PublishJobAd() {
             <DetailTitle>성별</DetailTitle>
             <SelectWrapper>
               <Controller
-                name="recruits_gender"
+                name="recruitsGender"
                 control={control}
                 render={({ field }) => (
                   <>
                     <CustomChip
                       label="남자"
                       clickable
-                      color={field.value === "male" ? "primary" : "default"}
+                      color={field.value === "남자" ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "male" ? "" : "male")
+                        field.onChange(field.value === "남자" ? "" : "남자")
                       }
                     />
                     <CustomChip
                       label="여자"
                       clickable
-                      color={field.value === "female" ? "primary" : "default"}
+                      color={field.value === "여자" ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "female" ? "" : "female")
+                        field.onChange(field.value === "여자" ? "" : "여자")
                       }
                     />
                     <CustomChip
                       label="성별 무관"
                       clickable
                       color={
-                        field.value === "anyGender" ? "primary" : "default"
+                        field.value === "성별 무관" ? "primary" : "default"
                       }
                       onClick={() =>
                         field.onChange(
-                          field.value === "anyGender" ? "" : "anyGender"
+                          field.value === "성별 무관" ? "" : "성별 무관"
                         )
                       }
                       style={{ width: "9.125rem" }}
@@ -570,24 +654,24 @@ export default function PublishJobAd() {
             <DetailTitle>숙소 제공 여부</DetailTitle>
             <SelectWrapper>
               <Controller
-                name="rooms_yn"
+                name="roomYn"
                 control={control}
                 render={({ field }) => (
                   <>
                     <CustomChip
                       label="가능"
                       clickable
-                      color={field.value === "Y" ? "primary" : "default"}
+                      color={field.value === true ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "Y" ? "" : "Y")
+                        field.onChange(field.value === true ? "" : true)
                       }
                     />
                     <CustomChip
                       label="불가"
                       clickable
-                      color={field.value === "N" ? "primary" : "default"}
+                      color={field.value === false ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "N" ? "" : "N")
+                        field.onChange(field.value === false ? "" : false)
                       }
                     />
                   </>
@@ -600,24 +684,24 @@ export default function PublishJobAd() {
             <DetailTitle>차량 제공 여부</DetailTitle>
             <SelectWrapper>
               <Controller
-                name="vehicles_yn"
+                name="vehiclesYn"
                 control={control}
                 render={({ field }) => (
                   <>
                     <CustomChip
                       label="가능"
                       clickable
-                      color={field.value === "Y" ? "primary" : "default"}
+                      color={field.value === true ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "Y" ? "" : "Y")
+                        field.onChange(field.value === true ? "" : true)
                       }
                     />
                     <CustomChip
                       label="불가"
                       clickable
-                      color={field.value === "N" ? "primary" : "default"}
+                      color={field.value === false ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "N" ? "" : "N")
+                        field.onChange(field.value === false ? "" : false)
                       }
                     />
                   </>
@@ -630,43 +714,43 @@ export default function PublishJobAd() {
             <DetailTitle>근무 종류</DetailTitle>
             <SelectWrapper>
               <Controller
-                name="work_type"
+                name="workType"
                 control={control}
                 render={({ field }) => (
                   <>
                     <CustomChip
                       label="모내기"
                       clickable
-                      color={field.value === "rice" ? "primary" : "default"}
+                      color={field.value === "모내기" ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "rice" ? "" : "rice")
+                        field.onChange(field.value === "모내기" ? "" : "모내기")
                       }
                     />
                     <CustomChip
                       label="수확"
                       clickable
-                      color={field.value === "harvest" ? "primary" : "default"}
+                      color={field.value === "수확" ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(
-                          field.value === "harvest" ? "" : "harvest"
-                        )
+                        field.onChange(field.value === "수확" ? "" : "수확")
                       }
                     />
                     <CustomChip
                       label="집 보수"
                       clickable
-                      color={field.value === "repair" ? "primary" : "default"}
+                      color={field.value === "집 보수" ? "primary" : "default"}
                       onClick={() =>
-                        field.onChange(field.value === "repair" ? "" : "repair")
+                        field.onChange(
+                          field.value === "집 보수" ? "" : "집 보수"
+                        )
                       }
                     />
                     <StyledPlaceHolder
                       placeholder="직접 입력"
                       value={customWorkType}
-                      onFocus={() => setValue("work_type", "")} // 직접 입력 시, 기존 선택 값 초기화
+                      onFocus={() => setValue("workType", "")} // 직접 입력 시, 기존 선택 값 초기화
                       onChange={(e) => {
                         setCustomWorkType(e.target.value);
-                        setValue("work_type", e.target.value);
+                        setValue("workType", e.target.value);
                       }}
                     />
                   </>
@@ -695,42 +779,27 @@ export default function PublishJobAd() {
             <DetailTitle>주소</DetailTitle>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <SelectWrapper>
-                <Controller
-                  name="address"
-                  control={control}
-                  render={({ field }) => (
-                    <AddressInput
-                      {...field}
-                      subBoxStyle={{
-                        width: "25.3125rem",
-                        height: "3.125rem",
-                        fontSize: "1.375rem",
-                      }}
-                      onAddressChange={(address, coordinates) => {
-                        setValue("address", address);
-                        if (coordinates) {
-                          setValue("lat", coordinates.lat);
-                          setValue("lng", coordinates.lng);
-                        }
-                      }}
-                    />
-                  )}
+                <AddressInput
+                  subBoxStyle={{
+                    width: "25.3125rem",
+                    height: "3.125rem",
+                    fontSize: "1.375rem",
+                  }}
+                  onAddressChange={(address, coordinates) => {
+                    setValue("mainAddress", address);
+                    if (coordinates) {
+                      setValue("lat", coordinates.lat);
+                      setValue("lng", coordinates.lng);
+                    }
+                  }}
                 />
               </SelectWrapper>
               <SelectWrapper>
-                <Controller
-                  name="detailedAddress"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <StyledPlaceHolder
-                        {...field}
-                        placeholder="상세 주소 입력"
-                        type="text"
-                        style={{ width: "25.3125rem" }}
-                      />
-                    </>
-                  )}
+                <StyledPlaceHolder
+                  placeholder="상세 주소 입력"
+                  type="text"
+                  style={{ width: "25.3125rem" }}
+                  onChange={(e) => setValue("detailedAddress", e.target.value)}
                 />
               </SelectWrapper>
             </div>
@@ -745,7 +814,7 @@ export default function PublishJobAd() {
             <DetailTitle>이름</DetailTitle>
             <SelectWrapper>
               <Controller
-                name="user_name"
+                name="userName"
                 control={control}
                 render={({ field }) => (
                   <>
