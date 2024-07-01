@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
@@ -179,4 +179,3 @@ const ListTitle = styled.div`
     justify-content: center;
   }
 `;
-

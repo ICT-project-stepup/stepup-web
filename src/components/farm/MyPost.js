@@ -29,7 +29,10 @@ export default function MyPost({ postInfo }) {
   };
 
   return (
-    <PostListWrapper postState={postInfo.postState} to="/JobAdDetail">
+    <PostListWrapper
+      postState={postInfo.postState}
+      to={`/jobaddetail/${postInfo.boardNumber}`}
+    >
       <span className="title">{postInfo.postTitle}</span>
       <span className="date">{formatDate(postInfo.postDate)}</span>
       <span className="state">{postInfo.postState}</span>
@@ -80,7 +83,7 @@ const PostListWrapper = styled(Link)`
     justify-content: center;
     font-family: "Pretendard-SemiBold";
     color: ${({ postState }) =>
-    postState === "모집 중" ? "#6698D2" : "#D66F6F"};
+      postState === "모집 중" ? "#6698D2" : "#D66F6F"};
   }
   .title {
     width: 20rem;
