@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { styled } from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
@@ -7,50 +7,8 @@ import CustomPagination from "../../components/CustomPagination";
 import { useNavigate } from "react-router-dom";
 import MyPost from "../../components/farm/MyPost";
 
-const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
-
-const postData = [
-  {
-    postTitle: "마늘 뽑으실 분 구합니다",
-    postDate: "2024.05.17",
-    postState: "모집 중",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-  {
-    postTitle: "벽화 그리기 모집",
-    postDate: "2024.03.23",
-    postState: "마감",
-  },
-];
+const name = window.localStorage.getItem("name"); // 로컬 스토리지에서 유저 이름 로드
+const recruiter = window.localStorage.getItem("recruiter"); // 로컬 스토리지에서 유저 아이디 로드
 
 /* 예은 */
 export default function FarmMyPage() {
@@ -61,20 +19,51 @@ export default function FarmMyPage() {
   };
 
   const [activePage, setActivePage] = useState(1);
+  const [totalJobAds, setTotalJobAds] = useState(0);
+  const [jobAds, setJobAds] = useState([]);
+
+  useEffect(() => {
+    fetchTotalJobAds(); // 페이지 로딩 시 총 구인글 개수를 가져오는 함수 호출
+    fetchJobAds(); // 페이지 로딩 시 구인글 목록을 가져오는 함수 호출
+  }, []);
+
+  /* 총 구인글 개수 */
+  const fetchTotalJobAds = async () => {
+    try {
+      const response = await fetch(`/api/jobad/my/${recruiter}`); // 백엔드 엔드포인트 URL
+      if (!response.ok) {
+        throw new Error("Failed to fetch total job ads");
+      }
+      const data = await response.json();
+      setTotalJobAds(data); // 총 구인글 개수 state 업데이트
+    } catch (error) {
+      console.error("Error fetching total job ads:", error);
+    }
+  };
+
+  /* 구인글 목록 불러오기*/
+  const fetchJobAds = async () => {
+    try {
+      const response = await fetch(`/api/jobad/my/${recruiter}`); // 백엔드 엔드포인트 URL
+      if (!response.ok) {
+        throw new Error("Failed to fetch job ads");
+      }
+      const data = await response.json();
+      setJobAds(data); // 구인글 목록 state 업데이트
+    } catch (error) {
+      console.error("Error fetching job ads:", error);
+    }
+  };
 
   /* 페이지네이션에 필요한 변수들 */
-  const totalItemsCount = postData.length;
+  const totalItemsCount = jobAds.length;
   const indexOfLastPost = activePage * 7;
   const indexOfFirstPost = indexOfLastPost - 7;
-  const currentPosts = postData.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = jobAds.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
-
-  const currentStatusPosts = currentPosts.filter((post) =>
-    postData.includes(post)
-  );
 
   return (
     <Container>
@@ -103,7 +92,7 @@ export default function FarmMyPage() {
 
       <PageTitle text="내가 쓴 글" style={{ position: "relative" }} />
       <CountWrapper>
-        <span>총 {totalItemsCount}건</span>
+        <span>총 {totalJobAds}건</span>
       </CountWrapper>
       <ListWrapper>
         <ListTitle>
@@ -112,7 +101,7 @@ export default function FarmMyPage() {
           <span className="state">현황</span>
           <span className="applicant" />
         </ListTitle>
-        {currentStatusPosts.map((postInfo, index) => (
+        {currentPosts.map((postInfo, index) => (
           <MyPost key={index} postInfo={postInfo} />
         ))}
         <CustomPagination

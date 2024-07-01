@@ -11,10 +11,29 @@ export default function MyPost({ postInfo }) {
     navigate("/showapplicant");
   };
 
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    if (day < 10) {
+      day = `0${day}`;
+    }
+
+    return `${year}.${month}.${day}`;
+  };
+
   return (
-    <PostListWrapper postState={postInfo.postState} to="/JobAdDetail">
+    <PostListWrapper
+      postState={postInfo.postState}
+      to={`/jobaddetail/${postInfo.boardNumber}`}
+    >
       <span className="title">{postInfo.postTitle}</span>
-      <span className="date">{postInfo.postDate}</span>
+      <span className="date">{formatDate(postInfo.postDate)}</span>
       <span className="state">{postInfo.postState}</span>
       <span className="applicant">
         <RoundWhiteBtn
