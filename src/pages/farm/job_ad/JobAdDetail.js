@@ -120,8 +120,16 @@ export default function JobAdDetail() {
             >
               모집일자
             </div>
-            <div style={{ fontFamily: "Pretendard-Regular", color: "#6e6e6e", fontSize: "1.375rem", width: "16.75rem", height: "1.625rem" }}>
-              {formatDate(post.recruitStart)}~{formatDate(post.recruitEnd)}
+            <div
+              style={{
+                fontFamily: "Pretendard-Regular",
+                color: "#6e6e6e",
+                fontSize: "1.375rem",
+                width: "16.75rem",
+                height: "1.625rem",
+              }}
+            >
+              {formatDate(post.recruitStart)} ~ {formatDate(post.recruitEnd)}
             </div>
           </div>
         </SectionWrapper>
@@ -138,7 +146,16 @@ export default function JobAdDetail() {
               <tr>
                 <td>{post.area}</td>
                 <td>
-                  {post.salaryType} {post.salary}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <SalaryTypeBtn>{post.salaryType}</SalaryTypeBtn>
+                    {post.salary}
+                  </div>
                 </td>
                 <td>{post.period}</td>
                 <td>
@@ -212,21 +229,23 @@ export default function JobAdDetail() {
             </tbody>
           </RequirementsTable>
         </PostContent>
-        {authority === "ROLE_USER1" ? (<PostingBtn>
-          <RoundWhiteBtn
-            text="지원하기"
-            icon={<ClipBoardIcon />}
-            onClick={handleApplyClick}
-            style={BtnStyle}
-          />
-          <div style={{ marginRight: "7.75rem" }} />
-          <RoundWhiteBtn
-            text="저장하기"
-            icon={<StarIcon />}
-            onClick={handleInterestClick}
-            style={BtnStyle}
-          />
-        </PostingBtn>) : null}
+        {authority === "ROLE_USER1" ? (
+          <PostingBtn>
+            <RoundWhiteBtn
+              text="지원하기"
+              icon={<ClipBoardIcon />}
+              onClick={handleApplyClick}
+              style={BtnStyle}
+            />
+            <div style={{ marginRight: "7.75rem" }} />
+            <RoundWhiteBtn
+              text="저장하기"
+              icon={<StarIcon />}
+              onClick={handleInterestClick}
+              style={BtnStyle}
+            />
+          </PostingBtn>
+        ) : null}
       </PostingWrapper>
     </Container>
   );
@@ -336,3 +355,19 @@ const BtnStyle = {
   justifyContent: "center",
   position: "relative",
 };
+
+const SalaryTypeBtn = styled.div`
+  width: 4.188rem;
+  height: 2.875rem;
+  background: #ffffff;
+  border-radius: 1.5625rem;
+  font-size: 1.375rem;
+  color: #2b2b2b;
+  line-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border: 0.1rem solid #afbfa5;
+  margin-right: 0.8rem;
+`;
