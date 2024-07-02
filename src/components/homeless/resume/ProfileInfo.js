@@ -12,9 +12,15 @@ const ProfileInfo = ({ profileData, isEditing }) => {
     { label: "나이", value: profileData.age },
     { label: "전화번호", value: profileData.phoneNumber },
     { label: "이메일", value: profileData.email },
-    { label: "주소", value: profileData.address },
+    { label: "주소", value: truncateAddress(profileData.address) },
     { label: "성별", value: profileData.gender },
   ];
+
+  function truncateAddress(address) {
+    if (!address) return "";
+    const parts = address.split(" ");
+    return parts.slice(0, 2).join(" ");
+  }
 
   return (
     <Container>

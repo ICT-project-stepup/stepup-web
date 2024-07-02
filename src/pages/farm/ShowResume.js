@@ -77,12 +77,18 @@ export default function ShowResume() {
       }
   };
 
+function truncateAddress(address) {
+  if (!address) return "";
+  const parts = address.split(" ");
+  return parts.slice(0, 2).join(" ");
+}
+
   const profileInfoLabel = [
     { label: "이름", value: profileData.name },
     { label: "나이", value: `${profileData.age}세` },
     { label: "전화번호", value: profileData.phoneNumber },
     { label: "이메일", value: profileData.email },
-    { label: "주소", value: profileData.address },
+    { label: "주소", value: truncateAddress(profileData.address) },
     { label: "성별", value: profileData.gender },
   ];
 
