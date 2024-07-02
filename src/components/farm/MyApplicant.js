@@ -13,9 +13,17 @@ export default function MyPost({ applicantData, boardNumber }) {
     return null;
   }
 
+  function truncateAddress(address) {
+    if (!address) return "";
+    const parts = address.split(" ");
+    return parts.slice(0, 2).join(" ");
+  }
+
   return (
     <PostListWrapper>
-      <span className="area">{applicantData.applicantArea}</span>
+      <span className="area">
+        {truncateAddress(applicantData.applicantArea)}
+      </span>
       <span className="name" style={{ fontFamily: "Pretendard-SemiBold" }}>
         {applicantData.applicantName}
       </span>
