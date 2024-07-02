@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 export default function ShowApplicant() {
   const [applicants, setApplicants] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  const [selectedApplicant, setSelectedApplicant] = useState(null);
 
   const { boardNumber } = useParams();
 
@@ -65,16 +64,6 @@ export default function ShowApplicant() {
           handlePageChange={handlePageChange}
         />
       </ListWrapper>
-      {selectedApplicant && (
-        <ApplicantDetails>
-          <h2>지원자 상세 정보</h2>
-          <p>이름: {selectedApplicant.applicantName}</p>
-          <p>지역: {selectedApplicant.applicantArea}</p>
-          <p>나이: {selectedApplicant.applicantAge}</p>
-          <p>성별: {selectedApplicant.applicantGender}</p>
-          <p>지원일: {selectedApplicant.applicantDate}</p>
-        </ApplicantDetails>
-      )}
     </Container>
   );
 }
@@ -127,19 +116,5 @@ const ListTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-`;
-
-const ApplicantDetails = styled.div`
-  margin-top: 2rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  h2 {
-    margin-bottom: 1rem;
-  }
-  p {
-    margin: 0.5rem 0;
   }
 `;
