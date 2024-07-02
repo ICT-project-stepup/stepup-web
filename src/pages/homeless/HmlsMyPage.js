@@ -1,5 +1,6 @@
 // HmlsMyPage.js
 
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import RoundWhiteBtn from "../../components/buttons/RoundWhiteBtn";
 import { ReactComponent as ProfileIcon } from "../../icons/ProfileIcon.svg";
@@ -8,11 +9,18 @@ import { ReactComponent as ApplyIcon } from "../../icons/ApplyIcon.svg";
 import { ReactComponent as SaveIcon } from "../../icons/SaveIcon.svg";
 import { useNavigate } from "react-router-dom";
 
-const name = window.localStorage.getItem("name");  // 로컬 스토리지에서 유저 이름 로드
-const userId = window.localStorage.getItem("userId");  // 로컬 스토리지에서 유저 이름 로드
-
 /* 채은 */
 export default function HmlsMyPage() {
+  const [name, setName] = useState("");
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const name = window.localStorage.getItem("name");
+    const userId = window.localStorage.getItem("userId");
+    setName(name);
+    setUserId(userId);
+  }, []);
+
 
   const navigate = useNavigate();
 

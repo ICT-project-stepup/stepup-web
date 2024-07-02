@@ -8,14 +8,22 @@ import { useNavigate } from "react-router-dom";
 import MyPost from "../../components/farm/MyPost";
 import axios from "axios";
 
-const name = window.localStorage.getItem("name"); // 로컬 스토리지에서 유저 이름 로드
-const id = window.localStorage.getItem("id"); // 로컬 스토리지에서 유저 ID 로드
 
 /* 예은 */
 export default function FarmMyPage() {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState(1);
   const [postData, setPostData] = useState([]);
+
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    const name = window.localStorage.getItem("name");
+    const id = window.localStorage.getItem("id");
+    setName(name);
+    setId(id);
+  }, []);
 
   useEffect(() => {
     // 데이터 fetching 함수
