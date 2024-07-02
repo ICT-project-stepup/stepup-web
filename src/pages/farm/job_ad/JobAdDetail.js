@@ -49,6 +49,7 @@ export default function JobAdDetail() {
         console.log("Sending request data:", requestData);
         await axios.post("/api/applicant", requestData);
         alert("지원이 완료되었습니다.");
+        navigate("/applicationhistory"); // 지원 완료 후 이동
       } catch (error) {
         console.error("There was an error applying!", error);
         console.error("Error response:", error.response);
