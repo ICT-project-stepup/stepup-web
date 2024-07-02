@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
-import PageTitle from '../../components/PageTitle';
-import CustomPagination from '../../components/CustomPagination';
-import MyApplicant from '../../components/farm/MyApplicant';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import PageTitle from "../../components/PageTitle";
+import CustomPagination from "../../components/CustomPagination";
+import MyApplicant from "../../components/farm/MyApplicant";
+import { useParams } from "react-router-dom";
 
 export default function ShowApplicant() {
   const [applicants, setApplicants] = useState([]);
@@ -14,12 +14,13 @@ export default function ShowApplicant() {
   const { boardNumber } = useParams();
 
   useEffect(() => {
-    axios.get(`/api/applicant/${boardNumber}`)
-      .then(response => {
+    axios
+      .get(`/api/applicant/${boardNumber}`)
+      .then((response) => {
         setApplicants(Array.isArray(response.data) ? response.data : []);
       })
-      .catch(error => {
-        console.error('There was an error fetching the applicants!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the applicants!", error);
       });
   }, [boardNumber]);
 
@@ -36,7 +37,7 @@ export default function ShowApplicant() {
 
   return (
     <Container>
-      <PageTitle text="지원자 정보" style={{ position: 'relative' }} />
+      <PageTitle text="지원자 정보" style={{ position: "relative" }} />
       <CountWrapper>
         <span>총 {totalItemsCount}건</span>
       </CountWrapper>
@@ -51,7 +52,10 @@ export default function ShowApplicant() {
         </ListTitle>
         {currentPosts.map((applicantData, index) => (
           <div key={index}>
-            <MyApplicant applicantData={applicantData} boardNumber={boardNumber} />
+            <MyApplicant
+              applicantData={applicantData}
+              boardNumber={boardNumber}
+            />
           </div>
         ))}
         <CustomPagination
@@ -86,7 +90,7 @@ const Container = styled.div`
 const CountWrapper = styled.div`
   width: 100%;
   height: 1.625rem;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-size: 1.375rem;
   color: #6e6e6e;
   display: flex;
@@ -110,7 +114,7 @@ const ListTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-size: 1.5rem;
 
   .area,
