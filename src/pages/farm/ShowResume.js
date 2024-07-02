@@ -162,8 +162,8 @@ export default function ShowResume() {
               <ListItem>
                 <Row>
                   <div className="number">{applyWith.number}</div>
-                  <div className="id">{applyWith.id}</div>
-                  <div className="name">{applyWith.name}</div>
+                  <div className="id">{applyWith.partnerUserId}</div>
+                  <div className="name">{applyWith.partnerName}</div>
                 </Row>
               </ListItem>
             </ItemWrapper>
