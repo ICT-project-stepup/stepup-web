@@ -73,6 +73,7 @@ const ApplyWith = ({ isEditing, applyWithData, setApplyWithData, onDeleteRow }) 
                 setApplyWithData([
                   ...applyWithData,
                   {
+                    number: applyWithData.length+1,
                     partnerUserId: "",
                     partnerName: "",
                   },
