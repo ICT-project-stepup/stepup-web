@@ -3,7 +3,7 @@ import PageTitle from "../../components/PageTitle";
 import { ReactComponent as BigLogo} from '../../assets/BigLogo.svg';
 
 
-/* 채민 */
+/* 채은 */
 export default function AboutStep() {
     return(
         <AboutStepPageContainer>
@@ -13,8 +13,8 @@ export default function AboutStep() {
                     width={'12.625rem'} height={'4.188rem'}
                 />
                 <AboutStepInputWrapper>
-                    <IdPasswordInput placeholder="아이디"/>
-                    <IdPasswordInput type="password" placeholder="비밀번호"/>
+                    {/* <IdPasswordInput placeholder="아이디"/>
+                    <IdPasswordInput type="password" placeholder="비밀번호"/> */}
                 </AboutStepInputWrapper>
                 <AboutStepBtn>로그인</AboutStepBtn>
             </AboutStepWrapper>
